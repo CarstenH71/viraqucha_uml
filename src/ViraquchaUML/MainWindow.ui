@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowClass</class>
+ <widget class="QMainWindow" name="MainWindowClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>934</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ViraquchaUML</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ViraquchaUML.qrc">
+    <normaloff>:/images/appicon_16x16.png</normaloff>:/images/appicon_16x16.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
+  <widget class="QTabWidget" name="centralWidget">
+   <property name="tabsClosable">
+    <bool>true</bool>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>934</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuApplication">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;ViraquchaUML</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuProject">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;Project</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionRecentlyUsed"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="actionDelete"/>
+    <addaction name="separator"/>
+    <addaction name="actionProperties"/>
+   </widget>
+   <widget class="QMenu" name="menuDiagram">
+    <property name="title">
+     <string>&amp;Diagram</string>
+    </property>
+    <widget class="QMenu" name="menuSaveImage">
+     <property name="title">
+      <string>Save Image</string>
+     </property>
+     <addaction name="actionSaveToClipboard"/>
+     <addaction name="actionSaveToFile"/>
+    </widget>
+    <addaction name="actionOpenDiagram"/>
+    <addaction name="separator"/>
+    <addaction name="actionAlign"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowGrid"/>
+    <addaction name="separator"/>
+    <addaction name="menuSaveImage"/>
+   </widget>
+   <widget class="QMenu" name="menuElement">
+    <property name="title">
+     <string>Ele&amp;ment</string>
+    </property>
+    <widget class="QMenu" name="menuAddElement">
+     <property name="title">
+      <string>Add &amp;Element</string>
+     </property>
+     <addaction name="actionAddClass"/>
+     <addaction name="actionAddInterface"/>
+     <addaction name="actionAddDatatype"/>
+     <addaction name="actionAddEnumeration"/>
+     <addaction name="actionAddPrimitive"/>
+     <addaction name="actionAddSignal"/>
+    </widget>
+    <widget class="QMenu" name="menuAdd_Feature">
+     <property name="title">
+      <string>Add &amp;Feature</string>
+     </property>
+     <addaction name="actionAddAttribute"/>
+     <addaction name="actionAddOperation"/>
+    </widget>
+    <addaction name="actionAddDiagram"/>
+    <addaction name="menuAddElement"/>
+    <addaction name="menuAdd_Feature"/>
+    <addaction name="actionAddModel"/>
+    <addaction name="actionAddPackage"/>
+   </widget>
+   <widget class="QMenu" name="menuWindows">
+    <property name="title">
+     <string>&amp;Windows</string>
+    </property>
+    <addaction name="actionViewProject"/>
+    <addaction name="actionViewToolbox"/>
+    <addaction name="actionViewProperties"/>
+    <addaction name="separator"/>
+    <addaction name="actionStartPage"/>
+   </widget>
+   <addaction name="menuApplication"/>
+   <addaction name="menuProject"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuElement"/>
+   <addaction name="menuDiagram"/>
+   <addaction name="menuWindows"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+   <addaction name="actionDelete"/>
+   <addaction name="separator"/>
+   <addaction name="actionHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="projDock">
+   <property name="windowTitle">
+    <string>Project</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="projDockLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QToolBar" name="projToolBar">
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+       <addaction name="actionExpand"/>
+       <addaction name="actionCollapse"/>
+       <addaction name="separator"/>
+       <addaction name="actionMoveUp"/>
+       <addaction name="actionMoveDown"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="filterCombo">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="ProjectTreeView" name="projTreeView">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="toolDock">
+   <property name="windowTitle">
+    <string>Toolbox</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QToolBox" name="toolBox">
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="propDock">
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QTreeView" name="propTable"/>
+  </widget>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/help_16x16.png</normaloff>:/images/help_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Help...</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows online help</string>
+   </property>
+   <property name="statusTip">
+    <string>Show online help</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows the About dialog</string>
+   </property>
+   <property name="statusTip">
+    <string>Show About dialog</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the Preferences dialog</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit preferences</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/exit_16x16.png</normaloff>:/images/exit_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exits ViraquchaUML</string>
+   </property>
+   <property name="statusTip">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/new_16x16.png</normaloff>:/images/new_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>New...</string>
+   </property>
+   <property name="toolTip">
+    <string>Creates a new project</string>
+   </property>
+   <property name="statusTip">
+    <string>Create new project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/open_16x16.png</normaloff>:/images/open_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens an existing project</string>
+   </property>
+   <property name="statusTip">
+    <string>Open existing project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/save_16x16.png</normaloff>:/images/save_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save...</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves the currently opened project</string>
+   </property>
+   <property name="statusTip">
+    <string>Save project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves the currently opened project under a new name</string>
+   </property>
+   <property name="statusTip">
+    <string>Save project under new name</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/close_16x16.png</normaloff>:/images/close_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="toolTip">
+    <string>Closes the currently opened project</string>
+   </property>
+   <property name="statusTip">
+    <string>Close project</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import...</string>
+   </property>
+   <property name="toolTip">
+    <string>Imports a project from XMI</string>
+   </property>
+   <property name="statusTip">
+    <string>Import from XMI</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export...</string>
+   </property>
+   <property name="toolTip">
+    <string>Exports the currently opened project to XMI</string>
+   </property>
+   <property name="statusTip">
+    <string>Export to XMI</string>
+   </property>
+  </action>
+  <action name="actionRecentlyUsed">
+   <property name="text">
+    <string>Recently used</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/undo_16x16.png</normaloff>:/images/undo_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undos the last action</string>
+   </property>
+   <property name="statusTip">
+    <string>Undo last action</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/redo_16x16.png</normaloff>:/images/redo_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redoes the last action</string>
+   </property>
+   <property name="statusTip">
+    <string>Redo last action</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="toolTip">
+    <string>Cuts an element from the project tree or a diagram</string>
+   </property>
+   <property name="statusTip">
+    <string>Cut element</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copies an element in the project tree or a diagram</string>
+   </property>
+   <property name="statusTip">
+    <string>Copy element</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Pastes an element into the project tree or a diagram</string>
+   </property>
+   <property name="statusTip">
+    <string>Paste element</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="iconText">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Deletes an element from the project tree or a diagram</string>
+   </property>
+   <property name="statusTip">
+    <string>Delete element</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionProperties">
+   <property name="text">
+    <string>Properties...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the Properties dialog for a selected element for editing</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit element properties</string>
+   </property>
+  </action>
+  <action name="actionViewProject">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Project</string>
+   </property>
+  </action>
+  <action name="actionViewToolbox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toolbox</string>
+   </property>
+  </action>
+  <action name="actionViewProperties">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
+  <action name="actionAlign">
+   <property name="text">
+    <string>Align</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="text">
+    <string>Zoom in</string>
+   </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="actionMoveUp">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/moveup_16x16.png</normaloff>:/images/moveup_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Up</string>
+   </property>
+   <property name="toolTip">
+    <string>Moves the selected element one up.</string>
+   </property>
+  </action>
+  <action name="actionMoveDown">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/movedown_16x16.png</normaloff>:/images/movedown_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move Down</string>
+   </property>
+   <property name="toolTip">
+    <string>Moves the selected element one down.</string>
+   </property>
+  </action>
+  <action name="actionExpand">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/expand_16x16.png</normaloff>:/images/expand_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Expand</string>
+   </property>
+   <property name="toolTip">
+    <string>Expands the selecte node.</string>
+   </property>
+  </action>
+  <action name="actionCollapse">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/collapse_16x16.png</normaloff>:/images/collapse_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Collapse</string>
+   </property>
+   <property name="toolTip">
+    <string>Collapses the selected node.</string>
+   </property>
+  </action>
+  <action name="actionAddClass">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/class_16x16.png</normaloff>:/images/class_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Class</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a classifier of type Class to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Class</string>
+   </property>
+  </action>
+  <action name="actionAddInterface">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/interface_16x16.png</normaloff>:/images/interface_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Interface</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a classifier of type Interface to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Interface</string>
+   </property>
+  </action>
+  <action name="actionAddDatatype">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/datatype_16x16.png</normaloff>:/images/datatype_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Data Type</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a classifier of type Data Type to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Data Type</string>
+   </property>
+  </action>
+  <action name="actionAddEnumeration">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/enum_16x16.png</normaloff>:/images/enum_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enumeration</string>
+   </property>
+   <property name="iconText">
+    <string>Adds a classifier of type Enumeration to the project</string>
+   </property>
+   <property name="toolTip">
+    <string>Add new Enumeration</string>
+   </property>
+  </action>
+  <action name="actionAddPrimitive">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/primitive_16x16.png</normaloff>:/images/primitive_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Primitive</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a classifier of type Primitive to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Primitive</string>
+   </property>
+  </action>
+  <action name="actionAddSignal">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/signal_16x16.png</normaloff>:/images/signal_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Signal</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a classifier of type Signal to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Signal</string>
+   </property>
+  </action>
+  <action name="actionAddDiagram">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/diagram_16x16.png</normaloff>:/images/diagram_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp; Diagram...</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a new diagram to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new diagram</string>
+   </property>
+  </action>
+  <action name="actionAddPackage">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/package_16x16.png</normaloff>:/images/package_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;Package</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a new Package to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Package</string>
+   </property>
+  </action>
+  <action name="actionCopy2Clipboard">
+   <property name="text">
+    <string>Copy to Clipboard</string>
+   </property>
+  </action>
+  <action name="actionOpenDiagram">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens a diagram</string>
+   </property>
+   <property name="statusTip">
+    <string>Open diagram</string>
+   </property>
+  </action>
+  <action name="actionAddModel">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/model_16x16.png</normaloff>:/images/model_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;Model</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a new Model to the project</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Model</string>
+   </property>
+  </action>
+  <action name="actionAddAttribute">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/attribute_16x16.png</normaloff>:/images/attribute_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Attribute</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a feature of type Attribute to a classifier</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Attribute</string>
+   </property>
+  </action>
+  <action name="actionAddOperation">
+   <property name="icon">
+    <iconset resource="ViraquchaUML.qrc">
+     <normaloff>:/images/operation_16x16.png</normaloff>:/images/operation_16x16.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Operation</string>
+   </property>
+   <property name="toolTip">
+    <string>Adds a feature of type Operation to a classifier</string>
+   </property>
+   <property name="statusTip">
+    <string>Add new Operation</string>
+   </property>
+  </action>
+  <action name="actionStartPage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start Page</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows or hides the Start Page</string>
+   </property>
+   <property name="statusTip">
+    <string>Show Start Page</string>
+   </property>
+  </action>
+  <action name="actionSaveToFile">
+   <property name="text">
+    <string>To File...</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves an image of a diagram to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save image to file</string>
+   </property>
+  </action>
+  <action name="actionSaveToClipboard">
+   <property name="text">
+    <string>To Clipboard</string>
+   </property>
+   <property name="toolTip">
+    <string>Saves an image of a diagram to Clipboard</string>
+   </property>
+   <property name="statusTip">
+    <string>Save image to clipboard</string>
+   </property>
+  </action>
+  <action name="actionShowGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Grid</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows or hides a grid in the diagrams</string>
+   </property>
+   <property name="statusTip">
+    <string>Show grid in diagrams</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+   <property name="shortcut">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the Project Settings dialog for editing</string>
+   </property>
+   <property name="statusTip">
+    <string>Edit project settings</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ProjectTreeView</class>
+   <extends>QTreeView</extends>
+   <header>ProjectTreeView.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="ViraquchaUML.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>613</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

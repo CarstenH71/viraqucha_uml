@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DiagramPage</class>
+ <widget class="QWidget" name="DiagramPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DiagramPage</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QGraphicsView" name="graphicsView">
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     </property>
+     <property name="sceneRect">
+      <rectf>
+       <x>0.000000000000000</x>
+       <y>0.000000000000000</y>
+       <width>5000.000000000000000</width>
+       <height>5000.000000000000000</height>
+      </rectf>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="renderHints">
+      <set>QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
+     </property>
+     <property name="dragMode">
+      <enum>QGraphicsView::RubberBandDrag</enum>
+     </property>
+     <property name="viewportUpdateMode">
+      <enum>QGraphicsView::FullViewportUpdate</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+  <action name="actionEditShape">
+   <property name="text">
+    <string>Shape...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the properties dialog for the shape.</string>
+   </property>
+  </action>
+  <action name="actionEditProperties">
+   <property name="text">
+    <string>Properties...</string>
+   </property>
+   <property name="toolTip">
+    <string>Opens the properties dialog for the UML element.</string>
+   </property>
+  </action>
+  <action name="actionDeleteFromDiagram">
+   <property name="text">
+    <string>Delete from Diagram</string>
+   </property>
+   <property name="toolTip">
+    <string>Deletes the shape from the diagram.</string>
+   </property>
+  </action>
+  <action name="actionDeleteFromModel">
+   <property name="text">
+    <string>Delete from Model</string>
+   </property>
+   <property name="toolTip">
+    <string>Deletes the shape from the diagram and the UML element from the model.</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="5" margin="0"/>
+ <resources/>
+ <connections/>
+</ui>
