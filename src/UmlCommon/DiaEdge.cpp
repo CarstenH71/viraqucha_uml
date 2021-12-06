@@ -33,6 +33,8 @@
 #include "PropertyStrings.h"
 #include "UmlLink.h"
 
+#include <QJsonArray>
+
 /**
  * @class DiaEdge
  * @brief The DiaEdge class holds information about an edge in a diagram.
@@ -57,12 +59,12 @@ struct DiaEdge::Data
    , routing(RoutingKind::Direct)
    {}
 
-   UmlLinkPtr      link;
-   DiaShape*       shape1;
-   DiaShape*       shape2;
-   QVector<Point>  points;
-   QVector<Label*> labels;
-   RoutingKind     routing;
+   UmlLinkPtr       link;
+   DiaShape*        shape1;
+   DiaShape*        shape2;
+   QVector<QPointF> points;
+   QVector<Label*>  labels;
+   RoutingKind      routing;
 };
 /// @endcond
 
@@ -175,13 +177,13 @@ void DiaEdge::setRouting(RoutingKind value)
 }
 
 /** Gets the vector of points of the edge's line. */
-QVector<Point> DiaEdge::points() const
+QVector<QPointF> DiaEdge::points() const
 {
    return data->points;
 }
 
 /** Sets the vector of points of the edge's line. */
-void DiaEdge::setPoints(QVector<Point> value)
+void DiaEdge::setPoints(QVector<QPointF> value)
 {
    data->points = value;
 }
@@ -191,7 +193,7 @@ void DiaEdge::setPoints(QVector<Point> value)
  */
 QVector<Label*> DiaEdge::labels() const
 {
-   return QVector<Label*>(data->labels);
+   return data->labels;
 }
 
 /**
@@ -220,17 +222,45 @@ void DiaEdge::serialize(QJsonObject& json, bool read, int version)
    if (read)
    {
       data->routing = (RoutingKind)json[KPropRouting].toInt();
-      
+      if (data->routing == RoutingKind::Custom)
+      {
+         // Read points only if routing kind is "Custom":
+         auto array = json[KPropPoints].toArray();
+         data->points.clear();
+         for (int index = 0; index < array.size(); ++index)
+         {
+            auto obj = array[index].toObject();
+
+            QPointF point;
+            point.setX(obj[KPropX].toDouble());
+            point.setY(obj[KPropY].toDouble());
+            data->points.append(point);
+         }
+      }
+
       auto* provider = dynamic_cast<ILabelProvider*>(data->link.pointee());
       if (provider != nullptr)
       {
          // TODO
       }
-
-      // TODO: Points
    }
    else
    {
       json[KPropRouting] = (int)data->routing;
+      if (data->routing == RoutingKind::Custom)
+      {
+         // Write points only if routing kind is "Custom":
+         QJsonArray array;
+         for (int index = 0; index < data->points.length(); ++index)
+         {
+            auto& point = data->points[index];
+
+            QJsonObject obj;
+            obj[KPropX] = point.x();
+            obj[KPropY] = point.y();
+            array.append(obj);
+         }
+         json[KPropPoints] = array;
+      }
    }
 }

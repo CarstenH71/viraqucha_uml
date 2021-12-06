@@ -27,8 +27,8 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "EdgeShape.h"
 
-#include "UmlLink.h"
 #include "Label.h"
+#include "UmlLink.h"
 
 #include <qmath.h>
 #include <QFontMetricsF>
@@ -42,15 +42,17 @@
  *
  * The EdgeShape class is an abstract base class that can be used for drawing UML relationships like Generalization, 
  * Realization, Association etc. It needs a DiaEdge object on construction that must contain pointers to the graphics
- * items of the nodes to which the edge is attached to.
+ * items of the two nodes to which the edge is attached to.
  *
  * Ending style as well as line style can be set in the constructor of a derived class using functions setEndingStyle()
  * and setLineStyle(). These styles are used for drawing the line and for optimization (ending style).
  *
- * The paint() function of the EdgeShape class is implemented such that it draws a line according to the RoutingKind
- * set at the DiaEdge object. It then calls abstract functions drawStartArrow() and drawEndArrow() to draw the arrows
- * at the start and end of the line respectively. These functions must be implemented by derived classes to draw
- * suitable arrows or line endings (e.g. the diamond of an UML association).
+ * The paint() function is implemented such, that it draws a polyline according to the RoutingKind set at the DiaEdge
+ * object first. Then it calls abstract functions drawLineStart() and drawLineEnd() to draw the arrows at the start and
+ * end of the polyline respectively. These functions must be implemented by derived classes to draw suitable arrows or
+ * line endings (e.g. the diamond of an UML association). After drawing polyline and line endings, it draws the text
+ * boxes for name, multiplicity and attributes and finally - if selected - the selection boxes (small rectangles at
+ * each end of the polyline).
  */
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -59,6 +61,8 @@
 
 /**
  * Initializes a new object of the EdgeShape class.
+ *
+ * Parameter edge must not be nullptr!
  * @param parent The parent graphics item in the graphics scene.
  * @param edge The DiaEdge object associated with this object.
  */
@@ -75,18 +79,20 @@ EdgeShape::EdgeShape(QGraphicsItem* parent, DiaEdge* edge)
    _items[0] = static_cast<QGraphicsItem*>(edge->shape1()->itemData());
    _items[1] = static_cast<QGraphicsItem*>(edge->shape2()->itemData());
 
-   if (_items[0] == _items[1])
+   loadPoints();
+   if (_line.isEmpty())
    {
-      // TODO: zeigt auf sich selbst!
-      QPointF p1 = computeIntersection(_items[0]);
-      QPointF p2 = computeIntersection(_items[1]);
-      makeAutoRoute(p1, p2);
-   }
-   else
-   {
-      QPointF p1 = computeIntersection(_items[0]);
-      QPointF p2 = computeIntersection(_items[1]);
-      makeDirectLine(p1, p2);
+      // No points given => edge is new => create default points:
+      if (_items[0] == _items[1])
+      {
+         _edge->setRouting(RoutingKind::Auto);
+         makeAutoRoute();
+      }
+      else
+      {
+         _edge->setRouting(RoutingKind::Direct);
+         makeDirectLine();
+      }
    }
 }
 
@@ -113,11 +119,14 @@ DiaEdge* EdgeShape::diaEdge() const
 /** Gets the bounding rectangle of the edge shape. */
 QRectF EdgeShape::boundingRect() const
 {
-   double extra = (_linePen.width() + 20) / 2.0;
-   QLineF temp(_line.first(), _line.last()); // TODO: Prüfen, ob das reicht.
+   /*
+   double extra = (_linePen.width() + 30) / 2.0;
+   QLineF temp(_line.first(), _line.last());
    return QRectF(
       temp.p1(), 
       QSizeF(temp.p2().x() - temp.p1().x(), temp.p2().y() - temp.p1().y())).normalized().adjusted(-extra, -extra, extra, extra);
+      */
+   return shape().controlPointRect() + QMarginsF(5.0, 5.0, 5.0, 5.0);
 }
 
 /** Gets the shape of the edge shape as a painter path. */
@@ -126,7 +135,15 @@ QPainterPath EdgeShape::shape() const
    QPainterPath path;
    path.addPolygon(_line);
    path.addPolygon(_arrow);
-   return path;
+
+   auto boxes = diaEdge()->labels();
+   if (boxes.size() == 5)
+   {
+      path.addText(findMidPoint(), _font, boxes[0]->text());
+   }
+
+   QPainterPathStroker stroker(_linePen);
+   return stroker.createStroke(path);
 }
 
 /** Gets the ending style of the edge shape. */
@@ -153,136 +170,75 @@ void EdgeShape::setLineStyle(Qt::PenStyle value)
     _linePen.setStyle(value);
 }
 
+/** Gets the line of the edge shape. */
 QPolygonF EdgeShape::line() const
 {
    return _line;
 }
 
+/** Sets the line of the edge shape. */
 void EdgeShape::setLine(QPolygonF value)
 {
    _line = value;
 }
 
+/** Handles the itemChange event. */
 QVariant EdgeShape::itemChange(GraphicsItemChange change, const QVariant& value)
 {
    if (change == ItemPositionHasChanged)
    {
-      // TODO... Nur verschieben, solange die Berührungspunkte erhalten bleiben.
    }
 
    return super::itemChange(change, value);
 }
 
+/** Updates the position of the edge shape. */
 void EdgeShape::updatePosition()
 {
-   QPointF p1 = mapFromItem(_items[0], 0, 0);
-   QPointF p2 = mapFromItem(_items[1], 0, 0);
    switch (_edge->routing())
    {
    case RoutingKind::Auto:
-      makeAutoRoute(p1, p2);
+      makeAutoRoute();
       break;
    case RoutingKind::Custom:
-      makeCustomLine(p1, p2);
+      updateCustomLine();
       break;
    case RoutingKind::Direct:
    default:
-      makeDirectLine(p1, p2);
+      makeDirectLine();
       break;
    }
 }
 
+/**
+ * Paints the edge shape.
+ *
+ * @param painter QPainter object needed for painting.
+ * @param option This parameter is unused.
+ * @param widget This parameter is unused.
+ */
 void EdgeShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
    Q_UNUSED(option);
    Q_UNUSED(widget);
-   // TODO: Sonderbehandlung wenn _items[0] == _items[1]!
 
-   if (_items[0]->collidesWithItem(_items[1])) return;
+   // Don't even try to draw a line between colliding nodes!
+   if (_items[0] != _items[1] && _items[0]->collidesWithItem(_items[1])) return;
 
+   // Draw line and line endings:
    painter->setPen(_linePen);
    painter->setBrush(_brush);
-
-   QPointF p1 = computeIntersection(_items[0]);
-   QPointF p2 = computeIntersection(_items[1]);
-   switch (_edge->routing())
-   {
-   case RoutingKind::Auto:
-      makeAutoRoute(p1, p2);
-      break;
-   case RoutingKind::Custom:
-      makeCustomLine(p1, p2);
-      break;
-   case RoutingKind::Direct:
-   default:
-      makeDirectLine(p1, p2);
-      break;
-   }
    painter->drawPolyline(_line);
-
    if (_style == EndingStyle::ArrowAtStart || _style == EndingStyle::ArrowAtBoth)
    {
-      drawLineStart(painter, QLineF(p1, p2));
+      drawLineStart(painter, QLineF(_line[0], _line[1]));
    }
    if (_style == EndingStyle::ArrowAtEnd || _style == EndingStyle::ArrowAtBoth)
    {
-      drawLineEnd(painter, QLineF(p2, p1));
+      drawLineEnd(painter, QLineF(_line[_line.length() - 1], _line[_line.length() - 2]));
    }
 
-   drawTextBoxes(painter);
-   if (isSelected())
-   {
-      savePenStyle();
-      _linePen.setStyle(Qt::DashLine);
-      QPolygonF myLine = _line;
-      myLine.translate(0, 4.0);
-      painter->drawPolyline(myLine);
-      myLine.translate(0, -8.0);
-      painter->drawPolyline(myLine);
-      restorePenStyle();
-   }
-}
-
-/**
- * Makes a direct line between a start and an end point but does not draw it.
- * 
- * The resulting line is stored in the _line attribute of this class.
- * @param start Starting point of the line.
- * @param end Ending point of the line.
- */
-void EdgeShape::makeDirectLine(const QPointF& start, const QPointF& end)
-{
-   _line.clear();
-   _line << start << end;
-}
-
-/**
- * Makes an auto route line between a start and an end point but does not draw it.
- * 
- * The resulting line is stored in the _line attribute of this class.
- * @param start Starting point of the line.
- * @param end Ending point of the line.
- */
-void EdgeShape::makeAutoRoute(const QPointF& start, const QPointF& end)
-{
-   // TODO...
-}
-
-/**
- * Makes a custom line between a start and an end point but does not draw it.
- * 
- * A custom line can be modified by dragging midpoints of the line. The resulting line is stored in the _line attribute
- * of this class.
- * @param start Starting point of the line.
- * @param end Ending point of the line.
- */
-void EdgeShape::makeCustomLine(const QPointF& start, const QPointF& end)
-{
-   // TODO...
-}
-
-void EdgeShape::drawTextBoxes(QPainter* painter)
-{
+   // Draw text boxes at each end and in the middle of the line:
    auto boxes = diaEdge()->labels();
    if (boxes.size() == 5)
    {
@@ -293,10 +249,100 @@ void EdgeShape::drawTextBoxes(QPainter* painter)
       drawMuliplicityBox(painter, metrics, 1, boxes[3]->text());
       drawAttributeBox(painter, metrics, 1, boxes[4]->text());
    }
+
+   // Draw small rectangles around each point of the line if selected:
+   if (isSelected())
+   {
+      painter->setBrush(Qt::white);
+      for (const QPointF& point : _line)
+      {
+         painter->drawRect(point.x() - KSBSize2, point.y() - KSBSize2, KSBSize, KSBSize);
+      }
+   }
 }
 
 /**
- * Draws the center text box containing name and stereotype of the link.
+ * Makes a direct line between the two nodes attached but does not draw it.
+ * 
+ * The resulting line is stored in the _line attribute of this class.
+ * @param start Starting point of the line.
+ * @param end Ending point of the line.
+ */
+void EdgeShape::makeDirectLine()
+{
+   auto p0 = computeIntersection(_items[0]);
+   auto p1 = computeIntersection(_items[1]);
+
+   setPos(p0);
+   diaEdge()->setPos(p0);
+   _line.clear();
+   _line << mapFromScene(p0) << mapFromScene(p1);
+   savePoints();
+}
+
+/**
+ * Makes an auto route line between the two nodes attached but does not draw it.
+ * 
+ * The resulting line is stored in the _line attribute of this class.
+ * @param start Starting point of the line.
+ * @param end Ending point of the line.
+ */
+void EdgeShape::makeAutoRoute()
+{
+   if (_items[0] == _items[1])
+   {
+      const double k = 25.0;
+      const double k2 = 2.0 * k;
+
+      // Edge points to the same item!
+      QRectF rect = _items[0]->boundingRect();
+      if (_items[0]->childItems().count() != 0 && _items[0]->childItems().first()->isVisible())
+      {
+         // Shape has a template box at the top: draw line around upper left corner
+         QPointF p0(_items[0]->pos().x() - rect.width() / 2.0, _items[0]->pos().y() - rect.height() / 2.0 + k);
+         setPos(p0);
+         diaEdge()->setPos(p0);
+         _line.clear();
+         _line << QPointF(0.0, 0.0) << QPointF(-k, 0.0) << QPointF(-k, -k2) << QPointF(k, -k2) << QPointF(k, -k);
+      }
+      else
+      {
+         // Draw line around upper right corner
+         QPointF p0(_items[0]->pos().x() + rect.width() / 2.0, _items[0]->pos().y() - rect.height() / 2.0 + k);
+         setPos(p0);
+         diaEdge()->setPos(p0);
+         _line.clear();
+         _line << QPointF(0.0, 0.0) << QPointF(k, 0.0) << QPointF(k, -k2) << QPointF(-k, -k2) << QPointF(-k, -k);
+      }
+   }
+   else
+   {
+       // TODO: find auto route between items
+   }
+   savePoints();
+}
+
+/**
+ * Updates the points of a custom line between the two nodes attached but does not draw it.
+ * 
+ * A custom line can be modified by dragging midpoints of the line. The resulting line is stored in the _line attribute
+ * of this class.
+ * @param start Starting point of the line.
+ * @param end Ending point of the line.
+ */
+void EdgeShape::updateCustomLine()
+{
+   Q_ASSERT(!_line.isEmpty());
+
+   // TODO: Update only start and end point of the custom line and leave all other points unmodified?
+   // Like this:
+   _line.first() = mapFromScene(computeIntersection(_items[0]));
+   _line.last()  = mapFromScene(computeIntersection(_items[1]));
+   savePoints();
+}
+
+/**
+ * Draws the center text box containing name and stereotype of the edge.
  * 
  * @param painter
  * @param metrics
@@ -304,16 +350,18 @@ void EdgeShape::drawTextBoxes(QPainter* painter)
  */
 void EdgeShape::drawCenterBox(QPainter* painter, QFontMetricsF& metrics, QString text)
 {
-   QLineF  temp(_line[0], _line[1]);
-   QPointF pos = temp.center();
-   QRectF  rect = metrics.boundingRect(QRectF(0.0, 0.0, 10.0, 10.0), Qt::AlignLeft, text);
-   painter->drawText(
-      pos.x() - rect.width() / 2.0, 
-      pos.y() - rect.height() - 5, 
-      rect.width(), 
-      rect.height(), 
-      Qt::AlignLeft, 
-      text);
+   if (_line.length() > 1)
+   {
+      auto pos = findMidPoint();
+      auto rect = metrics.boundingRect(QRectF(0.0, 0.0, 10.0, 10.0), Qt::AlignLeft, text);
+      painter->drawText(
+         pos.x() - rect.width() / 2.0,
+         pos.y() - rect.height() - 5.0,
+         rect.width(),
+         rect.height(),
+         Qt::AlignLeft,
+         text);
+   }
 }
 
 /**
@@ -327,11 +375,10 @@ void EdgeShape::drawCenterBox(QPainter* painter, QFontMetricsF& metrics, QString
  */
 void EdgeShape::drawMuliplicityBox(QPainter* painter, QFontMetricsF& metrics, int item, QString text)
 {
-   QRectF rect = metrics.boundingRect(QRectF(0.0, 0.0, 10.0, 10.0), Qt::AlignLeft, text);
-   
-   int side = 0;
+   int     side = 0;
    QPointF pos = computeIntersection(_items[item], &side, true);
-   
+   QRectF  rect = metrics.boundingRect(QRectF(0.0, 0.0, 10.0, 10.0), Qt::AlignLeft, text);
+
    // Move text box according to side number:
    switch (side)
    {
@@ -352,8 +399,21 @@ void EdgeShape::drawMuliplicityBox(QPainter* painter, QFontMetricsF& metrics, in
    painter->drawText(pos.x(), pos.y(), rect.width() + 5.0, rect.height() + 5.0, Qt::AlignLeft, text);
 }
 
+/**
+ * Draws the attribute box at one end of the line.
+ *
+ * This function is currently not implemented.
+ * @param painter
+ * @param metrics
+ * @param item
+ * @param text
+ */
 void EdgeShape::drawAttributeBox(QPainter* painter, QFontMetricsF& metrics, int item, QString text)
 {
+   Q_UNUSED(painter);
+   Q_UNUSED(metrics);
+   Q_UNUSED(item);
+   Q_UNUSED(text);
 }
 
 /** 
@@ -377,7 +437,7 @@ void EdgeShape::drawArrow(QPainter* painter, const QLineF& line, bool closed)
    _arrow << arrowP1 << line.p1() << arrowP2;
 
    auto saved = _linePen.style();
-    _linePen.setStyle(Qt::SolidLine);
+   _linePen.setStyle(Qt::SolidLine);
    painter->setPen(_linePen);
    if (closed)
    { 
@@ -387,7 +447,7 @@ void EdgeShape::drawArrow(QPainter* painter, const QLineF& line, bool closed)
    {
       painter->drawPolyline(_arrow);
    }
-    _linePen.setStyle(saved);
+   _linePen.setStyle(saved);
 }
 
 /**
@@ -399,7 +459,11 @@ void EdgeShape::drawArrow(QPainter* painter, const QLineF& line, bool closed)
  * @param crossed If true, draws a cross into the circle.
  */
 void EdgeShape::drawCircle(QPainter* painter, const QLineF& line, bool crossed)
-{}
+{
+   Q_UNUSED(painter);
+   Q_UNUSED(line);
+   Q_UNUSED(crossed);
+}
 
 /**
  * Draws a filled or unfilled diamond at one end of a given line.
@@ -446,14 +510,20 @@ void EdgeShape::computeAngles(const QLineF& line, double& angle1, double& angle2
 }
 
 /**
- * Computes the intersection point between the line of a link and a graphics item.
+ * Computes the intersection point between a line and a graphics item in scene coordinates.
  * 
- * This function also computes on which side of the bounding rectangle of the given item the intersection point lies:
+ * This function assumes that the two graphics items are connected with a direct line pointing to the midpoint of
+ * each graphics item. It then computes the intersection point with the bounding rectangle of the given graphics
+ * item with the direct line.<br/>
+ * The function also computes on which side of the bounding rectangle of the given item the intersection point lies:
  * - Top: side = 1;
  * - Right: side = 2;
  * - Bottom: side = 3;
  * - Left: side = 4.
- * 
+ *
+ * Note that the resulting intersection point is in scene coordinates! Use function mapFromScene() to map the point
+ * to item coordinates.
+ *
  * @param item Graphics item to compute the intersection point.
  * @param side Number of the side of the bounding rectangle where the intersection point lies.
  * @param margin True, if margins shall be added to the bounding rectangle of the given item.
@@ -481,4 +551,55 @@ QPointF EdgeShape::computeIntersection(QGraphicsItem* item, int* side, bool marg
 
    if (side != nullptr) *side = index;
    return result;
+}
+
+int EdgeShape::findNearestCorner(QGraphicsItem* item, QPointF pos)
+{
+   QPolygonF boundary(item->boundingRect());
+   double    lastDist = 0.0;
+   int       result = -1;
+
+   for (int index = 0; index < boundary.length(); ++index)
+   {
+      auto corner = boundary.at(index) + item->pos();
+      double dist = QPointF::dotProduct(corner, pos);
+      if (dist < lastDist || index == 0)
+      {
+         result = index;
+         lastDist = dist;
+      }
+   }
+
+   return result;
+}
+
+QPointF EdgeShape::findMidPoint() const
+{
+   int midIndex = _line.length() / 2;
+   return QLineF(_line[midIndex - 1], _line[midIndex]).center();
+}
+
+/** Loads points from the DiaEdge object. */
+void EdgeShape::loadPoints()
+{
+   auto points = _edge->points();
+   for (const QPointF& point : points)
+   {
+      _line << point;
+   }
+
+   setPos(_edge->pos());
+}
+
+/** Saves points to the DiaEdge object. */
+void EdgeShape::savePoints()
+{
+   QVector<QPointF> points;
+   for (const QPointF& point : _line)
+   {
+      points.append(point);
+   }
+
+   _edge->setPos(pos());
+   _edge->setPoints(points);
 }

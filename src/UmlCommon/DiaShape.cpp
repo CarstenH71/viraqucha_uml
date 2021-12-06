@@ -56,6 +56,7 @@ struct DiaShape::Data
    {}
 
    QList<DiaEdge*>        edges;
+   QPointF                position;
    QString                fontFamily;
    int                    fontSize;
    double                 penWidth;
@@ -85,6 +86,18 @@ DiaShape::~DiaShape()
 QList<DiaEdge*> DiaShape::edges() const
 {
    return QList<DiaEdge*>(data->edges);
+}
+
+/** Gets the position of the shape in scene coordinates. */
+QPointF DiaShape::pos() const
+{
+   return data->position;
+}
+
+/** Sets the position of the shape in scene coordinates. */
+void DiaShape::setPos(const QPointF& value)
+{
+   data->position = value;
 }
 
 /** Gets the font family used for drawing text. */
@@ -269,6 +282,11 @@ void DiaShape::serialize(QJsonObject& json, bool read, int version)
    QString hexColor;
    if (read)
    {
+      QPointF point;
+      point.setX(json[KPropX].toDouble());
+      point.setY(json[KPropY].toDouble());
+      data->position = point;
+
       data->fontFamily = json[KPropFont].toString();
       data->fontSize = json[KPropFontSize].toInt();
       data->penWidth = json[KPropPenWidth].toDouble();
@@ -283,6 +301,9 @@ void DiaShape::serialize(QJsonObject& json, bool read, int version)
    }
    else
    {
+      json[KPropX] = data->position.x();
+      json[KPropY] = data->position.y();
+
       json[KPropFont] = data->fontFamily;
       json[KPropFontSize] = data->fontSize;
       json[KPropPenWidth] = data->penWidth;

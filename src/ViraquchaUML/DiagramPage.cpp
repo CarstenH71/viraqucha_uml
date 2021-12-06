@@ -74,6 +74,8 @@ DiagramPage::DiagramPage(UmlDiagram* diagram, const QModelIndex& index, QWidget*
    _contextMenu->addAction(ui.actionEditShape);
    _contextMenu->addSeparator();
    _contextMenu->addAction(ui.actionEditProperties);
+   connect(ui.actionDeleteFromDiagram, &QAction::triggered, this, &DiagramPage::deleteFromDiagram);
+   connect(ui.actionDeleteFromModel, &QAction::triggered, this, &DiagramPage::deleteFromModel);
    connect(ui.actionEditProperties, &QAction::triggered, this, &DiagramPage::editElementProperties);
    connect(ui.actionEditShape, &QAction::triggered, this, &DiagramPage::editShapeProperties);
    
@@ -179,7 +181,7 @@ void DiagramPage::editElementProperties()
    if (!items.isEmpty())
    {
       // Note: QFrame has an enum named Shape, therefore use global namespace:
-      ::Shape* shape = dynamic_cast<::Shape*>(items[0]);
+      auto* shape = dynamic_cast<::Shape*>(items[0]);
       Q_ASSERT(shape != nullptr);
       
       PropertiesDialog dialog(this, shape->element());
@@ -199,6 +201,25 @@ void DiagramPage::editShapeProperties()
  */
 void DiagramPage::deleteFromDiagram()
 {
+   auto items = _scene->selectedItems();
+   if (!items.isEmpty())
+   {
+      foreach (QGraphicsItem* item, items)
+      {
+         auto shape = dynamic_cast<::Shape*>(item);
+         Q_ASSERT(shape != nullptr);
+
+         auto edges = shape->diaShape()->edges();
+         foreach (DiaEdge* edge, edges)
+         {
+            auto victim = static_cast<QGraphicsItem*>(edge->itemData());
+            _scene->removeItem(victim);
+            delete victim;
+         }
+         _scene->removeItem(item);
+         delete item;
+      }
+   }
 }
 
 /**

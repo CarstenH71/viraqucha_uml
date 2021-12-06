@@ -29,6 +29,27 @@
 
 #include "AssociationEnd.h"
 
+/**
+ * @class AssociationShape
+ * @brief Draws an Association shape.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ * The AssociationShape class draws a UML Association: a solid line connecting two node shapes, decorated with a
+ * diamond at one end representing the aggregation kind, and (if the connection is directed) an open arrow at the other
+ * end.
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Construction
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the AssociationShape class.
+ *
+ * @param parent
+ * @param edge
+ */
 AssociationShape::AssociationShape(QGraphicsItem* parent, DiaEdge* edge)
 : super(parent, edge)
 {
@@ -43,6 +64,16 @@ AssociationShape::~AssociationShape()
 {
 }
 
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Draws an arrow or a diamond at the start (first line segment) of the polyline of the shape.
+ *
+ * @param painter QPainter object needed for drawing
+ * @param line Line segment where to draw the arrow or diamond
+ */
 void AssociationShape::drawLineStart(QPainter* painter, const QLineF& line)
 {
    if (_link->sourceEnd().aggregation() != AggregationKind::None)
@@ -55,6 +86,12 @@ void AssociationShape::drawLineStart(QPainter* painter, const QLineF& line)
    }
 }
 
+/**
+ * Draws an arrow at the end (last line segment) of the polyline of the shape.
+ *
+ * @param painter QPainter object needed for drawing
+ * @param line Line segment where to draw the arrow
+ */
 void AssociationShape::drawLineEnd(QPainter* painter, const QLineF& line)
 {
    if (_link->isDirected())
@@ -63,12 +100,16 @@ void AssociationShape::drawLineEnd(QPainter* painter, const QLineF& line)
    }
 }
 
-void AssociationShape::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-{
-   Q_UNUSED(event);
-   // TODO: Implementieren
-}
+//---------------------------------------------------------------------------------------------------------------------
+// Builder implementation
+//---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Builds an AssociationShape object.
+ *
+ * This function is called by the shape factory each time a new AssociationShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* AssociationShapeBuilder::build(DiaShape* shape)
 {
    return new AssociationShape(nullptr, dynamic_cast<DiaEdge*>(shape));

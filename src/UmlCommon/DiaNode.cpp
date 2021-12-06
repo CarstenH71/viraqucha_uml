@@ -51,8 +51,7 @@ struct DiaNode::Data
    {}
 
    UmlElementPtr         element;
-   double                x, y;
-   double                w, h;
+   QSizeF                size;
    QVector<Compartment*> compartments;
 };
 /// @endcond
@@ -106,30 +105,16 @@ void DiaNode::setElement(UmlElement* value)
    }
 }
 
-/** Gets the position of the node in the two-dimensional plane. */
-QPointF DiaNode::pos() const
-{
-   return QPointF(data->x, data->y);
-}
-
-/** Sets the position of the node in the two-dimensional plane. */
-void DiaNode::setPos(const QPointF& value)
-{
-   data->x = value.x();
-   data->y = value.y();
-}
-
 /** Gets the size of the (rectangular, elliptic) node. */
 QSizeF DiaNode::size()
 {
-   return QSizeF(data->w, data->h);
+   return data->size;
 }
 
 /** Sets the size of the node. */
 void DiaNode::setSize(const QSizeF& value)
 {
-   data->w = value.width();
-   data->h = value.height();
+   data->size = value;
 }
 
 /** Gets the vector of compartments. */
@@ -179,11 +164,10 @@ void DiaNode::serialize(QJsonObject& json, bool read, int version)
    super::serialize(json, read, version);
    if (read)
    {
-      // Read position and size first:
-      data->x = json[KPropX].toDouble();
-      data->y = json[KPropY].toDouble();
-      data->w = json[KPropW].toDouble();
-      data->h = json[KPropH].toDouble();
+      QSizeF size;
+      size.setWidth(json[KPropW].toDouble());
+      size.setHeight(json[KPropH].toDouble());
+      data->size = size;
 
       // Read compartments only if element implements interface ICompartmentProvider:
       if (provider != nullptr)
@@ -207,11 +191,8 @@ void DiaNode::serialize(QJsonObject& json, bool read, int version)
    }
    else
    {
-      // Write position and size first:
-      json[KPropX] = data->x;
-      json[KPropY] = data->y;
-      json[KPropW] = data->w;
-      json[KPropH] = data->h;
+      json[KPropW] = data->size.width();
+      json[KPropH] = data->size.height();
 
       // Write compartments only if element implements interface ICompartmentProvider:
       if (provider != nullptr)

@@ -39,12 +39,7 @@ class UmlElement;
 
 class NodeShape : public Shape
 {
-   typedef Shape super;
-public: // Constants
-   const double KSFMargin = 5.0;           ///< Margin for the selection frame.
-   const double KSBSize   = 7.0;           ///< Size (width and height) of the sizing box.
-   const double KSBSize2  = KSBSize / 2.0; ///< Half the size of the sizing box.
-   
+   typedef Shape super;   
 public: // Constructors
    NodeShape(QGraphicsItem* parent, DiaNode* node);
    virtual ~NodeShape();

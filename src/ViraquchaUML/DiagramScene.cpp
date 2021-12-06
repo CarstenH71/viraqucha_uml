@@ -330,6 +330,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             link->setTarget(item2->element());
 
             auto* edge = _diagram->addEdge(link);
+            edge->setPos(event->scenePos());
             edge->setShape1(item1->diaShape());
             edge->setShape2(item2->diaShape());
 

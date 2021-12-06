@@ -31,16 +31,12 @@
 #include "DiaShape.h"
 #include "RoutingKind.h"
 
+#include <QPointF>
 #include <QVector>
 
 class DiaNode;
 class Label;
 class UmlLink;
-
-struct Point
-{
-   double x, y;
-};
 
 class UMLCOMMON_EXPORT DiaEdge : public DiaShape
 {
@@ -62,8 +58,8 @@ public: // Properties
    RoutingKind routing() const;
    void setRouting(RoutingKind value);
 
-   QVector<Point> points() const;
-   void setPoints(QVector<Point> value);
+   QVector<QPointF> points() const;
+   void setPoints(QVector<QPointF> value);
 
    QVector<Label*> labels() const;
 

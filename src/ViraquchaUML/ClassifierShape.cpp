@@ -50,7 +50,7 @@
  */
 
 //---------------------------------------------------------------------------------------------------------------------
-// Class implementation
+// Construction
 //---------------------------------------------------------------------------------------------------------------------
 
 ClassifierShape::ClassifierShape(QGraphicsItem* parent, DiaNode* node)
@@ -68,6 +68,10 @@ ClassifierShape::ClassifierShape(QGraphicsItem* parent, DiaNode* node)
 ClassifierShape::~ClassifierShape()
 {
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
 
 /** Gets the element associated with this shape. */
 UmlElement* ClassifierShape::element() const
@@ -144,6 +148,8 @@ void ClassifierShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 /**
  * Builds a ClassifierShape object.
+ *
+ * This function is called by the shape factory each time a new ClassifierShape object needs to be created.
  * @param shape DiaShape object needed for construction.
  */
 Shape* ClassifierShapeBuilder::build(DiaShape* shape)

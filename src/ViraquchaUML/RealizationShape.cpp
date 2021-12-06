@@ -29,9 +29,26 @@
 
 #include <QPainter>
 
+/**
+ * @class RealizationShape
+ * @brief Draws a Realization shape.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ * The RealizationShape class draws a UML Realization: a dashed line with a closed arrow at one end pointing to a node
+ * shape representing the base classifier to be realized.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the RealizationShape class.
+ *
+ * @param parent Parent graphics item
+ * @param edge Associated DiaEdge object
+ */
 RealizationShape::RealizationShape(QGraphicsItem* parent, DiaEdge* edge)
 : super(parent, edge)
 {
@@ -49,24 +66,43 @@ RealizationShape::~RealizationShape()
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Draws an arrow at the start (first line segment) of the polyline of the shape.
+ *
+ * This function is unused.
+ * @param painter This parameter is unused
+ * @param line This parameter is unused
+ */
 void RealizationShape::drawLineStart(QPainter* painter, const QLineF& line)
 {
-   // Unused
+   Q_UNUSED(painter);
+   Q_UNUSED(line);
 }
 
+/**
+ * Draws an arrow at the end (last line segment) of the polyline of the shape.
+ *
+ * This implementation draws a closed arrow at the last line segment of the polyline of the shape by calling function
+ * drawArrow() of the base class.
+ * @param painter QPainter object needed for drawing
+ * @param line The last line segment of the polygon of the edge shape
+ */
 void RealizationShape::drawLineEnd(QPainter* painter, const QLineF& line)
 {
    drawArrow(painter, line, true);
-}
-
-void RealizationShape::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-{
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Builds a RealizationShape object.
+ *
+ * This function is called by the shape factory each time a new RealizationShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* RealizationShapeBuilder::build(DiaShape* shape)
 {
    return new RealizationShape(nullptr, dynamic_cast<DiaEdge*>(shape));

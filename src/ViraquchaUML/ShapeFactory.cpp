@@ -47,17 +47,21 @@
 
 /**
  * @class ShapeFactory
- * @brief Creates Shape instances for diagrams.
+ * @brief Creates Shape objects for diagrams.
  * @since 1.0
  * @ingroup GUI
  *
- * The ShapeFactory class is a factory method for creating Shape instances for diagrams. It is implemented as a 
- * singleton.
+ * The ShapeFactory class is a factory method that creates Shape objects for the diagrams of ViraquchaUML. It is
+ * implemented as a singleton.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the ShapeFactory class.
+ */
 ShapeFactory::ShapeFactory()
 {
    subscribe(UmlClass::staticMetaObject.className(), new ClassifierShapeBuilder());
@@ -97,7 +101,11 @@ ShapeFactory& ShapeFactory::instance()
    return factory;
 }
 
-/** Builds a Shape instance for a given DiaEdge instance. */
+/**
+ * Builds a Shape object for a given DiaEdge object.
+ *
+ * @param edge DiaEdge object to be used
+ */
 Shape* ShapeFactory::buildShape(DiaEdge* edge)
 {
    Q_ASSERT(edge != nullptr);
@@ -110,7 +118,11 @@ Shape* ShapeFactory::buildShape(DiaEdge* edge)
    return nullptr;
 }
 
-/** Builds a Shape instance for a given DiaNode instance. */
+/**
+ * Builds a Shape object for a given DiaNode object.
+ *
+ * @param node DiaNode object to be used
+ */
 Shape* ShapeFactory::buildShape(DiaNode* node)
 {
    Q_ASSERT(node != nullptr);
@@ -123,7 +135,12 @@ Shape* ShapeFactory::buildShape(DiaNode* node)
    return nullptr;
 }
 
-/** Builds a whole scene from a UmlDiagram instance. */
+/**
+ * Builds a whole scene from a UmlDiagram instance.
+ *
+ * @param scene The DiagramScene object to be filled with shapes
+ * @param diagram The UmlDiagram object providing data for the shapes
+ */
 void ShapeFactory::buildScene(DiagramScene* scene, UmlDiagram* diagram)
 {
    Q_ASSERT(scene != nullptr);
@@ -152,6 +169,12 @@ void ShapeFactory::buildScene(DiagramScene* scene, UmlDiagram* diagram)
    }
 }
 
+/**
+ * Finds an IShapeBuilder object for a given class name.
+ *
+ * @param className Class name of the UmlElement object to find an IShapeBuilder object for
+ * @return The IShapeBuilder object or nullptr if nothing was found
+ */
 IShapeBuilder* ShapeFactory::find(const QString& className)
 {
    if (_builder.contains(className))
@@ -162,6 +185,14 @@ IShapeBuilder* ShapeFactory::find(const QString& className)
    return nullptr;
 }
 
+/**
+ * Subscribes an IShapeBuilder object with a class name.
+ *
+ * The IShapeBuilder objects are stored in a QMap using the class name as key. Therefore, the class name must be
+ * unique.
+ * @param className Class name used as key for the IShapeBuilder object to be subscribed
+ * @param builder IShapeBuilder object to be subscribed
+ */
 void ShapeFactory::subscribe(const QString& className, IShapeBuilder* builder)
 {
    Q_ASSERT(builder != nullptr);

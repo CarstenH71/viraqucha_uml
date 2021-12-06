@@ -45,6 +45,9 @@ public: // Constructors
 public: // Properties
    QList<DiaEdge*> edges() const;
 
+   QPointF pos() const;
+   void setPos(const QPointF& value);
+
    QString fontFamily() const;
    void setFontFamily(const QString& value);
 

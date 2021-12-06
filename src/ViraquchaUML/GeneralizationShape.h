@@ -37,14 +37,12 @@ class GeneralizationShape : public EdgeShape
 {
    typedef EdgeShape super;
 public: // Constructors
-    GeneralizationShape(QGraphicsItem* parent, DiaEdge* edge);
-    virtual ~GeneralizationShape();
+   GeneralizationShape(QGraphicsItem* parent, DiaEdge* edge);
+   virtual ~GeneralizationShape();
 
 protected: // Methods
    void drawLineStart(QPainter* painter, const QLineF& line) override;
    void drawLineEnd(QPainter* painter, const QLineF& line) override;
-
-   void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
 
 private: // Attributes
    UmlGeneralization* _link;

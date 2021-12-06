@@ -73,3 +73,4 @@ const QString KPropH             = "h";
 const QString KPropFont          = "font";
 const QString KPropFontSize      = "fontsize";
 const QString KPropPenWidth      = "penwidth";
+const QString KPropPoints        = "points";

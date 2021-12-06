@@ -45,9 +45,6 @@ public: // Properties
    UmlElement* element() const;
    void setElement(UmlElement* value);
 
-   QPointF pos() const;
-   void setPos(const QPointF& value);
-
    QSizeF size();
    void setSize(const QSizeF& value);
 

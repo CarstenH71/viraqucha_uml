@@ -29,9 +29,26 @@
 
 #include <QPainter>
 
+/**
+ * @class GeneralizationShape
+ * @brief Draws a Generalization shape.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ * The GeneralizationShape class draws a UML Generalization: a solid line with a closed arrow at one end pointing to a
+ * node shape representing the base classifier to be inherited from.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the GeneralizationShape class.
+ *
+ * @param parent Parent graphics item
+ * @param edge Associated DiaEdge object
+ */
 GeneralizationShape::GeneralizationShape(QGraphicsItem* parent, DiaEdge* edge)
 : super(parent, edge)
 {
@@ -49,24 +66,43 @@ GeneralizationShape::~GeneralizationShape()
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Draws an arrow at the start (first line segment) of the polyline of the shape.
+ *
+ * This function is unused.
+ * @param painter This parameter is unused
+ * @param line This parameter is unused
+ */
 void GeneralizationShape::drawLineStart(QPainter* painter, const QLineF& line)
 {
-   // Unused
+   Q_UNUSED(painter);
+   Q_UNUSED(line);
 }
 
+/**
+ * Draws an arrow at the end (last line segment) of the polyline of the shape.
+ *
+ * This implementation draws a closed arrow at the last line segment of the polyline of the shape by calling function
+ * drawArrow() of the base class.
+ * @param painter QPainter object needed for drawing
+ * @param line The last line segment of the polygon of the edge shape
+ */
 void GeneralizationShape::drawLineEnd(QPainter* painter, const QLineF& line)
 {
    drawArrow(painter, line, true);
-}
-
-void GeneralizationShape::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-{
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Builds a GeneralizationShape object.
+ *
+ * This function is called by the shape factory each time a new GeneralizationShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* GeneralizationShapeBuilder::build(DiaShape* shape)
 {
    return new GeneralizationShape(nullptr, dynamic_cast<DiaEdge*>(shape));

@@ -41,6 +41,11 @@ class UmlElement;
 class Shape : public QGraphicsItem, public IShapeObserver
 {
    typedef QGraphicsItem super;
+public: // Constants
+   const double KSFMargin = 5.0;           ///< Margin for the selection frame.
+   const double KSBSize   = 7.0;           ///< Size (width and height) of the sizing box.
+   const double KSBSize2  = KSBSize / 2.0; ///< Half the size of the sizing box.
+
 public: // Constructors
     Shape(QGraphicsItem* parent, DiaShape* shape);
     virtual ~Shape();

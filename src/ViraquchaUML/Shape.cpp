@@ -70,6 +70,7 @@ Shape::Shape(QGraphicsItem* parent, DiaShape* shape)
 
    setFlag(QGraphicsItem::ItemIsSelectable, true);
    setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+   setPos(_shape->pos());
 }
 
 Shape::~Shape()

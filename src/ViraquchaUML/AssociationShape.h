@@ -44,8 +44,6 @@ protected: // Methods
    void drawLineStart(QPainter* painter, const QLineF& line) override;
    void drawLineEnd(QPainter* painter, const QLineF& line) override;
 
-   void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
-
 private: // Attributes
    UmlAssociation* _link;
 };

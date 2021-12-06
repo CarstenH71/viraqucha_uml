@@ -75,11 +75,10 @@ public: // Methods
 protected:
    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 
-   void makeDirectLine(const QPointF& start, const QPointF& end);
-   void makeAutoRoute(const QPointF& start, const QPointF& end);
-   void makeCustomLine(const QPointF& start, const QPointF& end);
+   void makeDirectLine();
+   void makeAutoRoute();
+   void updateCustomLine();
 
-   void drawTextBoxes(QPainter* painter);
    void drawCenterBox(QPainter* painter, QFontMetricsF& metrics, QString text);
    void drawMuliplicityBox(QPainter* painter, QFontMetricsF& metrics, int item, QString text);
    void drawAttributeBox(QPainter* painter, QFontMetricsF& metrics, int item, QString text);
@@ -94,6 +93,11 @@ protected:
 private:
    void computeAngles(const QLineF& line, double& angle1, double& angle2);
    QPointF computeIntersection(QGraphicsItem* item, int* side = nullptr, bool margin = false);
+   int findNearestCorner(QGraphicsItem* item, QPointF pos);
+   QPointF findMidPoint() const;
+
+   void loadPoints();
+   void savePoints();
    
 private: // Attributes
    ///@cond

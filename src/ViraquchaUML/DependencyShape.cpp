@@ -57,12 +57,6 @@ void DependencyShape::drawLineEnd(QPainter* painter, const QLineF& line)
    drawArrow(painter, line, false);
 }
 
-void DependencyShape::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-{
-   Q_UNUSED(event);
-   // TODO: Implementieren
-}
-
 //---------------------------------------------------------------------------------------------------------------------
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------

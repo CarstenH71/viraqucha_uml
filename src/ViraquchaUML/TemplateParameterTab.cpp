@@ -126,12 +126,14 @@ public: // Methods
    /** Gets the row count. */
    int rowCount(const QModelIndex& parent = QModelIndex()) const override
    {
+      Q_UNUSED(parent);
       return _items.count();
    }
 
    /** Gets the column count. */
    int columnCount(const QModelIndex& parent = QModelIndex()) const override
    {
+      Q_UNUSED(parent);
       return 4;
    }
 
@@ -361,6 +363,7 @@ void TemplateParameterTab::moveItemsDown()
 /** Updates the buttons of the tab. */
 void TemplateParameterTab::updateButtons(const QModelIndex& current, const QModelIndex& previous)
 {
+   Q_UNUSED(previous);
    if (current.isValid())
    {
       ui.moveDownButton->setEnabled(current.row() < _model->rowCount() - 1);
