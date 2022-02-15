@@ -33,21 +33,24 @@
 
 /**
  * @class AttributeTab
- * @brief The AttributeTab class implements a tab for attribute properties.
+ * @brief The AttributeTab class implements a widget for editing properties of a single UML attribute.
  * @since 1.0
  * @ingroup GUI
+ * @see PropertiesDialog
  *
- * 
+ * The AttributeTab class provides controls for editing attribute specific properties like type, default value,
+ * aggregation kind and flags. It is added to the properties dialog, if the object to be edited is an UmlAttribute.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
 /**
- * Initializes a new instance of the AttributeTab class.
+ * Initializes a new object of the AttributeTab class.
  *
- * @param parent Parent widget, i.e. an instance of class PropertiesDialog.
- * @param attr UmlAttribute instance to be edited by this tab.
+ * @param parent Parent widget, i.e. an object of class PropertiesDialog.
+ * @param attr UmlAttribute object to be edited by this tab.
  */
 AttributeTab::AttributeTab(QWidget* parent, UmlAttribute* attr)
 : super(parent)
@@ -61,17 +64,22 @@ AttributeTab::~AttributeTab()
 {
 }
 
+/**
+ * Validates user input.
+ *
+ * This function is unused and always returns true.
+ * @returns Always true.
+ */
 bool AttributeTab::validateInput()
 {
    return true;
 }
 
 /**
- * Applies all changes made to the attribute to the ViraquchaUML database. 
+ * Applies changes to the properties of the UmlAttribute object.
  *
- * This function is called by class PropertiesDialog if the user clicks on the Apply button of the dialog. It stores
- * all data in the UmlAttribute instance, after validating it. 
- * @returns false, if validation fails; otherwise true.
+ * This function is called by class PropertiesDialog if the user clicks on the Apply button of the dialog and after
+ * successfully calling function validateInput(). It writes modified data to the UmlAttribute object's properties.
  */
 void AttributeTab::applyChanges()
 {
@@ -87,9 +95,7 @@ void AttributeTab::applyChanges()
 }
 
 /** 
- * Updates the controls of the tab with data from the instance to be edited. 
- *
- * This method is called once on creation of the class.
+ * Updates the controls of the tab with data from the object to be edited.
  */
 void AttributeTab::updateControls()
 {
@@ -99,7 +105,7 @@ void AttributeTab::updateControls()
    ui.defaultEdit->setText(_attr->defaultValue());
 
    QStringList list;
-   list << "None" << "Shared" << "Composite";
+   list << tr("None") << tr("Shared") << tr("Composite");
    ui.aggregationCombo->addItems(list);
    ui.aggregationCombo->setCurrentIndex((int)_attr->aggregation());
 

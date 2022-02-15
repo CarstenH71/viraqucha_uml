@@ -42,6 +42,14 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the ComboBoxDelegate class.
+ *
+ * @param parent Parent object.
+ * @param items String items to be shown in the Combo Box.
+ * @param mode Mode (text based or index based).
+ */
 ComboBoxDelegate::ComboBoxDelegate(QObject* parent, QStringList items, Mode mode)
 : super(parent)
 , _items(items)
@@ -53,47 +61,82 @@ ComboBoxDelegate::~ComboBoxDelegate()
 {
 }
 
-QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
+/**
+ * Creates a QComboBox object and fills it with the items passed in on construction.
+ *
+ * @param parent The parent widget.
+ * @param modelIndex This parameter is unused.
+ * @returns A QComboBox object.
+ */
+QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& modelIndex) const
 {
+   Q_UNUSED(modelIndex);
    auto box = new QComboBox(parent);
    box->insertItems(0, _items);
+   box->setFocusPolicy(Qt::StrongFocus);
    box->setEditable(_mode == TextBased);
    return box;
 }
 
-void ComboBoxDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+/**
+ * Sets editor data.
+ *
+ * @param editor
+ * @param modelIndex
+ */
+void ComboBoxDelegate::setEditorData(QWidget* editor, const QModelIndex& modelIndex) const
 {
    auto box = static_cast<QComboBox*>(editor);
    switch (_mode)
    {
    case IndexBased:
-      box->setCurrentIndex(index.model()->data(index, Qt::EditRole).toInt());
+      box->setCurrentIndex(modelIndex.model()->data(modelIndex, Qt::EditRole).toInt());
       break;
    case TextBased:
-      box->setCurrentText(index.model()->data(index, Qt::EditRole).toString());
+   {
+      auto text = modelIndex.model()->data(modelIndex, Qt::EditRole).toString();
+      int index = _items.indexOf(text);
+      if (index != -1) box->setCurrentIndex(index);
+      box->setCurrentText(text);
+      break;
+   }
+   default:
+      break;
+   }
+}
+
+/**
+ * Sets model data.
+ *
+ * @param editor
+ * @param model
+ * @param modelIndex
+ */
+void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& modelIndex) const
+{
+   auto box = static_cast<QComboBox*>(editor);
+   switch (_mode)
+   {
+   case IndexBased:
+      model->setData(modelIndex, box->currentIndex(), Qt::EditRole);
+      break;
+   case TextBased:
+      model->setData(modelIndex, box->currentText(), Qt::EditRole);
       break;
    default:
       break;
    }
 }
 
-void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+/**
+ * Updates the editor's geometry.
+ *
+ * @param editor
+ * @param option
+ * @param modelIndex This parameter is unused.
+ */
+void ComboBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& modelIndex) const
 {
-   auto box = static_cast<QComboBox*>(editor);
-   switch (_mode)
-   {
-   case IndexBased:
-      model->setData(index, box->currentIndex(), Qt::EditRole);
-      break;
-   case TextBased:
-      model->setData(index, box->currentText(), Qt::EditRole);
-      break;
-   default:
-      break;
-   }
-}
-
-void ComboBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
+   Q_UNUSED(modelIndex);
    editor->setGeometry(option.rect);
 }

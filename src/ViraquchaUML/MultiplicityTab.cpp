@@ -25,6 +25,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "MultiplicityTab.h"
 #include "Globals.h"
+#include "StringProvider.h"
 
 #include "IMultiplicityElement.h"
 #include "MultiplicityUtils.h"
@@ -82,7 +83,7 @@ MultiplicityTab::~MultiplicityTab()
 bool MultiplicityTab::validateInput()
 {
    auto  text = ui.rangeCombo->currentText();
-   if (MultiplicityUtils::instance().tryParse(text, _lower, _upper))
+   if (MultiplicityUtils::tryParse(text, _lower, _upper))
    {
       if (_lower > _upper)
       {
@@ -115,8 +116,8 @@ void MultiplicityTab::applyChanges()
  */
 void MultiplicityTab::updateControls()
 {
-   ui.rangeCombo->addItems(MultiplicityUtils::instance().list());
-   ui.rangeCombo->setEditText(MultiplicityUtils::instance().toString(_lower, _upper));
+   ui.rangeCombo->addItems(StringProvider::multiplicities());
+   ui.rangeCombo->setEditText(MultiplicityUtils::toString(_lower, _upper));
    ui.isOrderedBox->setChecked(_elem->isOrdered());
    ui.isUniqueBox->setChecked(_elem->isUnique());
 }

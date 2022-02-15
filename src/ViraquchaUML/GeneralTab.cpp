@@ -8,15 +8,17 @@
 //
 // *******************************************************************************************************************
 // *                                                                                                                 *
-// * This library is free software; you can redistribute it and/or modify it under the terms of the GNU General      *
+// * This file is part of ViraquchaUML.                                                                              *
+// *                                                                                                                 *
+// * ViraquchaUML is free software; you can redistribute it and/or modify it under the terms of the GNU General      *
 // * Public License as published by the Free Software Foundation; either version 3.0 of the License, or (at your     *
 // * option) any later version.                                                                                      *
 // *                                                                                                                 *
-// * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the      *
+// * ViraquchaUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the      *
 // * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License     *
 // * for more details.                                                                                               *
 // *                                                                                                                 *
-// * You should have received a copy of the GNU General Public License along with this library; if not, see          *
+// * You should have received a copy of the GNU General Public License along with ViraquchaUML; if not, see          *
 // * http://www.gnu.org/licenses/gpl                                                                                 *
 // *                                                                                                                 *
 // *******************************************************************************************************************
@@ -33,6 +35,28 @@
 
 #include <QStringList>
 
+/**
+ * @class GeneralTab
+ * @brief The GeneralTab class implements a widget for editing general properties of a single UML element.
+ * @since 1.0
+ * @ingroup GUI
+ * @see PropertiesDialog
+ *
+ * The GeneralTab class provides controls for editing the name, comment and visibility of an UmlElement object, if it
+ * implements INamedElement. If the UmlElement object implements IStereotypedElement as well, it also provides a
+ * control for editing the stereotype of the object. It is added to the properties dialog for objects of derivations
+ * of class UmlElement implementing interfaces INamedElement and IStereotypedElement.
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the GeneralTab class.
+ * @param parent Parent widget.
+ * @param elem UmlElement object to be edited.
+ */
 GeneralTab::GeneralTab(QWidget* parent, UmlElement* elem)
 : super(parent)
 , _element(elem)
@@ -56,11 +80,18 @@ GeneralTab::~GeneralTab()
 {
 }
 
+/**
+ * Validates user input.
+ * @returns True, if input is valid; false otherwise.
+ */
 bool GeneralTab::validateInput()
 {
    return true;
 }
 
+/**
+ * Applies changes to the properties of the UmlElement object.
+ */
 void GeneralTab::applyChanges()
 {
    _named->setName(ui.nameEdit->text());
@@ -72,6 +103,9 @@ void GeneralTab::applyChanges()
    }
 }
 
+/**
+ * Updates controls of the widget by reading properties from the UmlElement object.
+ */
 void GeneralTab::updateControls()
 {
    ui.nameEdit->setText(_named->name());

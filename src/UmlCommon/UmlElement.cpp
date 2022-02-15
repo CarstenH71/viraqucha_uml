@@ -215,10 +215,9 @@ bool UmlElement::isHidden() const
 QList<UmlLink*> UmlElement::links() const
 {
    QList<UmlLink*> list;
-   QListIterator<UmlLinkPtr> iter(data->links);
-   while (iter.hasNext())
+   for (auto link : data->links)
    {
-      list.append(iter.next());
+      list.append(link.pointee());
    }
 
    return list;
@@ -307,25 +306,46 @@ void UmlElement::dispose()
 }
 
 /**
- * Attaches a UmlLink object to the UmlElement object.
+ * Attaches an UmlLink object to the UmlElement object.
+ *
+ * @param link UmlLink object to be attached.
  */
 void UmlElement::linkto(UmlLink* link)
 {
-   if (link != nullptr)
+   if (link != nullptr && !isLinkedTo(link))
    {
       data->links.append(UmlLinkPtr(link));
    }
 }
 
 /**
- * Detaches a UmlLink object from the UmlElement object.
+ * Detaches an UmlLink object from the UmlElement object.
+ *
+ * @param link UmlLink object to be detached.
  */
 void UmlElement::unlink(UmlLink* link)
 {
-   if (link != nullptr)
+   if (link != nullptr && isLinkedTo(link))
    {
       data->links.removeOne(UmlLinkPtr(link));
    }
+}
+
+/**
+ * Checks whether an UmlLink object is already attached to the UmlElement object.
+ *
+ * @param link UmlLink object to be checked. Must not be nullptr.
+ * @returns True, if the UmlLink object is already attached; false otherwise.
+ */
+bool UmlElement::isLinkedTo(UmlLink* link)
+{
+   Q_ASSERT(link != nullptr);
+   for (auto current : data->links)
+   {
+      if (current.pointee() == link) return true;
+   }
+
+   return false;
 }
 
 /**
@@ -390,7 +410,10 @@ void UmlElement::dispose(bool disposing)
       send(EventType::ObjectReleased);
 
       // Do a lazy remove of the element file:
-      project()->removeFile(elementFile());
+      if (project() != nullptr)
+      {
+         project()->removeFile(elementFile());
+      }
    }
 
    data->links.clear();

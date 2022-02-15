@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// InsertCommand.h
+// MoveCommand.h
 //
 // Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class InsertCommand.
+// Description  : Declaration of class MoveCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -33,31 +33,45 @@
 #include <QModelIndex>
 #include <QPersistentModelIndex>
 
-class InsertCommand : public UndoCommand
+class MoveCommand : public UndoCommand
 {
    typedef UndoCommand super;
 public:
-   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
+   MoveCommand(UmlElement* element, ProjectTreeModel& model, bool down)
    : super(element, model.getProject())
    , _model(model)
-   , _parent(parent)
+   , _down(down)
    {}
-   
-   virtual ~InsertCommand()
+
+   virtual ~MoveCommand()
    {}
-   
+
 public:
    void redo() override
    {
-      _model.insertRow(_parent, element());
+      if (_down)
+      {
+        _model.moveRow(_model.indexOf(element()), true);
+      }
+      else
+      {
+         _model.moveRow(_model.indexOf(element()), false);
+      }
    }
 
    void undo() override
    {
-      _model.removeRow(_parent, element());
+      if (_down)
+      {
+        _model.moveRow(_model.indexOf(element()), false);
+      }
+      else
+      {
+         _model.moveRow(_model.indexOf(element()), true);
+      }
    }
-   
+
 private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
+   ProjectTreeModel& _model;
+   bool              _down;
 };

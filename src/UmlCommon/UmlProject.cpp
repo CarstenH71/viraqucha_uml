@@ -769,7 +769,7 @@ bool UmlProject::save(QString filename)
       obj[KPropElements] = array;
 
       QJsonDocument doc(obj);
-      prjfile.write(doc.toJson());
+      prjfile.write(doc.toJson(QJsonDocument::Compact));
       prjfile.commit();
       qDebug() << "Done.";
    }
@@ -794,7 +794,7 @@ bool UmlProject::save(QString filename)
          iter.value()->serialize(obj, false, KFileVersion);
 
          QJsonDocument doc(obj);
-         objfile.write(doc.toJson());
+         objfile.write(doc.toJson(QJsonDocument::Compact));
          objfile.commit();
 
          // Compute percentage and issue signal:

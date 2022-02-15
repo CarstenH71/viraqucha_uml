@@ -89,6 +89,8 @@ protected:
 
    virtual void drawLineStart(QPainter* painter, const QLineF& line) = 0;
    virtual void drawLineEnd(QPainter* painter, const QLineF& line) = 0;
+
+   void aboutToDestroy() override;
    
 private:
    void computeAngles(const QLineF& line, double& angle1, double& angle2);

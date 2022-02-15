@@ -30,6 +30,7 @@
 #include "Globals.h"
 #include "MessageBox.h"
 #include "MultiplicityUtils.h"
+#include "StringProvider.h"
 
 #include "UmlOperation.h"
 #include "UmlParameter.h"
@@ -47,20 +48,24 @@
  */
 
 //---------------------------------------------------------------------------------------------------------------------
-// OPTableItem implementation
+// PATableItem implementation
 //---------------------------------------------------------------------------------------------------------------------
-class OPTableItem
+class PATableItem
 {
 public:
-   OPTableItem()
+   PATableItem()
    : _param(nullptr)
-   , _direction(ParameterDirectionKind::In)
-   , _effect(ParameterEffectKind::Undefined)
-   , _isException(false)
-   , _isStream(false)
-   {}
+   {
+      _name         = "param";
+      _direction    = ParameterDirectionKind::In;
+      _effect       = ParameterEffectKind::Undefined;
+      _isException  = false;
+      _isStream     = false;
+      _multiplicity = StringProvider::defaultMultiplicity();
+      _type         = StringProvider::defaultPrimitiveType();
+   }
 
-   OPTableItem(UmlParameter* param)
+   PATableItem(UmlParameter* param)
    : _param(param)
    {
       _name         = _param->name();
@@ -70,7 +75,7 @@ public:
       _effect       = _param->effect();
       _isException  = _param->isException();
       _isStream     = _param->isStream();
-      _multiplicity = MultiplicityUtils::instance().toString(_param->lower(), _param->upper());
+      _multiplicity = MultiplicityUtils::toString(_param->lower(), _param->upper());
       _type         = _param->type();
    }
 
@@ -118,7 +123,7 @@ public: // Methods
       _param->setEffect(_effect);
       _param->isException(_isException);
       _param->isStream(_isStream);
-      if (MultiplicityUtils::instance().tryParse(_multiplicity, lower, upper))
+      if (MultiplicityUtils::tryParse(_multiplicity, lower, upper))
       {
          _param->setLower(lower);
          _param->setUpper(upper);
@@ -141,9 +146,9 @@ private:
 };
 
 //---------------------------------------------------------------------------------------------------------------------
-// OPTableModel implementation
+// PATableModel implementation
 //---------------------------------------------------------------------------------------------------------------------
-class OPTableModel : public QAbstractTableModel
+class PATableModel : public QAbstractTableModel
 {
 public:
    static const int KDirColumn    = 0;
@@ -154,40 +159,34 @@ public:
    static const int KEffectColumn = 5;
 
 public: // Constructors
-   OPTableModel(UmlOperation* elem)
+   PATableModel(UmlOperation* elem)
    : _elem(elem)
    {
       Q_ASSERT(_elem != nullptr);
-
-      _directions << "" << tr("in") << tr("out") << tr("inout") << tr("return");
-      _effects << "" << tr("create") << tr("delete") << tr("read") << tr("update");
-
       QListIterator<UmlParameter*> iter(_elem->parameter());
       while (iter.hasNext())
       {
-         _items.append(QSharedPointer<OPTableItem>(new OPTableItem(iter.next())));
+         _items.append(QSharedPointer<PATableItem>(new PATableItem(iter.next())));
       }
    }
 
-   virtual ~OPTableModel()
+   virtual ~PATableModel()
    {
       _items.clear();
    }
-
-public: // Properties
-   QStringList directions() const { return _directions; }
-   QStringList effects() const { return _effects; }
 
 public: // Methods
    /** Gets the row count. */
    int rowCount(const QModelIndex& parent = QModelIndex()) const override
    {
+      Q_UNUSED(parent);
       return _items.count();
    }
 
    /** Gets the column count. */
    int columnCount(const QModelIndex& parent = QModelIndex()) const override
    {
+      Q_UNUSED(parent);
       return 6;
    }
 
@@ -201,12 +200,12 @@ public: // Methods
          {
             switch (index.column())
             {
-            case KDirColumn:    return _directions[item->direction()];
+            case KDirColumn:    return StringProvider::directions()[item->direction()];
             case KNameColumn:   return item->name();
             case KTypeColumn:   return item->type();
             case KMultiColumn:  return item->multiplicity();
             case KDefColumn:    return item->defaultValue();
-            case KEffectColumn: return _effects[item->effect()];
+            case KEffectColumn: return StringProvider::effects()[item->effect()];
             default: break;
             }
          }
@@ -301,7 +300,7 @@ public: // Methods
       beginInsertRows(parent, row, row + count - 1);
       while (count > 0)
       {
-         _items.insert(row, QSharedPointer<OPTableItem>(new OPTableItem()));
+         _items.insert(row, QSharedPointer<PATableItem>(new PATableItem()));
          --count;
       }
       endInsertRows();
@@ -340,15 +339,13 @@ public: // Methods
    /** Flushes the model to the ViraquchaUML data model. */
    void flush()
    {
-      QListIterator<QSharedPointer<OPTableItem>> iter(_items);
+      QListIterator<QSharedPointer<PATableItem>> iter(_items);
       while (iter.hasNext()) iter.next()->flush(*_elem);
    }
 
 private:
    UmlOperation*                      _elem;
-   QList<QSharedPointer<OPTableItem>> _items;
-   QStringList                        _directions;
-   QStringList                        _effects;
+   QList<QSharedPointer<PATableItem>> _items;
 };
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -357,29 +354,28 @@ private:
 ParameterTab::ParameterTab(QWidget* parent, UmlOperation* elem)
 : super(parent)
 , _elem(elem)
-, _model(new OPTableModel(elem))
+, _model(new PATableModel(elem))
 {
    Q_ASSERT(_elem != nullptr);
 
-   _directionsDelegate = new ComboBoxDelegate(this, _model->directions(), ComboBoxDelegate::IndexBased);
-   _effectsDelegate = new ComboBoxDelegate(this, _model->effects(), ComboBoxDelegate::IndexBased);
-   _multiDelegate = new ComboBoxDelegate(this, MultiplicityUtils::instance().list(), ComboBoxDelegate::TextBased);
-   _typesDelegate = new ComboBoxDelegate(this, _elem->project()->primitiveTypes(), ComboBoxDelegate::TextBased);
+   _directionsDelegate = new ComboBoxDelegate(this, StringProvider::directions(), ComboBoxDelegate::IndexBased);
+   _effectsDelegate = new ComboBoxDelegate(this, StringProvider::effects(), ComboBoxDelegate::IndexBased);
+   _multiDelegate = new ComboBoxDelegate(this, StringProvider::multiplicities(), ComboBoxDelegate::TextBased);
+   _typesDelegate = new ComboBoxDelegate(this, StringProvider::primitiveTypes(), ComboBoxDelegate::TextBased);
 
    ui.setupUi(this);
-   ui.parameterList->setModel(_model);
-   ui.parameterList->setItemDelegateForColumn(OPTableModel::KDirColumn, _directionsDelegate);
-   ui.parameterList->setItemDelegateForColumn(OPTableModel::KEffectColumn, _effectsDelegate);
-   ui.parameterList->setItemDelegateForColumn(OPTableModel::KMultiColumn, _multiDelegate);
-   ui.parameterList->setItemDelegateForColumn(OPTableModel::KTypeColumn, _typesDelegate);
-   ui.parameterList->resizeRowsToContents();
-   ui.parameterList->resizeColumnsToContents();
+   ui.tableView->setModel(_model);
+   ui.tableView->setItemDelegateForColumn(PATableModel::KDirColumn, _directionsDelegate);
+   ui.tableView->setItemDelegateForColumn(PATableModel::KEffectColumn, _effectsDelegate);
+   ui.tableView->setItemDelegateForColumn(PATableModel::KMultiColumn, _multiDelegate);
+   ui.tableView->setItemDelegateForColumn(PATableModel::KTypeColumn, _typesDelegate);
+   ui.tableView->horizontalHeader()->resizeSection(0, 80);
 
    connect(ui.addItem, &QPushButton::clicked, this, &ParameterTab::addItem);
    connect(ui.removeItems, &QPushButton::clicked, this, &ParameterTab::removeItems);
    connect(ui.moveItemsUp, &QPushButton::clicked, this, &ParameterTab::moveItemsUp);
    connect(ui.moveItemsDown, &QPushButton::clicked, this, &ParameterTab::moveItemsDown);
-   connect(ui.parameterList->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &ParameterTab::updateButtons);
+   connect(ui.tableView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &ParameterTab::updateButtons);
 }
 
 ParameterTab::~ParameterTab()
@@ -406,9 +402,7 @@ void ParameterTab::applyChanges()
 void ParameterTab::addItem()
 {
    _model->insertRow(_model->rowCount());
-   ui.parameterList->resizeRowsToContents();
-   ui.parameterList->selectRow(_model->rowCount() - 1);
-   ui.parameterList->selectColumn(0);
+   ui.tableView->selectRow(_model->rowCount() - 1);
 }
 
 void ParameterTab::removeItems()
@@ -420,37 +414,38 @@ void ParameterTab::removeItems()
       QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
    if (result == QMessageBox::Ok)
    {
-      while (ui.parameterList->selectionModel()->selectedIndexes().size() > 0)
+      while (ui.tableView->selectionModel()->selectedIndexes().size() > 0)
       {
-         _model->removeRow(ui.parameterList->selectionModel()->selectedIndexes().first().row());
+         _model->removeRow(ui.tableView->selectionModel()->selectedIndexes().first().row());
       }
    }
 }
 
 void ParameterTab::moveItemsUp()
 {
-   auto index = ui.parameterList->currentIndex();
+   auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() > 0)
    {
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() - 1);
    }
 
-   updateButtons(ui.parameterList->currentIndex(), QModelIndex());
+   updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
 void ParameterTab::moveItemsDown()
 {
-   auto index = ui.parameterList->currentIndex();
+   auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() < _model->rowCount() - 1)
    {
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() + 1);
    }
 
-   updateButtons(ui.parameterList->currentIndex(), QModelIndex());
+   updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
 void ParameterTab::updateButtons(const QModelIndex& current, const QModelIndex& previous)
 {
+   Q_UNUSED(previous);
    if (current.isValid())
    {
       ui.moveItemsDown->setEnabled(current.row() < _model->rowCount() - 1);

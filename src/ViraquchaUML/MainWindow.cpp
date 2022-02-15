@@ -612,7 +612,7 @@ void MainWindow::editProperties()
    auto index = ui.projTreeView->currentIndex();
    if (index.isValid())
    {
-      QScopedPointer<PropertiesDialog> dialog(new PropertiesDialog(this, treeModel()->getElement(index)));
+      QScopedPointer<PropertiesDialog> dialog(new PropertiesDialog(this, *treeModel(), treeModel()->getElement(index)));
       if (dialog->exec() == QDialog::Accepted)
       {
          _project->isModified(true);

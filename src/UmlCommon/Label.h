@@ -43,6 +43,8 @@ public: // Properties
    void setPosition(QPointF value);
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

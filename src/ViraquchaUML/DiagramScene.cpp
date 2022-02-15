@@ -333,6 +333,7 @@ void DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             edge->setPos(event->scenePos());
             edge->setShape1(item1->diaShape());
             edge->setShape2(item2->diaShape());
+            edge->setRouting(item1 == item2 ? RoutingKind::Auto : RoutingKind::Direct);
 
             // Create new shape for the edge:
             auto* item3 = ShapeFactory::instance().buildShape(edge);

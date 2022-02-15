@@ -33,25 +33,8 @@
 
 class MultiplicityUtils final
 {
-private: // Constructors
-   MultiplicityUtils();
-
-public:
-   /// @cond
-   MultiplicityUtils(MultiplicityUtils const&) = delete;
-   void operator=(MultiplicityUtils const&) = delete;
-   /// @endcond
-
-public: // Properties
-   static MultiplicityUtils& instance();
-   QStringList list() const;
-
 public: // Methods
-   bool tryParse(QString value, unsigned int& lower, unsigned int& upper);
-   QString toString(unsigned int lower, unsigned int upper);
-
-private: // Attributes
-   QRegularExpression _expr;
-   QStringList        _list;
+   static bool tryParse(QString value, unsigned int& lower, unsigned int& upper);
+   static QString toString(unsigned int lower, unsigned int upper);
 };
 

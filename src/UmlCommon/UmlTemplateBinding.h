@@ -36,8 +36,10 @@ class UmlParameterSubstitution;
 
 class UMLCOMMON_EXPORT UmlTemplateBinding : public UmlLink
 {
+   ///@cond
    Q_GADGET
    typedef UmlLink super;
+   ///@endcond
 public: // Constructors
    UmlTemplateBinding();
    UmlTemplateBinding(QUuid id);
@@ -60,6 +62,8 @@ protected:
    void dispose(bool disposing) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

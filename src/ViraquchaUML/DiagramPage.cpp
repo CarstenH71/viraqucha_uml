@@ -27,6 +27,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "DiagramPage.h"
 #include "DiagramScene.h"
+#include "ProjectTreeModel.h"
 #include "PropertiesDialog.h"
 #include "Shape.h"
 #include "ToolBoxManager.h"
@@ -180,11 +181,14 @@ void DiagramPage::editElementProperties()
    auto items = _scene->selectedItems();
    if (!items.isEmpty())
    {
+      auto* model = dynamic_cast<ProjectTreeModel*>(const_cast<QAbstractItemModel*>(_index.model()));
+      Q_ASSERT(model != nullptr);
+
       // Note: QFrame has an enum named Shape, therefore use global namespace:
       auto* shape = dynamic_cast<::Shape*>(items[0]);
       Q_ASSERT(shape != nullptr);
       
-      PropertiesDialog dialog(this, shape->element());
+      PropertiesDialog dialog(this, *model, shape->element());
       dialog.exec();
    }
 }

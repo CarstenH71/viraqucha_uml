@@ -28,17 +28,18 @@
 #pragma once
 
 #include "ProjectTreeModel.h"
-#include "UndoCommand"
+#include "UndoCommand.h"
 
 #include <QModelIndex>
 #include <QPersistentModelIndex>
 
-class RemoveCommand : public UndoCommand<UmlElement>
+class RemoveCommand : public UndoCommand
 {
-   typedef UndoCommand<UmlElement> super;
+   typedef UndoCommand super;
 public:
-   RemoveCommand(ProjectTreeModel* model, const QModelIndex& parent, UmlElement* element)
-   : super(element)
+   RemoveCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
+   : super(element, model.getProject())
+   , _model(model)
    , _parent(parent)
    {}
    
@@ -46,10 +47,21 @@ public:
    {}
    
 public:
-   void redo() { _model->removeRow(_parent, element()); } override;
-   void undo() { _model->insertRow(_parent, element()); } override;
+   void redo() override
+   {
+      saveProperties(_properties);
+      _model.removeRow(_parent, element());
+   }
+
+   void undo() override
+   {
+      restoreElement();
+      loadProperties(_properties);
+      _model.insertRow(_parent, element());
+   }
    
 private:
-   ProjectTreeModel*     _model;
+   ProjectTreeModel&     _model;
    QPersistentModelIndex _parent;
+   QByteArray            _properties;
 };

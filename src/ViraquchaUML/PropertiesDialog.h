@@ -35,13 +35,14 @@
 #include <QVector>
 
 class IPropertiesTab;
+class ProjectTreeModel;
 
 class PropertiesDialog : public QDialog
 {
    Q_OBJECT
    typedef QDialog super;
 public: // Constructors
-   PropertiesDialog(QWidget* parent, UmlElement* elem);
+   PropertiesDialog(QWidget* parent, ProjectTreeModel& model, UmlElement* elem);
    virtual ~PropertiesDialog();
 
 public slots:
@@ -64,4 +65,5 @@ private: // Attributes
    Ui::PropertiesDialog ui;
    QVector<IPropertiesTab*> _tabs;
    UmlElement*              _elem;
+   ProjectTreeModel&        _model;
 };

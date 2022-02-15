@@ -45,8 +45,10 @@ class UMLCOMMON_EXPORT UmlPackage : public UmlCompositeElement,
    public INamedElement,
    public ITemplatableElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlCompositeElement super;
+   ///@endcond
 public: // Constructors
    UmlPackage();
    UmlPackage(QUuid id);
@@ -55,21 +57,21 @@ public: // Constructors
 public: // Properties
    QString className() const override;
 
-   virtual QString name() const;
-   virtual void setName(QString value);
+   QString name() const override;
+   void setName(QString value) override;
 
-   virtual QString comment() const;
-   virtual void setComment(QString value);
+   QString comment() const override;
+   void setComment(QString value) override;
 
-   virtual VisibilityKind visibility() const;
-   virtual void setVisibility(VisibilityKind value);
+   VisibilityKind visibility() const override;
+   void setVisibility(VisibilityKind value) override;
 
    QString uri() const;
    void setUri(QString value);
 
-   virtual QList<UmlTemplateBinding*> templateBindings() const;
-   virtual QList<UmlTemplateParameter*> templateParameter() const;
-   virtual bool isTemplated() const;
+   QList<UmlTemplateBinding*> templateBindings() const override;
+   QList<UmlTemplateParameter*> templateParameter() const override;
+   bool isTemplated() const override;
 
 public: // Methods
    void append(UmlTemplateParameter* par) override;
@@ -87,6 +89,8 @@ protected:
    void dispose(bool disposing) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

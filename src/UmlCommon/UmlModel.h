@@ -36,8 +36,10 @@
 
 class UMLCOMMON_EXPORT UmlModel : public UmlPackage
 {
+   ///@cond
    Q_GADGET
    typedef UmlPackage super;
+   ///@endcond
 public: // Constructors
    UmlModel();
    UmlModel(QUuid id);
@@ -53,6 +55,8 @@ public: // Methods
    virtual void serialize(QJsonObject& obj, bool read, int version);
 
 private:
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

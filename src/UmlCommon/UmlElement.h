@@ -49,7 +49,9 @@ class UmlProject;
 
 class UMLCOMMON_EXPORT UmlElement : public ISerializable
 {
+   ///@cond
    friend UmlProject;
+   ///@endcond
 public: // Constructors
    UmlElement();
    UmlElement(QUuid id);
@@ -82,6 +84,7 @@ public: // Methods:
 
    void linkto(UmlLink* link);
    void unlink(UmlLink* link);
+   bool isLinkedTo(UmlLink* link);
 
    void serialize(QJsonObject& json, bool read, int version) override;
 
@@ -96,8 +99,10 @@ protected:
    void send(EventType type);
 
 private: // Attributes
-    struct Data;
-    Data* data;
+   ///@cond
+   struct Data;
+   Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlElement> UmlElementPtr;

@@ -57,6 +57,8 @@ public: // Properties
    void setAlignment(AlignmentFlag value);
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

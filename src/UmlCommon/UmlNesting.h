@@ -33,8 +33,10 @@
 
 class UMLCOMMON_EXPORT UmlNesting : public UmlLink
 {
+   ///@cond
    Q_GADGET
    typedef UmlLink super;
+   ///@endcond
 public:
    UmlNesting();
    UmlNesting(QUuid id);

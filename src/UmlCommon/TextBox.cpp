@@ -70,63 +70,61 @@ TextBox::~TextBox()
    delete data;
 }
 
-/**
- * @brief Gets the text in the text box.
- */
+/** Gets the text in the text box. */
 QString TextBox::text() const
 {
    return data->text;
 }
 
-/**
- * @brief Sets the text in the text box.
- */
+/** Sets the text in the text box. */
 void TextBox::setText(QString value)
 {
    data->text = value;
 }
 
+/** Gets a value indicating whether the text is to be rendered bold. */
 bool TextBox::isBold() const
 {
    return data->bold;
 }
 
+/** Sets a value indicating whether the text is to be rendered bold. */
 void TextBox::isBold(bool value)
 {
    data->bold = value;
 }
 
+/** Gets a value indicating whether the text is to be rendered italic. */
 bool TextBox::isItalic() const
 {
    return data->italic;
 }
 
+/** Sets a value indicating whether the text is to be rendered italic. */
 void TextBox::isItalic(bool value)
 {
    data->italic = value;
 }
 
+/** Gets a value indicating whether the text is to be rendered underlined. */
 bool TextBox::isUnderline() const
 {
    return data->underline;
 }
 
+/** Sets a value indicating whether the text is to be rendered underlined. */
 void TextBox::isUnderline(bool value)
 {
    data->underline = value;
 }
 
-/**
- * @brief Gets the alignment of the text in the text box.
- */
+/** Gets the alignment of text in the text box. */
 AlignmentFlag TextBox::alignment() const
 {
    return data->alignment;
 }
 
-/**
- * @brief Sets the alignment of the text in the text box.
- */
+/** Sets the alignment of the text in the text box. */
 void TextBox::setAlignment(AlignmentFlag value)
 {
    data->alignment = value;

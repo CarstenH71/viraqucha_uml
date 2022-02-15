@@ -62,8 +62,10 @@ public: // Methods
    QString toString() const;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlTemplateParameter> UmlTemplateParameterPtr;

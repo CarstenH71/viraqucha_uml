@@ -52,6 +52,8 @@ public: // Methods
    Qt::ItemFlags flags(const QModelIndex& index) const override;
    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+   QModelIndex indexOf(UmlElement* element);
+   QModelIndex parentOf(UmlElement* element);
    bool insertRow(int position, const QModelIndex& parent, UmlElement* element);
    bool insertRow(const QModelIndex& parent, UmlElement* element);
    bool insertRow(const QModelIndex& parent, QString className, QString baseName);
@@ -62,6 +64,7 @@ public: // Methods
    UmlCompositeElement* getComposite(const QModelIndex& index) const;
    UmlElement* getElement(const QModelIndex& index) const;
    UmlPackage* getPackage(const QModelIndex& index) const;
+   UmlProject* getProject() const { return _root->project(); }
 
 private:
    void removeRecursive(UmlElement* elem);

@@ -49,6 +49,11 @@
 /// @cond
 struct UmlAssociation::Data
 {
+   Data()
+   : visibility(VisibilityKind::Public)
+   , isDerived(false)
+   {}
+
    QString        name;
    QString        comment;
    VisibilityKind visibility;

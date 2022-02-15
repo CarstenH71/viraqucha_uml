@@ -33,8 +33,10 @@
 
 class UMLCOMMON_EXPORT UmlRoot : public UmlCompositeElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlCompositeElement super;
+   ///@endcond
 public: // Constructors
    UmlRoot();
    UmlRoot(QUuid id);

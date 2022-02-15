@@ -52,11 +52,13 @@ add_executable(${EXE_NAME}
   ShapeFactory.cpp
   StartPage.cpp
   StartPage.ui
+  StringProvider.cpp
   TemplateBox.cpp
   TemplateParameterTab.cpp
   TemplateParameterTab.ui
   ToolBoxManager.cpp
   TreeIconProvider.cpp
+  UndoCommand.cpp
   ViraquchaUML.qrc
 )
 

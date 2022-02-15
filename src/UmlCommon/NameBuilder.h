@@ -43,7 +43,9 @@ public: // Methods
    QString buildFor(INamedElement* elem, QString base);
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 

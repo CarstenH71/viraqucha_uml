@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// InsertCommand.h
+// StringProvider.cpp
 //
-// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class InsertCommand.
+// Description  : Implementation of class StringProvider.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,39 +25,59 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
+#include "StringProvider.h"
 
-#include "ProjectTreeModel.h"
-#include "UndoCommand.h"
-
-#include <QModelIndex>
-#include <QPersistentModelIndex>
-
-class InsertCommand : public UndoCommand
+StringProvider::StringProvider()
 {
-   typedef UndoCommand super;
-public:
-   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
-   : super(element, model.getProject())
-   , _model(model)
-   , _parent(parent)
-   {}
-   
-   virtual ~InsertCommand()
-   {}
-   
-public:
-   void redo() override
-   {
-      _model.insertRow(_parent, element());
-   }
+   _directions << "" << tr("in") << tr("out") << tr("inout") << tr("return");
+   _effects << "" << tr("create") << tr("delete") << tr("read") << tr("update");
+   _multiplicities << "0" << "1" << "*" << "0..1" << "1..*";
+   _primitiveTypes << "" << tr("bool") << tr("char") << tr("double") << tr("float") << tr("int") << tr("long")
+      << tr("short") << tr("string") << tr("uint") << tr("ulong") << tr("ushort") << tr("void");
+   _visibilities << tr("public") << tr("protected") << tr("private") << tr("package");
+}
 
-   void undo() override
-   {
-      _model.removeRow(_parent, element());
-   }
-   
-private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
-};
+StringProvider::~StringProvider()
+{
+}
+
+StringProvider& StringProvider::instance()
+{
+   static StringProvider provider;
+   return provider;
+}
+
+QString StringProvider::defaultMultiplicity()
+{
+   return tr("1");
+}
+
+QString StringProvider::defaultPrimitiveType()
+{
+   return tr("int");
+}
+
+QStringList& StringProvider::directions()
+{
+   return instance()._directions;
+}
+
+QStringList& StringProvider::effects()
+{
+   return instance()._effects;
+}
+
+QStringList& StringProvider::multiplicities()
+{
+   return instance()._multiplicities;
+}
+
+QStringList& StringProvider::primitiveTypes()
+{
+   return instance()._primitiveTypes;
+}
+
+QStringList& StringProvider::visibilities()
+{
+   return instance()._visibilities;
+}

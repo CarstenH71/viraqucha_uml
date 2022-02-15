@@ -73,26 +73,24 @@ EdgeShape::EdgeShape(QGraphicsItem* parent, DiaEdge* edge)
    Q_ASSERT(_edge != nullptr);
    _edge->setItemData(static_cast<void*>(this));
 
-   _solidBrush.setColor(QColor(edge->lineColor()));
+   _solidBrush.setColor(QColor(_edge->lineColor()));
    _solidBrush.setStyle(Qt::SolidPattern);
    
-   _items[0] = static_cast<QGraphicsItem*>(edge->shape1()->itemData());
-   _items[1] = static_cast<QGraphicsItem*>(edge->shape2()->itemData());
+   _items[0] = static_cast<QGraphicsItem*>(_edge->shape1()->itemData());
+   _items[1] = static_cast<QGraphicsItem*>(_edge->shape2()->itemData());
 
-   loadPoints();
-   if (_line.isEmpty())
+   switch (_edge->routing())
    {
-      // No points given => edge is new => create default points:
-      if (_items[0] == _items[1])
-      {
-         _edge->setRouting(RoutingKind::Auto);
-         makeAutoRoute();
-      }
-      else
-      {
-         _edge->setRouting(RoutingKind::Direct);
-         makeDirectLine();
-      }
+   case RoutingKind::Auto:
+      makeAutoRoute();
+      break;
+   case RoutingKind::Custom:
+      loadPoints();
+      break;
+   case RoutingKind::Direct:
+   default:
+      makeDirectLine();
+      break;
    }
 }
 
@@ -107,7 +105,7 @@ EdgeShape::~EdgeShape()
 /** Gets the UmlElement object. */
 UmlElement* EdgeShape::element() const
 {
-   return _edge->link();
+   return _edge != nullptr ? _edge->link() : nullptr;
 }
 
 /** Gets the DiaEdge object. */
@@ -125,7 +123,7 @@ QRectF EdgeShape::boundingRect() const
    return QRectF(
       temp.p1(), 
       QSizeF(temp.p2().x() - temp.p1().x(), temp.p2().y() - temp.p1().y())).normalized().adjusted(-extra, -extra, extra, extra);
-      */
+   */
    return shape().controlPointRect() + QMarginsF(5.0, 5.0, 5.0, 5.0);
 }
 
@@ -136,10 +134,13 @@ QPainterPath EdgeShape::shape() const
    path.addPolygon(_line);
    path.addPolygon(_arrow);
 
-   auto boxes = diaEdge()->labels();
-   if (boxes.size() == 5)
+   if (diaEdge() != nullptr)
    {
-      path.addText(findMidPoint(), _font, boxes[0]->text());
+      auto boxes = diaEdge()->labels();
+      if (boxes.size() == 5)
+      {
+         path.addText(findMidPoint(), _font, boxes[0]->text());
+      }
    }
 
    QPainterPathStroker stroker(_linePen);
@@ -195,18 +196,21 @@ QVariant EdgeShape::itemChange(GraphicsItemChange change, const QVariant& value)
 /** Updates the position of the edge shape. */
 void EdgeShape::updatePosition()
 {
-   switch (_edge->routing())
+   if (diaEdge() != nullptr)
    {
-   case RoutingKind::Auto:
-      makeAutoRoute();
-      break;
-   case RoutingKind::Custom:
-      updateCustomLine();
-      break;
-   case RoutingKind::Direct:
-   default:
-      makeDirectLine();
-      break;
+      switch (diaEdge()->routing())
+      {
+      case RoutingKind::Auto:
+         makeAutoRoute();
+         break;
+      case RoutingKind::Custom:
+         updateCustomLine();
+         break;
+      case RoutingKind::Direct:
+      default:
+         makeDirectLine();
+         break;
+      }
    }
 }
 
@@ -317,7 +321,7 @@ void EdgeShape::makeAutoRoute()
    }
    else
    {
-       // TODO: find auto route between items
+       // TODO: Find auto route between items
    }
    savePoints();
 }
@@ -414,6 +418,7 @@ void EdgeShape::drawAttributeBox(QPainter* painter, QFontMetricsF& metrics, int 
    Q_UNUSED(metrics);
    Q_UNUSED(item);
    Q_UNUSED(text);
+   // TODO: Draw the attribute box
 }
 
 /** 
@@ -463,6 +468,7 @@ void EdgeShape::drawCircle(QPainter* painter, const QLineF& line, bool crossed)
    Q_UNUSED(painter);
    Q_UNUSED(line);
    Q_UNUSED(crossed);
+   // TODO: Draw the circle
 }
 
 /**
@@ -493,6 +499,13 @@ void EdgeShape::drawDiamond(QPainter* painter, const QLineF& line, bool filled)
    painter->setPen(_linePen);
    painter->drawPolygon(_arrow);
    restorePenStyle();
+}
+
+void EdgeShape::aboutToDestroy()
+{
+   // Reset DiaEdge object, since it is not used any more:
+   _edge = nullptr;
+   super::aboutToDestroy();
 }
 
 /**
@@ -582,24 +595,30 @@ QPointF EdgeShape::findMidPoint() const
 /** Loads points from the DiaEdge object. */
 void EdgeShape::loadPoints()
 {
-   auto points = _edge->points();
-   for (const QPointF& point : points)
+   if (diaEdge() != nullptr)
    {
-      _line << point;
-   }
+      auto points = diaEdge()->points();
+      for (const QPointF& point : points)
+      {
+         _line << point;
+      }
 
-   setPos(_edge->pos());
+      setPos(diaEdge()->pos());
+   }
 }
 
 /** Saves points to the DiaEdge object. */
 void EdgeShape::savePoints()
 {
-   QVector<QPointF> points;
-   for (const QPointF& point : _line)
+   if (diaEdge() != nullptr)
    {
-      points.append(point);
-   }
+      QVector<QPointF> points;
+      for (const QPointF& point : _line)
+      {
+         points.append(point);
+      }
 
-   _edge->setPos(pos());
-   _edge->setPoints(points);
+      diaEdge()->setPos(pos());
+      diaEdge()->setPoints(points);
+   }
 }

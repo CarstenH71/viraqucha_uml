@@ -32,8 +32,10 @@
 
 class ComboBoxDelegate : public QStyledItemDelegate
 {
+   ///@cond
    Q_OBJECT
    typedef QStyledItemDelegate super;
+   ///@endcond
 public:
    enum Mode { IndexBased, TextBased };
 
@@ -48,6 +50,8 @@ public: // Methods
    void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
+   ///@cond
    QStringList _items;
    Mode        _mode;
+   ///@endcond
 };

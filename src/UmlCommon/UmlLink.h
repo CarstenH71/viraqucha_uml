@@ -34,8 +34,10 @@
 
 class UMLCOMMON_EXPORT UmlLink : public UmlElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlLink();
    UmlLink(QUuid id);
@@ -63,8 +65,10 @@ protected:
    void dispose(bool disposing) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlLink> UmlLinkPtr;

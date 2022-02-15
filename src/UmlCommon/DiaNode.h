@@ -36,7 +36,9 @@ class UmlProject;
 
 class UMLCOMMON_EXPORT DiaNode : public DiaShape
 {
+   ///@cond
    typedef DiaShape super;
+   ///@endcond
 public: // Constructors
    DiaNode();
    virtual ~DiaNode();
@@ -56,6 +58,8 @@ public: // Methods
    void serialize(QJsonObject& json, bool read, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

@@ -34,7 +34,7 @@
 #include <QWidget>
 
 class UmlOperation;
-class OPTableModel;
+class PATableModel;
 class ComboBoxDelegate;
 
 class ParameterTab : public QWidget, public IPropertiesTab
@@ -59,7 +59,7 @@ private slots:
 private: // Attributes
    Ui::ParameterTab  ui;
    UmlOperation*     _elem;
-   OPTableModel*     _model;
+   PATableModel*     _model;
    ComboBoxDelegate* _directionsDelegate;
    ComboBoxDelegate* _effectsDelegate;
    ComboBoxDelegate* _multiDelegate;

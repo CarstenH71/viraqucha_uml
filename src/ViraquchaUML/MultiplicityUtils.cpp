@@ -40,31 +40,19 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
-MultiplicityUtils::MultiplicityUtils()
-: _expr("^(\\d+\\.{2}(\\d+|\\*))$|^(\\d+)$|^(\\*)$")
-{
-   _list << "0" << "1" << "*" << "0..1" << "1..*";
-}
-
-/** Gets the only instance of the MultiplicityUtils class. */
-MultiplicityUtils& MultiplicityUtils::instance()
-{
-   static MultiplicityUtils utils;
-   return utils;
-}
-
-/** Gets a string list of standard multiplicities which can be used in combo boxes. */
-QStringList MultiplicityUtils::list() const
-{
-   return _list;
-}
 
 /**
  * Parses a given string and returns the lower and upper bound of a multiplicity.
+ *
+ * @param text
+ * @param lower
+ * @param upper
  */
 bool MultiplicityUtils::tryParse(QString text, unsigned int& lower, unsigned int& upper)
 {
-   auto match = _expr.match(text);
+   static QRegularExpression expr("^(\\d+\\.{2}(\\d+|\\*))$|^(\\d+)$|^(\\*)$");
+
+   auto match = expr.match(text);
    if (match.hasMatch())
    {
       bool ok = false;
@@ -94,7 +82,12 @@ bool MultiplicityUtils::tryParse(QString text, unsigned int& lower, unsigned int
    return false;
 }
 
-/** Converts lower and upper value of a multiplicity to a string. */
+/**
+ * Converts lower and upper value of a multiplicity to a string.
+ *
+ * @param lower
+ * @param upper
+ */
 QString MultiplicityUtils::toString(unsigned int lower, unsigned int upper)
 {
    QString result;

@@ -48,6 +48,8 @@ public: // Methods
    virtual void serialize(QJsonObject& json, bool read, int version);
 
 private:
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

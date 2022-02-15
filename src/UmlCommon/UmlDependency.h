@@ -40,8 +40,10 @@ class UMLCOMMON_EXPORT UmlDependency : public UmlLink,
    public INamedElement,
    public IStereotypedElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlLink super;
+   ///@endcond
 public: // Constructors
    UmlDependency();
    UmlDependency(QUuid id);
@@ -71,6 +73,8 @@ public: // Methods
    void update(int index, Label* label) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

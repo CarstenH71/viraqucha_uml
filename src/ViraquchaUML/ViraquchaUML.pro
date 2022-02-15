@@ -85,7 +85,9 @@ HEADERS += \
 ./TemplateParameterTab.h \
 ./ToolBoxManager.h \
 ./TreeIconProvider.h \
-./UndoCommand.h
+./UndoCommand.h \
+./MoveCommand.h \
+./StringProvider.h
 
 FORMS += \
 ./AttributesTab.ui \
@@ -143,4 +145,6 @@ SOURCES += \
 ./TemplateBox.cpp \
 ./TemplateParameterTab.cpp \
 ./ToolBoxManager.cpp \
-./TreeIconProvider.cpp
+./TreeIconProvider.cpp \
+./StringProvider.cpp \
+./UndoCommand.cpp

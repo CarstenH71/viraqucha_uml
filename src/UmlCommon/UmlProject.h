@@ -41,7 +41,9 @@ class UmlRoot;
 
 class UMLCOMMON_EXPORT UmlProject : public QObject
 {
+   ///@cond
    Q_OBJECT
+   ///@endcond
 public:
    UmlProject();
    virtual ~UmlProject();
@@ -109,6 +111,8 @@ private:
    void setErrorString(QString error);
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

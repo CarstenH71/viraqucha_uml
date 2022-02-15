@@ -119,171 +119,205 @@ QString UmlAttribute::className() const
    return staticMetaObject.className();
 }
 
+/** Gets the name of the attribute. */
 QString UmlAttribute::name() const
 {
    return data->name;
 }
 
+/** Sets the name of the attribute. */
 void UmlAttribute::setName(QString value)
 {
    data->name = value;
 }
 
+/** Gets the comment of the attribute. */
 QString UmlAttribute::comment() const
 {
    return data->comment;
 }
 
+/** Sets the comment of the attribute. */
 void UmlAttribute::setComment(QString value)
 {
    data->comment = value;
 }
 
+/** Gets the visibility of the attribute. */
 VisibilityKind UmlAttribute::visibility() const
 {
    return data->visibility;
 }
 
+/** Sets the visibility of the attribute. */
 void UmlAttribute::setVisibility(VisibilityKind value)
 {
    data->visibility = value;
 }
 
+/** Gets the stereotype of the attribute. */
 QString UmlAttribute::stereotype() const
 {
    return data->stereotype;
 }
 
+/** Sets the stereotype of the attribute. */
 void UmlAttribute::setStereotype(QString value)
 {
    data->stereotype = value;
 }
 
+/** Gets a value indicating whether the attribute is ordered (collection). */
 bool UmlAttribute::isOrdered() const
 {
    return data->isOrdered;
 }
 
+/** Sets a value indicating whether the attribute is ordered (collection). */
 void UmlAttribute::isOrdered(bool value)
 {
    data->isOrdered = value;
 }
 
+/** Gets a value indicating whether the attribute is unique. */
 bool UmlAttribute::isUnique() const
 {
    return data->isUnique;
 }
 
+/** Sets a value indicating whether the attribute is unique. */
 void UmlAttribute::isUnique(bool value)
 {
    data->isUnique = value;
 }
 
+/** Gets the lower bound of the multiplicity. */
 quint32 UmlAttribute::lower() const
 {
    return data->lower;
 }
 
+/** Sets the lower bound of the multiplicity. */
 void UmlAttribute::setLower(quint32 value)
 {
    data->lower = value;
 }
 
+/** Gets the upper bound of the multiplicity. */
 quint32 UmlAttribute::upper() const
 {
    return data->upper;
 }
 
+/** Sets the upper bound of the multiplicity. */
 void UmlAttribute::setUpper(quint32 value)
 {
    data->upper = value;
 }
 
+/** Gets the aggregation kind of the attribute. */
 AggregationKind UmlAttribute::aggregation() const
 {
    return data->aggregation;
 }
 
+/** Sets the aggregation kind of the attribute. */
 void UmlAttribute::setAggregation(AggregationKind value)
 {
    data->aggregation = value;
 }
 
+/** Gets a value indicating whether the attribute is composite. */
 bool UmlAttribute::isComposite() const
 {
    return data->isComposite;
 }
 
+/** Sets a value indicating whether the attribute is composite. */
 void UmlAttribute::isComposite(bool value)
 {
    data->isComposite = value;
 }
 
+/** Gets a value indicating whether the attribute is derived. */
 bool UmlAttribute::isDerived() const
 {
    return data->isDerived;
 }
 
+/** Sets a value indicating whether the attribute is derived. */
 void UmlAttribute::isDerived(bool value)
 {
    data->isDerived = value;
 }
 
+/** Gets a value indicating whether the attribute is derived union. */
 bool UmlAttribute::isDerivedUnion() const
 {
    return data->isDerivedUnion;
 }
 
+/** Sets a value indicating whether the attribute is derived union. */
 void UmlAttribute::isDerivedUnion(bool value)
 {
    data->isDerivedUnion = value;
 }
 
+/** Gets a value indicating whether the attribute is an identifier. */
 bool UmlAttribute::isID() const
 {
    return data->isID;
 }
 
+/** Sets a value indicating whether the attribute is an identifier. */
 void UmlAttribute::isID(bool value)
 {
    data->isID = value;
 }
 
+/** Gets a value indicating whether the attribute is static. */
 bool UmlAttribute::isStatic() const
 {
    return data->isStatic;
 }
 
+/** Sets a value indicating whether the attribute is static. */
 void UmlAttribute::isStatic(bool value)
 {
    data->isStatic = value;
 }
 
+/** Gets a value indicating whether the attribute is read-only. */
 bool UmlAttribute::isReadOnly() const
 {
    return data->isReadOnly;
 }
 
+/** Sets a value indicating whether the attribute is read-only. */
 void UmlAttribute::isReadOnly(bool value)
 {
    data->isReadOnly = value;
 }
 
+/** Gets the (data)type of the attribute. */
 QString UmlAttribute::type() const
 {
    return data->type;
 }
 
+/** Sets the (data)type of the attribute. */
 void UmlAttribute::setType(QString value)
 {
    data->type = value;
 }
 
+/** Gets the default value of the attribute. */
 QString UmlAttribute::defaultValue() const
 {
    return data->defaultValue;
 }
 
+/** Sets the default value of the attribute. */
 void UmlAttribute::setDefaultValue(QString value)
 {
    data->defaultValue = value;

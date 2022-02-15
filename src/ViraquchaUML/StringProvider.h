@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// InsertCommand.h
+// StringProvider.cpp
 //
-// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class InsertCommand.
+// Description  : Declaration of class StringProvider.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -27,37 +27,42 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "ProjectTreeModel.h"
-#include "UndoCommand.h"
+#include <QObject>
+#include <QString>
+#include <QStringList>
 
-#include <QModelIndex>
-#include <QPersistentModelIndex>
-
-class InsertCommand : public UndoCommand
+class StringProvider final : public QObject
 {
-   typedef UndoCommand super;
-public:
-   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
-   : super(element, model.getProject())
-   , _model(model)
-   , _parent(parent)
-   {}
-   
-   virtual ~InsertCommand()
-   {}
-   
-public:
-   void redo() override
-   {
-      _model.insertRow(_parent, element());
-   }
+   Q_OBJECT
+private: // Constructors
+   StringProvider();
 
-   void undo() override
-   {
-      _model.removeRow(_parent, element());
-   }
-   
+public:
+   /// @cond
+   StringProvider(StringProvider const&) = delete;
+   void operator=(StringProvider const&) = delete;
+   /// @endcond
+   virtual ~StringProvider();
+
 private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
+   static StringProvider& instance();
+
+public: // Properties
+   static QString defaultMultiplicity();
+   static QString defaultPrimitiveType();
+
+   static QStringList& directions();
+   static QStringList& effects();
+   static QStringList& multiplicities();
+   static QStringList& primitiveTypes();
+   static QStringList& visibilities();
+
+private: // Attributes
+   /// @cond
+   QStringList _directions;
+   QStringList _effects;
+   QStringList _multiplicities;
+   QStringList _primitiveTypes;
+   QStringList _visibilities;
+   /// @endcond
 };

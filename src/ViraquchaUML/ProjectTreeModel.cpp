@@ -112,7 +112,7 @@ QModelIndex ProjectTreeModel::parent(const QModelIndex& index) const
     }
 
     return createIndex(0, 0, owner);
- }
+}
 
 /** 
  * Gets the row count of a specified parent model index in the project tree. 
@@ -238,6 +238,47 @@ QVariant ProjectTreeModel::headerData(int section, Qt::Orientation orientation, 
 }
 
 /**
+ * Gets the model index of a UmlElement object.
+ * @param element
+ * @return Model index of the object.
+ */
+QModelIndex ProjectTreeModel::indexOf(UmlElement* element)
+{
+   if (element != nullptr)
+   {
+      auto* owner = element->owner();
+      if (owner != nullptr)
+      {
+         return createIndex(owner->elements().indexOf(element), 0, element);
+      }
+   }
+
+   return QModelIndex();
+}
+
+/**
+ * Gets the parent model index of a UmlElement object.
+ * @param element
+ * @return The parent model index of the object.
+ */
+QModelIndex ProjectTreeModel::parentOf(UmlElement* element)
+{
+   if (element != nullptr)
+   {
+      auto* owner = element->owner();
+      if (owner == _root) return QModelIndex();
+      if (owner->owner() != nullptr)
+      {
+         return createIndex(owner->owner()->indexOf(owner), 0, owner);
+      }
+
+      return createIndex(0, 0, owner);
+   }
+
+   return QModelIndex();
+}
+
+/**
  * Inserts a single row for a UML element before the given position in the list of child items of the parent specified.
  * 
  * @param position Insert position.
@@ -255,6 +296,7 @@ bool ProjectTreeModel::insertRow(int position, const QModelIndex& parent, UmlEle
    if (element != nullptr)
    {
       auto* project = _root->project();
+      project->insert(element);
       if (element->isHidden())
       {
          // Append at the end of the parent, do not update tree!
@@ -290,6 +332,7 @@ bool ProjectTreeModel::insertRow(const QModelIndex& parent, UmlElement* element)
    if (element != nullptr)
    {
       auto* project = _root->project();
+      project->insert(element);
       if (element->isHidden())
       {
          // Append at the end of the parent, do not update tree!
@@ -483,24 +526,24 @@ UmlPackage* ProjectTreeModel::getPackage(const QModelIndex& index) const
  * Recursively removes an element from the project.
  *
  * The function also removes all links connected to the element, as well as all child elements (if it is a composite
- * element, that is, an instance of class UmlCompositeElement) from the project.
+ * element, that is, an object of class UmlCompositeElement) from the project.
  * @param elem UML element to be removed from the project.
  */
 void ProjectTreeModel::removeRecursive(UmlElement* elem)
 {
-   QListIterator<UmlLink*> iter1(elem->links());
-   while (iter1.hasNext())
+   auto links = elem->links();
+   for (auto victim : links)
    {
-      removeRecursive(iter1.next());
+      removeRecursive(victim);
    }
 
    auto* comp = dynamic_cast<UmlCompositeElement*>(elem);
    if (comp != nullptr)
-   { 
-      QListIterator<UmlElement*> iter2(comp->elements());
-      while (iter2.hasNext())
+   {
+      auto elements = comp->elements();
+      for (auto victim : elements)
       {
-         removeRecursive(iter2.next());
+         removeRecursive(victim);
       }
    }
 

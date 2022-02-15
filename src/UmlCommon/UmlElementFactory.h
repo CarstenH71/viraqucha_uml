@@ -25,6 +25,8 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
+#pragma once
+
 #include "umlcommon_globals.h"
 #include "UmlElement.h"
 #include "IElementBuilder.h"

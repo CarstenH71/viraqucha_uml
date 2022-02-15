@@ -36,9 +36,11 @@
  * 
  * Undoes editing of the name, i.e. restores the old (undo) or new (redo) name of the named element.
  */
+/*
 class RenameCommand : public UndoCommandWithValue<INamedElement, QString>
 {
 public:
    void undo() override { element()->setName(oldValue()); }
    void redo() override { element()->setName(newValue()); }
 };
+*/

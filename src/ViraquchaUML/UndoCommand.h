@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 // UndoCommand.h
 //
-// Copyright (C) 2018 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
 // Description  : Declaration of template class UndoCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
@@ -27,40 +27,83 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "IntrusivePtr.h"
+#include "ISerializable.h"
+#include "UmlElement.h"
+#include "UmlElementFactory.h"
+#include "UmlProject.h"
+
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QString>
 #include <QUndoCommand>
 
-template<class T> class UndoCommand : public QUndoCommand
+class UndoCommand : public QUndoCommand
 {
 public:
-   UndoCommand(T* element) : _element(element) {}
+   UndoCommand(UmlElement* element, UmlProject* project)
+   : _element(element)
+   , _project(project)
+   {
+      Q_ASSERT(_element != nullptr);
+      Q_ASSERT(_project != nullptr);
+      _className = _element->className();
+      _elementId = _element->identifier();
+   }
+
    virtual ~UndoCommand() {}
 
 public:
-   T* element() const { return _element.pointee(); }
+   /** Gets the element contained in this command. */
+   UmlElement* element() const { return _element; }
+
+   QUuid elementId() const { return _elementId; }
+
+protected:
+   /** Saves properties of the element to a byte array. */
+   void saveProperties(QByteArray& array)
+   {
+      if (_element == nullptr) return;
+      QJsonObject json;
+      _element->serialize(json, false, KFileVersion);
+      QJsonDocument jdoc(json);
+      array = jdoc.toJson(QJsonDocument::Compact);
+   }
+
+   /** Loads properties of the element from a byte array. */
+   void loadProperties(QByteArray& array)
+   {
+      if (_element == nullptr) return;
+      QJsonParseError error;
+      auto doc = QJsonDocument::fromJson(array, &error);
+      if (!doc.isNull())
+      {
+         auto obj = doc.object();
+         _element->serialize(obj, true, KFileVersion);
+      }
+   }
+
+   /** Restores the element. */
+   void restoreElement()
+   {
+      if (!_project->find(_elementId, &_element))
+      {
+         _element = UmlElementFactory::instance().build(_className, _elementId);
+      }
+   }
+
+   /** Resets the element to nullptr. */
+   void resetElement()
+   {
+      _element = nullptr;
+   }
 
 private:
-   IntrusivePtr<T> _element;
+   UmlElement* _element;
+   QUuid       _elementId;
+   QString     _className;
+   UmlProject* _project;
 };
 
-template<class T, class V> class UndoCommandWithValue : public UndoCommand<T>
-{
-   typedef UndoCommand<T> super;
-public:
-   UndoCommandWithValue(T* element, V oldval, V newval)
-   : super(element)
-   , _oldValue(oldval)
-   , _newValue(newval)
-   {}
-   
-   virtual ~UndoCommandWithValue()
-   {}
-
-public:
-   V oldValue() const { return _oldValue; }
-   V newValue() const { return _newValue; }
-
-private:
-   V _oldValue;
-   V _newValue;
-};
+typedef QList<UndoCommand*> UndoCommandList;
+int findElementId(UndoCommandList& list, QUuid id);

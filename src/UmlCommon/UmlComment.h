@@ -35,8 +35,10 @@
 
 class UMLCOMMON_EXPORT UmlComment : public UmlElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlComment();
    UmlComment(QUuid id);
@@ -53,6 +55,8 @@ public: // Methods
    void serialize(QJsonObject& obj, bool read, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

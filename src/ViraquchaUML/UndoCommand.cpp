@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// InsertCommand.h
+// UndoCommand.cpp
 //
-// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class InsertCommand.
+// Description  : Implementation of class UndoCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,39 +25,17 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
-
-#include "ProjectTreeModel.h"
 #include "UndoCommand.h"
 
-#include <QModelIndex>
-#include <QPersistentModelIndex>
-
-class InsertCommand : public UndoCommand
+int findElementId(UndoCommandList& list, QUuid id)
 {
-   typedef UndoCommand super;
-public:
-   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
-   : super(element, model.getProject())
-   , _model(model)
-   , _parent(parent)
-   {}
-   
-   virtual ~InsertCommand()
-   {}
-   
-public:
-   void redo() override
+   for (int index = 0; index < list.count(); ++index)
    {
-      _model.insertRow(_parent, element());
+      if (list[index]->elementId() == id)
+      {
+         return index;
+      }
    }
 
-   void undo() override
-   {
-      _model.removeRow(_parent, element());
-   }
-   
-private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
-};
+   return -1;
+}

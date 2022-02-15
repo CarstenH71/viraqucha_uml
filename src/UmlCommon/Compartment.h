@@ -63,6 +63,8 @@ public: // Methods
    void clear();
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

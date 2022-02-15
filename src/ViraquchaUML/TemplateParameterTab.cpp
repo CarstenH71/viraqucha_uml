@@ -109,11 +109,9 @@ public: // Constructors
    : _elem(elem)
    {
       Q_ASSERT(_elem != nullptr);
-
-      QListIterator<UmlTemplateParameter*> iter(_elem->templateParameter());
-      while (iter.hasNext())
+      for (auto param : _elem->templateParameter())
       {
-         _items.append(QSharedPointer<TPTableItem>(new TPTableItem(iter.next())));
+         _items.append(QSharedPointer<TPTableItem>(new TPTableItem(param)));
       }
    }
 
@@ -282,15 +280,14 @@ TemplateParameterTab::TemplateParameterTab(QWidget* parent, ITemplatableElement*
 , _model(new TPTableModel(elem))
 {
    ui.setupUi(this);
-   ui.parameterList->setModel(_model);
-   ui.parameterList->resizeRowsToContents();
-   ui.parameterList->resizeColumnsToContents();
+   ui.tableView->setModel(_model);
+   ui.tableView->horizontalHeader()->resizeSection(0, 80);
 
    connect(ui.addButton, &QPushButton::clicked, this, &TemplateParameterTab::addItem);
    connect(ui.removeButton, &QPushButton::clicked, this, &TemplateParameterTab::removeItems);
    connect(ui.moveUpButton, &QPushButton::clicked, this, &TemplateParameterTab::moveItemsUp);
    connect(ui.moveDownButton, &QPushButton::clicked, this, &TemplateParameterTab::moveItemsDown);
-   connect(ui.parameterList->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &TemplateParameterTab::updateButtons);
+   connect(ui.tableView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &TemplateParameterTab::updateButtons);
 }
 
 TemplateParameterTab::~TemplateParameterTab()
@@ -314,9 +311,7 @@ void TemplateParameterTab::applyChanges()
 void TemplateParameterTab::addItem()
 {
    _model->insertRow(_model->rowCount());
-   ui.parameterList->resizeRowsToContents();
-   ui.parameterList->selectRow(_model->rowCount() - 1);
-   ui.parameterList->selectColumn(0);
+   ui.tableView->selectRow(_model->rowCount() - 1);
 }
 
 /** Removes all selected items from the table. */
@@ -329,9 +324,9 @@ void TemplateParameterTab::removeItems()
       QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
    if (result == QMessageBox::Ok)
    {
-      while (ui.parameterList->selectionModel()->selectedIndexes().size() > 0)
+      while (ui.tableView->selectionModel()->selectedIndexes().size() > 0)
       {
-         _model->removeRow(ui.parameterList->selectionModel()->selectedIndexes().first().row());
+         _model->removeRow(ui.tableView->selectionModel()->selectedIndexes().first().row());
       }
    }
 }
@@ -339,25 +334,25 @@ void TemplateParameterTab::removeItems()
 /** Moves selected items one up. */
 void TemplateParameterTab::moveItemsUp()
 {
-   auto index = ui.parameterList->currentIndex();
+   auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() > 0)
    {
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() - 1);
    }
 
-   updateButtons(ui.parameterList->currentIndex(), QModelIndex());
+   updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
 /** Moves selected items one down. */
 void TemplateParameterTab::moveItemsDown()
 {
-   auto index = ui.parameterList->currentIndex();
+   auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() < _model->rowCount() - 1)
    {
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() + 1);
    }
 
-   updateButtons(ui.parameterList->currentIndex(), QModelIndex());
+   updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
 /** Updates the buttons of the tab. */

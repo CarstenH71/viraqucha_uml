@@ -35,6 +35,7 @@
 #include "OperationTab.h"
 #include "OperationsTab.h"
 #include "ParameterTab.h"
+#include "ProjectTreeModel.h"
 #include "TemplateParameterTab.h"
 
 #include <QListIterator>
@@ -57,11 +58,13 @@
  * Initializes a new instance of the PropertiesDialog class.
  *
  * @param parent Parent widget.
- * @param elem UmlElement instance to be edited.
+ * @param model ProjectTreeModel object needed for undo/redo commands.
+ * @param elem UmlElement object to be edited.
  */
-PropertiesDialog::PropertiesDialog(QWidget* parent, UmlElement* elem)
+PropertiesDialog::PropertiesDialog(QWidget* parent, ProjectTreeModel& model, UmlElement* elem)
 : super(parent)
 , _elem(elem)
+, _model(model)
 {
    ui.setupUi(this);
    connect(ui.buttonBox, &QDialogButtonBox::helpRequested, this, &PropertiesDialog::showHelp);
@@ -136,7 +139,7 @@ void PropertiesDialog::createTabsFor(UmlDatatype* elem)
 {
    setWindowTitle(tr("DataType properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
-   addTab(new AttributesTab(this, elem), tr("Attributes"));
+   addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
    addTab(new OperationsTab(this, elem), tr("Operations"));
 }
 
@@ -150,7 +153,7 @@ void PropertiesDialog::createTabsFor(UmlClass* elem)
 {
    setWindowTitle(tr("Class properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
-   addTab(new AttributesTab(this, elem), tr("Attributes"));
+   addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
    addTab(new OperationsTab(this, elem), tr("Operations"));
    addTab(new TemplateParameterTab(this, elem), tr("Template Parameter"));
 }
@@ -166,7 +169,7 @@ void PropertiesDialog::createTabsFor(UmlInterface* elem)
 {
    setWindowTitle(tr("Interface properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
-   addTab(new AttributesTab(this, elem), tr("Attributes"));
+   addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
    addTab(new OperationsTab(this, elem), tr("Operations"));
    addTab(new TemplateParameterTab(this, elem), tr("Template Parameter"));
 }

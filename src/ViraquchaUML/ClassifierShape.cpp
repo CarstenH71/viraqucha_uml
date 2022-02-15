@@ -63,6 +63,7 @@ ClassifierShape::ClassifierShape(QGraphicsItem* parent, DiaNode* node)
    Q_ASSERT(_classifier != nullptr);
 
    _templateBox = new TemplateBox(this, node, _font, _linePen, _textPen);
+   _templateBox->setVisible(_classifier->isTemplated());
 }
 
 ClassifierShape::~ClassifierShape()
@@ -93,6 +94,7 @@ void ClassifierShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
    computeSize(_classifier->isTemplated());
    _templateBox->setTextBoxSize(textBoxSize());
+   _templateBox->setVisible(_classifier->isTemplated());
    
    double x1 = -(nodeSize().width() / 2.0);
    double x2 = -x1;

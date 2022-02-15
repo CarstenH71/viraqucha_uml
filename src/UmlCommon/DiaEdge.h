@@ -40,7 +40,9 @@ class UmlLink;
 
 class UMLCOMMON_EXPORT DiaEdge : public DiaShape
 {
+   ///@cond
    typedef DiaShape super;
+   ///@endcond
 public:
    DiaEdge();
    virtual ~DiaEdge();
@@ -68,6 +70,8 @@ public: // Methods
    void serialize(QJsonObject& json, bool read, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
