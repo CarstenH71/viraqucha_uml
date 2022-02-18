@@ -87,7 +87,8 @@ HEADERS += \
 ./TreeIconProvider.h \
 ./UndoCommand.h \
 ./MoveCommand.h \
-./StringProvider.h
+./StringProvider.h \
+    CommandStack.h
 
 FORMS += \
 ./AttributesTab.ui \
@@ -147,4 +148,6 @@ SOURCES += \
 ./ToolBoxManager.cpp \
 ./TreeIconProvider.cpp \
 ./StringProvider.cpp \
-./UndoCommand.cpp
+./UndoCommand.cpp \
+    CommandStack.cpp \
+    MoveCommand.cpp

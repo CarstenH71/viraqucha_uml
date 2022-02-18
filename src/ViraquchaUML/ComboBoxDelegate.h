@@ -3,7 +3,7 @@
 //
 // Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of ComboBoxDelegate.
+// Description  : Declaration of class ComboBoxDelegate.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************

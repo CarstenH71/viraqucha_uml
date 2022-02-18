@@ -12,6 +12,7 @@ add_executable(${EXE_NAME}
   ClassifierTab.cpp
   ClassifierTab.ui
   ComboBoxDelegate.cpp
+  CommandStack.cpp
   CommentShape.cpp
   CommentTab.cpp
   CommentTab.ui
@@ -28,6 +29,7 @@ add_executable(${EXE_NAME}
   MainWindow.cpp
   MainWindow.ui
   MessageBox.cpp
+  MoveCommand.cpp
   MultiplicityTab.cpp
   MultiplicityTab.ui
   MultiplicityUtils.cpp

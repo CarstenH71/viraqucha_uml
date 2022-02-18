@@ -1,10 +1,10 @@
 //---------------------------------------------------------------------------------------------------------------------
-// StringProvider.cpp
+// CommandStack.h
 //
 // Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of class StringProvider.
-// Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
+// Description  : Declaration of class CommandStack
+// Compiles with: Compilers supporting C++17 (MSVC, GCC, CLang)
 //
 // *******************************************************************************************************************
 // *                                                                                                                 *
@@ -23,50 +23,36 @@
 // *                                                                                                                 *
 // *******************************************************************************************************************
 //
-// See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
+// See https://github.com/carstenhuber/viraqucha_uml for the latest version of ViraquchaUML.
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
+#include "UndoCommand.h"
 
-class StringProvider final : public QObject
+#include <QSharedPointer>
+#include <QVector>
+
+class CommandStack final
 {
-   Q_OBJECT
-private: // Constructors
-   StringProvider();
+public:
+   CommandStack();
+   ~CommandStack();
 
 public:
-   /// @cond
-   StringProvider(StringProvider const&) = delete;
-   void operator=(StringProvider const&) = delete;
-   /// @endcond
-   virtual ~StringProvider();
+   void push(UndoCommand* cmd);
 
-private:
-   static StringProvider& instance();
+   void setObsolete(QUuid elementId);
 
-public: // Properties
-   static QString defaultMultiplicity();
-   static QString defaultPrimitiveType();
+   void redo();
+   void undo();
+   void redoOnce();
+   void undoOnce();
 
-   static QStringList& aggregations();
-   static QStringList& directions();
-   static QStringList& effects();
-   static QStringList& multiplicities();
-   static QStringList& primitiveTypes();
-   static QStringList& stereotypes();
-   static QStringList& visibilities();
+   void clear();
 
-private: // Attributes
-   /// @cond
-   QStringList _aggregations;
-   QStringList _directions;
-   QStringList _effects;
-   QStringList _multiplicities;
-   QStringList _primitiveTypes;
-   QStringList _stereotypes;
-   QStringList _visibilities;
-   /// @endcond
+public:
+   ///@cond
+   QVector<QSharedPointer<UndoCommand>> _stack;
+   ///@endcond
 };
+

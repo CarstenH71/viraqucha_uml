@@ -1,10 +1,10 @@
 //---------------------------------------------------------------------------------------------------------------------
-// StringProvider.cpp
+// CommandStack.cpp
 //
 // Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of class StringProvider.
-// Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
+// Description  : Implementation of class CommandStack
+// Compiles with: Compilers supporting C++17 (MSVC, GCC, CLang)
 //
 // *******************************************************************************************************************
 // *                                                                                                                 *
@@ -23,50 +23,104 @@
 // *                                                                                                                 *
 // *******************************************************************************************************************
 //
-// See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
+// See https://github.com/carstenhuber/viraqucha_uml for the latest version of ViraquchaUML.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
+#include "CommandStack.h"
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
+/**
+ * @class CommandStack
+ * @brief The CommandStack class implements an undo stack that does not execute a command on push.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ */
 
-class StringProvider final : public QObject
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+CommandStack::CommandStack()
 {
-   Q_OBJECT
-private: // Constructors
-   StringProvider();
+}
 
-public:
-   /// @cond
-   StringProvider(StringProvider const&) = delete;
-   void operator=(StringProvider const&) = delete;
-   /// @endcond
-   virtual ~StringProvider();
+CommandStack::~CommandStack()
+{
+}
 
-private:
-   static StringProvider& instance();
+/**
+ * Pushes an UndoCommand object onto the stack without executing it.
+ *
+ * @param cmd UndoCommand to be pushed.
+ */
+void CommandStack::push(UndoCommand* cmd)
+{
+   _stack.append(QSharedPointer<UndoCommand>(cmd));
+}
 
-public: // Properties
-   static QString defaultMultiplicity();
-   static QString defaultPrimitiveType();
+/**
+ * Sets all UndoCommand objects with the given element ID obsolete.
+ *
+ * @param elementId
+ */
+void CommandStack::setObsolete(QUuid elementId)
+{
+   for (auto cmd : _stack)
+   {
+      if (cmd->elementId() == elementId || cmd->neighborId() == elementId)
+      {
+         cmd->setObsolete(true);
+      }
+   }
+}
 
-   static QStringList& aggregations();
-   static QStringList& directions();
-   static QStringList& effects();
-   static QStringList& multiplicities();
-   static QStringList& primitiveTypes();
-   static QStringList& stereotypes();
-   static QStringList& visibilities();
+void CommandStack::redo()
+{
+   for (int index = 0; index < _stack.count(); ++index)
+   {
+      auto cmd = _stack[index];
+      if (!cmd->isObsolete())
+      {
+         cmd->redo();
+      }
+   }
+}
 
-private: // Attributes
-   /// @cond
-   QStringList _aggregations;
-   QStringList _directions;
-   QStringList _effects;
-   QStringList _multiplicities;
-   QStringList _primitiveTypes;
-   QStringList _stereotypes;
-   QStringList _visibilities;
-   /// @endcond
-};
+void CommandStack::undo()
+{
+   for (int index = _stack.count() - 1; index > 0; --index)
+   {
+      auto cmd = _stack[index];
+      if (!cmd->isObsolete())
+      {
+         cmd->undo();
+      }
+   }
+}
+
+void CommandStack::redoOnce()
+{
+   while (!_stack.isEmpty())
+   {
+      auto cmd = _stack.takeFirst();
+      if (!cmd->isObsolete())
+      {
+         cmd->redo();
+      }
+   }
+}
+
+void CommandStack::undoOnce()
+{
+   while (!_stack.isEmpty())
+   {
+      auto cmd = _stack.takeLast();
+      if (!cmd->isObsolete())
+      {
+         cmd->undo();
+      }
+   }
+}
+
+void CommandStack::clear()
+{
+   _stack.clear();
+}

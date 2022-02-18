@@ -35,43 +35,20 @@
 
 class MoveCommand : public UndoCommand
 {
+   ///@cond
    typedef UndoCommand super;
+   ///@endcond
 public:
-   MoveCommand(UmlElement* element, ProjectTreeModel& model, bool down)
-   : super(element, model.getProject())
-   , _model(model)
-   , _down(down)
-   {}
-
-   virtual ~MoveCommand()
-   {}
+   MoveCommand(UmlElement* element, QUuid neighbor, ProjectTreeModel& model, bool down);
+   virtual ~MoveCommand();
 
 public:
-   void redo() override
-   {
-      if (_down)
-      {
-        _model.moveRow(_model.indexOf(element()), true);
-      }
-      else
-      {
-         _model.moveRow(_model.indexOf(element()), false);
-      }
-   }
-
-   void undo() override
-   {
-      if (_down)
-      {
-        _model.moveRow(_model.indexOf(element()), false);
-      }
-      else
-      {
-         _model.moveRow(_model.indexOf(element()), true);
-      }
-   }
+   void redo() override;
+   void undo() override;
 
 private:
+   ///@cond
    ProjectTreeModel& _model;
    bool              _down;
+   ///@endcond
 };

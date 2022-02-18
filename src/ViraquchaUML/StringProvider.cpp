@@ -27,13 +27,34 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "StringProvider.h"
 
+/**
+ * @class StringProvider
+ * @brief Provides translatable strings and string lists for windows and dialogs
+ * @since 1.0
+ * @ingroup GUI
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the StringProvider class.
+ */
 StringProvider::StringProvider()
 {
+   _aggregations << tr("None") << tr("Shared") << tr("Composite");
    _directions << "" << tr("in") << tr("out") << tr("inout") << tr("return");
    _effects << "" << tr("create") << tr("delete") << tr("read") << tr("update");
    _multiplicities << "0" << "1" << "*" << "0..1" << "1..*";
    _primitiveTypes << "" << tr("bool") << tr("char") << tr("double") << tr("float") << tr("int") << tr("long")
       << tr("short") << tr("string") << tr("uint") << tr("ulong") << tr("ushort") << tr("void");
+   _stereotypes << "" << tr("Auxiliary") << tr("BuildComponent") << tr("Call") << tr("Create") << tr("Derive")
+      << tr("Destroy") << tr("Document") << tr("Entity") << tr("Executable") << tr("File") << tr("Focus")
+      << tr("Framework") << tr("Implement") << tr("ImplementationClass") << tr("Instantiate") << tr("Library")
+      << tr("Metaclass") << tr("Metamodel") << tr("ModelLibrary") << tr("Pocess") << tr("Realization")
+      << tr("Refine") << tr("Responsibility") << tr("Script") << tr("Send") << tr("Service") << tr("Source")
+      << tr("Specification") << tr("Subsystem") << tr("SystemModel") << tr("Trace") << tr("Type") << tr("Utility");
    _visibilities << tr("public") << tr("protected") << tr("private") << tr("package");
 }
 
@@ -41,42 +62,62 @@ StringProvider::~StringProvider()
 {
 }
 
+/** Gets the only object of this class (singleton) */
 StringProvider& StringProvider::instance()
 {
    static StringProvider provider;
    return provider;
 }
 
+/** Gets the default multiplicity. */
 QString StringProvider::defaultMultiplicity()
 {
    return tr("1");
 }
 
+/** Gets the default primitive type. */
 QString StringProvider::defaultPrimitiveType()
 {
    return tr("int");
 }
 
+/** Gets the list of aggregations. */
+QStringList& StringProvider::aggregations()
+{
+   return instance()._aggregations;
+}
+
+/** Gets the list of directions. */
 QStringList& StringProvider::directions()
 {
    return instance()._directions;
 }
 
+/** Gets the list of effects. */
 QStringList& StringProvider::effects()
 {
    return instance()._effects;
 }
 
+/** Gets the list of multiplicities. */
 QStringList& StringProvider::multiplicities()
 {
    return instance()._multiplicities;
 }
 
+/** Gets the list of primitive types. */
 QStringList& StringProvider::primitiveTypes()
 {
    return instance()._primitiveTypes;
 }
 
+/** Gets the list of stereotypes. */
+QStringList& StringProvider::stereotypes()
+{
+   return instance()._stereotypes;
+}
+
+/** Gets the list of visibilities. */
 QStringList& StringProvider::visibilities()
 {
    return instance()._visibilities;

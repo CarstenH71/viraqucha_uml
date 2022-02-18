@@ -25,6 +25,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "AttributeTab.h"
 #include "Globals.h"
+#include "StringProvider.h"
 
 #include "UmlAttribute.h"
 #include "UmlProject.h"
@@ -39,7 +40,7 @@
  * @see PropertiesDialog
  *
  * The AttributeTab class provides controls for editing attribute specific properties like type, default value,
- * aggregation kind and flags. It is added to the properties dialog, if the object to be edited is an UmlAttribute.
+ * aggregation kind and flags. It is added to the properties dialog, if the object to be edited is a UmlAttribute.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -99,14 +100,13 @@ void AttributeTab::applyChanges()
  */
 void AttributeTab::updateControls()
 {
-   ui.typeCombo->addItems(_attr->project()->primitiveTypes());
+   ui.typeCombo->addItems(StringProvider::primitiveTypes());
+   ui.typeCombo->setCurrentIndex(StringProvider::primitiveTypes().indexOf(_attr->type()));
    ui.typeCombo->setCurrentText(_attr->type());
 
    ui.defaultEdit->setText(_attr->defaultValue());
 
-   QStringList list;
-   list << tr("None") << tr("Shared") << tr("Composite");
-   ui.aggregationCombo->addItems(list);
+   ui.aggregationCombo->addItems(StringProvider::aggregations());
    ui.aggregationCombo->setCurrentIndex((int)_attr->aggregation());
 
    // Flags:

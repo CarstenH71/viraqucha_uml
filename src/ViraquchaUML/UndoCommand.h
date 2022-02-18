@@ -27,83 +27,41 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "ISerializable.h"
 #include "UmlElement.h"
-#include "UmlElementFactory.h"
 #include "UmlProject.h"
 
 #include <QByteArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QString>
 #include <QUndoCommand>
 
 class UndoCommand : public QUndoCommand
 {
+   ///@cond
+   typedef QUndoCommand super;
+   ///@endcond
 public:
-   UndoCommand(UmlElement* element, UmlProject* project)
-   : _element(element)
-   , _project(project)
-   {
-      Q_ASSERT(_element != nullptr);
-      Q_ASSERT(_project != nullptr);
-      _className = _element->className();
-      _elementId = _element->identifier();
-   }
-
-   virtual ~UndoCommand() {}
+   UndoCommand(UmlElement* element, UmlProject* project);
+   virtual ~UndoCommand();
 
 public:
-   /** Gets the element contained in this command. */
-   UmlElement* element() const { return _element; }
+   UmlElement* element() const;
 
-   QUuid elementId() const { return _elementId; }
+   QUuid elementId() const;
+   QUuid neighborId() const;
+   void setNeighborId(QUuid value);
 
 protected:
-   /** Saves properties of the element to a byte array. */
-   void saveProperties(QByteArray& array)
-   {
-      if (_element == nullptr) return;
-      QJsonObject json;
-      _element->serialize(json, false, KFileVersion);
-      QJsonDocument jdoc(json);
-      array = jdoc.toJson(QJsonDocument::Compact);
-   }
-
-   /** Loads properties of the element from a byte array. */
-   void loadProperties(QByteArray& array)
-   {
-      if (_element == nullptr) return;
-      QJsonParseError error;
-      auto doc = QJsonDocument::fromJson(array, &error);
-      if (!doc.isNull())
-      {
-         auto obj = doc.object();
-         _element->serialize(obj, true, KFileVersion);
-      }
-   }
-
-   /** Restores the element. */
-   void restoreElement()
-   {
-      if (!_project->find(_elementId, &_element))
-      {
-         _element = UmlElementFactory::instance().build(_className, _elementId);
-      }
-   }
-
-   /** Resets the element to nullptr. */
-   void resetElement()
-   {
-      _element = nullptr;
-   }
+   void saveProperties(QByteArray& array);
+   void loadProperties(QByteArray& array);
+   void restoreElement();
+   void resetElement();
 
 private:
+   ///@cond
    UmlElement* _element;
    QUuid       _elementId;
+   QUuid       _neighborId;
    QString     _className;
    UmlProject* _project;
+   ///@endcond
 };
-
-typedef QList<UndoCommand*> UndoCommandList;
-int findElementId(UndoCommandList& list, QUuid id);

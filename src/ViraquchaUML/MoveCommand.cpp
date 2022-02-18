@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// StringProvider.cpp
+// MoveCommand.cpp
 //
-// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of class StringProvider.
+// Description  : Implementation of class MoveCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,48 +25,39 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
+#include "MoveCommand.h"
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
-
-class StringProvider final : public QObject
+MoveCommand::MoveCommand(UmlElement* element, QUuid neighbor, ProjectTreeModel& model, bool down)
+: super(element, model.getProject())
+, _model(model)
+, _down(down)
 {
-   Q_OBJECT
-private: // Constructors
-   StringProvider();
+   setNeighborId(neighbor);
+}
 
-public:
-   /// @cond
-   StringProvider(StringProvider const&) = delete;
-   void operator=(StringProvider const&) = delete;
-   /// @endcond
-   virtual ~StringProvider();
+MoveCommand::~MoveCommand()
+{}
 
-private:
-   static StringProvider& instance();
+void MoveCommand::redo()
+{
+   if (_down)
+   {
+     _model.moveRow(_model.indexOf(element()), true);
+   }
+   else
+   {
+      _model.moveRow(_model.indexOf(element()), false);
+   }
+}
 
-public: // Properties
-   static QString defaultMultiplicity();
-   static QString defaultPrimitiveType();
-
-   static QStringList& aggregations();
-   static QStringList& directions();
-   static QStringList& effects();
-   static QStringList& multiplicities();
-   static QStringList& primitiveTypes();
-   static QStringList& stereotypes();
-   static QStringList& visibilities();
-
-private: // Attributes
-   /// @cond
-   QStringList _aggregations;
-   QStringList _directions;
-   QStringList _effects;
-   QStringList _multiplicities;
-   QStringList _primitiveTypes;
-   QStringList _stereotypes;
-   QStringList _visibilities;
-   /// @endcond
-};
+void MoveCommand::undo()
+{
+   if (_down)
+   {
+     _model.moveRow(_model.indexOf(element()), false);
+   }
+   else
+   {
+      _model.moveRow(_model.indexOf(element()), true);
+   }
+}

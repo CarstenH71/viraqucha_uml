@@ -23,7 +23,7 @@
 // *                                                                                                                 *
 // *******************************************************************************************************************
 //
-// See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
+// See https://github.com/carstenhuber/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "AttributesTab.h"
 #include "Globals.h"
@@ -50,24 +50,46 @@
  * @brief The AttributesTab class implements a widget for editing UML attributes of a UML classifier.
  * @since 1.0
  * @ingroup GUI
- * @see PropertiesDialog
+ * @see PropertiesDialog, AttributeTab
  *
- * The AttributesTab class provides a table view and some buttons for adding, removing and editing attributes of an
- * UML classifier. It is added to the properties dialog, if the object to be edited is a UmlClassifier.
+ * The AttributesTab class provides a table view and buttons for adding, deleting, moving and editing attributes of a
+ * UML classifier. Its intention is to edit attributes of a classifier in a comfortable list or table view instead of
+ * the project's tree view (thus the name &quot;Attribute-S-Tab&quot; because it allows editing of several attributes
+ * in one dialog). It is added to the PropertiesDialog object, if the object to be edited is a UmlClassifier.
+ *
+ * The table view only shows the most important properties of a UmlAttribute object, to avoid cluttering the GUI.
+ * These are:
+ * - Name (text edit)
+ * - Type (editable combo box)
+ * - Visibility (fixed combo box)
+ * - Default value (text edit)
+ * - Comment (text edit)
+ *
+ * Remaining properties (flags etc.) of a UmlAttribute object can be edited using the properties dialog of the object.
+ * This dialog can be opened on a selected UmlAttribute object by clicking on the [Edit...] button to the right of the
+ * table view.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
 // ATTableItem implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief The ATTableItem class provides information of a single item (or row) in an attribute table.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ *
+ */
 class ATTableItem
 {
 public:
-   ATTableItem(int count)
+   ATTableItem(QString name)
    : _attr(new UmlAttribute())
    , _isNew(true)
    {
-      _name = QString("attribute%1").arg(count);
-      _type = StringProvider::defaultPrimitiveType();
+      _name       = name;
+      _type       = StringProvider::defaultPrimitiveType();
       _visibility = VisibilityKind::Private;
    }
 
@@ -75,10 +97,10 @@ public:
    : _attr(attr)
    , _isNew(false)
    {
-      _name = _attr->name();
-      _comment = attr->comment();
-      _type = _attr->type();
-      _default = _attr->defaultValue();
+      _name       = _attr->name();
+      _comment    = _attr->comment();
+      _type       = _attr->type();
+      _default    = _attr->defaultValue();
       _visibility = _attr->visibility();
    }
 
@@ -114,6 +136,7 @@ public: // Methods
       _attr->setType(_type);
       _attr->setDefaultValue(_default);
       _attr->setVisibility(_visibility);
+      _isNew = false;
    }
 
 private:
@@ -131,7 +154,12 @@ private:
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * The ATTableModel class implements QAbstractTableModel for an attribute table.
+ * @brief The ATTableModel class implements QAbstractTableModel for an attribute table.
+ * @since 1.0
+ * @ingroup GUI
+ *
+ * The ATTableModel class provides an implementation of class QAbstractTableModel needed for the table view of class
+ * AttributesTab.
  */
 class ATTableModel : public QAbstractTableModel
 {
@@ -267,7 +295,8 @@ public: // Methods
       beginInsertRows(parent, row, row + count - 1);
       while (count > 0)
       {
-         _items.insert(row, QSharedPointer<ATTableItem>(new ATTableItem(_items.count() + 1)));
+         QString name = QString(tr("attribute%1")).arg(_items.count() + 1);
+         _items.insert(row, QSharedPointer<ATTableItem>(new ATTableItem(name)));
          --count;
       }
       endInsertRows();
@@ -391,12 +420,7 @@ void AttributesTab::applyChanges()
 
    // No need to keep them now, they will currently not be added to the global
    // Undo/Redo command stack. This may be done in future versions.
-   while (!_commands.isEmpty())
-   {
-      auto cmd = _commands.takeFirst();
-      cmd->redo();
-      delete cmd;
-   }
+   _commands.redoOnce();
 }
 
 /** Adds a new item to the table and the data model. */
@@ -404,7 +428,7 @@ void AttributesTab::addItem()
 {
    _model->insertRow(_model->rowCount());
    ui.tableView->selectRow(_model->rowCount() - 1);
-   _commands.append(new InsertCommand(
+   _commands.push(new InsertCommand(
      _model->lastItem()->attribute(),
      _project,
      _project.indexOf(_classifier)));
@@ -430,15 +454,11 @@ void AttributesTab::removeItems()
          auto item = _model->itemAt(row);
          if (item->isNew())
          {
-            int index = 1;
-            while ((index = findElementId(_commands, item->attribute()->identifier())) != -1)
-            {
-               _commands.removeAt(index);
-            }
+            _commands.setObsolete(item->attribute()->identifier());
          }
          else
          {
-            _commands.append(new RemoveCommand(
+            _commands.push(new RemoveCommand(
                item->attribute(),
                _project,
                _project.indexOf(_classifier)));
@@ -454,9 +474,11 @@ void AttributesTab::moveItemUp()
    auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() > 0)
    {
-      auto item = _model->itemAt(index.row());
-      _commands.append(new MoveCommand(
+      auto item = _model->itemAt(index.row());     // Item to be moved up
+      auto succ = _model->itemAt(index.row() - 1); // Successor to be moved down
+      _commands.push(new MoveCommand(
          item->attribute(),
+         succ->attribute()->identifier(), // Needed in case an item is removed, to obsolete the command
          _project,
          false));
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() - 1);
@@ -471,16 +493,17 @@ void AttributesTab::moveItemDown()
    auto index = ui.tableView->currentIndex();
    if (index.isValid() && index.row() < _model->rowCount() - 1)
    {
-      auto item = _model->itemAt(index.row());
-      _commands.append(new MoveCommand(
+      auto item = _model->itemAt(index.row());     // Item to be moved down
+      auto pred = _model->itemAt(index.row() + 1); // Predecessor to be moved up
+      _commands.push(new MoveCommand(
          item->attribute(),
+         pred->attribute()->identifier(), // Needed in case an item is removed, to obsolete the command
          _project,
          true));
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() + 1);
    }
 
    updateButtons(ui.tableView->currentIndex(), QModelIndex());
-
 }
 
 /** Enables or disables move up and down buttons depending on the currently selected item. */

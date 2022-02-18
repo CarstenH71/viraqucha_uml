@@ -28,6 +28,7 @@
 #pragma once
 
 #include "ui_AttributesTab.h"
+#include "CommandStack.h"
 #include "IPropertiesTab.h"
 #include "UndoCommand.h"
 
@@ -42,8 +43,10 @@ class UmlClassifier;
 
 class AttributesTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    AttributesTab(QWidget* parent, UmlClassifier* classifier, ProjectTreeModel& project);
    virtual ~AttributesTab();
@@ -61,12 +64,13 @@ private slots:
    void updateButtons(const QModelIndex& current, const QModelIndex& previous);
 
 private: // Attributes
+   ///@cond
    Ui::AttributesTab ui;
    UmlClassifier*    _classifier;
    ProjectTreeModel& _project;
    ATTableModel*     _model;
-   UndoCommandList   _commands;
+   CommandStack      _commands;
    ComboBoxDelegate* _typeDelegate;
    ComboBoxDelegate* _visibilityDelegate;
-
+   ///@endcond
 };

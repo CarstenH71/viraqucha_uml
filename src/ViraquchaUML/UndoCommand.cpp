@@ -26,16 +26,107 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "UndoCommand.h"
+#include "ISerializable.h"
+#include "UmlElementFactory.h"
 
-int findElementId(UndoCommandList& list, QUuid id)
+#include <QJsonDocument>
+#include <QJsonObject>
+
+/**
+ * @class UndoCommand
+ * @brief Base class for the undo commands of ViraquchaUML
+ * @since 1.0
+ * @ingroup GUI
+ *
+ * The UndoCommand class is the base class of the undo commands of ViraquchaUML. It extends QUndoCommand by properties
+ * and functions for managing UmlElement objects.
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Instantiates a new object of the UndoCommand class with a UmlElement and a UmlProject object.
+ * @param element
+ * @param project
+ */
+UndoCommand::UndoCommand(UmlElement* element, UmlProject* project)
+: _element(element)
+, _project(project)
 {
-   for (int index = 0; index < list.count(); ++index)
-   {
-      if (list[index]->elementId() == id)
-      {
-         return index;
-      }
-   }
+   Q_ASSERT(_element != nullptr);
+   Q_ASSERT(_project != nullptr);
+   _className = _element->className();
+   _elementId = _element->identifier();
+   _neighborId = QUuid();
+}
 
-   return -1;
+UndoCommand::~UndoCommand()
+{}
+
+/** Gets the element contained. */
+UmlElement* UndoCommand::element() const
+{
+   return _element;
+}
+
+/** Gets the identifier of the element contained. */
+QUuid UndoCommand::elementId() const
+{
+   return _elementId;
+}
+
+/**
+ * Gets the identifier of a neighboring element.
+ *
+ * This property can be used for move commands, where it is important to know the neighoring elements of an element.
+ */
+QUuid UndoCommand::neighborId() const
+{
+   return _neighborId;
+}
+
+/** Sets the identifier of a neighboring element. */
+void UndoCommand::setNeighborId(QUuid value)
+{
+   _neighborId = value;
+}
+
+/** Saves properties of the element to a byte array. */
+void UndoCommand::saveProperties(QByteArray& array)
+{
+   if (_element == nullptr) return;
+   QJsonObject json;
+   _element->serialize(json, false, KFileVersion);
+   QJsonDocument jdoc(json);
+   array = jdoc.toJson(QJsonDocument::Compact);
+}
+
+/** Loads properties of the element from a byte array. */
+void UndoCommand::loadProperties(QByteArray& array)
+{
+   if (_element == nullptr) return;
+   QJsonParseError error;
+   auto doc = QJsonDocument::fromJson(array, &error);
+   if (!doc.isNull())
+   {
+      auto obj = doc.object();
+      _element->serialize(obj, true, KFileVersion);
+   }
+}
+
+/** Restores the element. */
+void UndoCommand::restoreElement()
+{
+   if (!_project->find(_elementId, &_element))
+   {
+      _element = UmlElementFactory::instance().build(_className, _elementId);
+   }
+}
+
+/** Resets the element to nullptr. */
+void UndoCommand::resetElement()
+{
+   _element = nullptr;
 }

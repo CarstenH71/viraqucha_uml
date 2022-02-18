@@ -82,8 +82,8 @@ MultiplicityTab::~MultiplicityTab()
  */
 bool MultiplicityTab::validateInput()
 {
-   auto  text = ui.rangeCombo->currentText();
-   if (MultiplicityUtils::tryParse(text, _lower, _upper))
+   auto range = ui.rangeCombo->currentText();
+   if (MultiplicityUtils::tryParse(range, _lower, _upper))
    {
       if (_lower > _upper)
       {
@@ -95,7 +95,7 @@ bool MultiplicityTab::validateInput()
       return true;
    }
 
-   QString msg(tr("'%1' is not a valid range.\nA valid range may contain '0'-'9', '*' and '..' only.").arg(text));
+   QString msg(tr("'%1' is not a valid range.\nA valid range may contain '0'-'9', '*' and '..' only.").arg(range));
    QMessageBox::warning(this, Viraqucha::KProgramName, msg, QMessageBox::Ok);
    return false;
 }
@@ -116,8 +116,12 @@ void MultiplicityTab::applyChanges()
  */
 void MultiplicityTab::updateControls()
 {
+   auto range = MultiplicityUtils::toString(_lower, _upper);
+
    ui.rangeCombo->addItems(StringProvider::multiplicities());
-   ui.rangeCombo->setEditText(MultiplicityUtils::toString(_lower, _upper));
+   ui.rangeCombo->setCurrentIndex(StringProvider::multiplicities().indexOf(range));
+   ui.rangeCombo->setCurrentText(range);
+
    ui.isOrderedBox->setChecked(_elem->isOrdered());
    ui.isUniqueBox->setChecked(_elem->isUnique());
 }

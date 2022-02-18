@@ -27,6 +27,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "GeneralTab.h"
 #include "RenameCommand.h"
+#include "StringProvider.h"
 
 #include "UmlElement.h"
 #include "UmlProject.h"
@@ -111,14 +112,13 @@ void GeneralTab::updateControls()
    ui.nameEdit->setText(_named->name());
    ui.commentEdit->setPlainText(_named->comment());
 
-   QStringList vlist;
-   vlist << tr("Public") << tr("Protected") << tr("Private") << tr("Package");
-   ui.visibCombo->addItems(vlist);
+   ui.visibCombo->addItems(StringProvider::visibilities());
    ui.visibCombo->setCurrentIndex((int)_named->visibility() - 1);
 
    if (_stereotyped != nullptr)
    {
-      ui.stereoCombo->addItems(_element->project()->stereoTypes());
+      ui.stereoCombo->addItems(StringProvider::stereotypes());
+      ui.stereoCombo->setCurrentIndex(StringProvider::stereotypes().indexOf(_stereotyped->stereotype()));
       ui.stereoCombo->setCurrentText(_stereotyped->stereotype());
    }
 }
