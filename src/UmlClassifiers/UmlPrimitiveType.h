@@ -55,8 +55,10 @@ public: // Properties
    void setVisibility(VisibilityKind value) override;
 
 public: // Methods
-   void serialize(QJsonObject& json, bool read, int version) override;
    QString toString() const override;
+
+protected:
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    struct Data;

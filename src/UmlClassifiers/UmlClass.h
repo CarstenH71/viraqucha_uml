@@ -53,8 +53,8 @@ public: // Properties
    bool isActive() const;
    void isActive(bool value);
 
-public: // Methods
-   void serialize(QJsonObject& json, bool read, int version) override;
+protected: // Methods
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    /// @cond

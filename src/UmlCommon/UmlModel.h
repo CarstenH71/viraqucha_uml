@@ -51,8 +51,8 @@ public: // Properties
    QString viewpoint() const;
    void setViewpoint(QString value);
 
-public: // Methods
-   virtual void serialize(QJsonObject& obj, bool read, int version);
+protected: // Methods
+   void serialize(QJsonObject& obj, bool read, bool flat, int version) override;
 
 private:
    ///@cond

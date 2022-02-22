@@ -33,6 +33,7 @@
 #include "ISerializable.h"
 #include "IntrusivePtr.h"
 
+#include <QByteArray>
 #include <QObject>
 #include <QString>
 #include <QUuid>
@@ -50,11 +51,13 @@ class UmlProject;
 class UMLCOMMON_EXPORT UmlElement : public ISerializable
 {
    ///@cond
-   friend UmlProject;
+   friend class UmlProject;
    ///@endcond
 public: // Constructors
    UmlElement();
    UmlElement(QUuid id);
+   UmlElement(UmlElement const&) = delete;
+   void operator=(UmlElement const&) = delete;
    virtual ~UmlElement();
 
 public: // Properties
@@ -80,6 +83,8 @@ public: // Properties
    QList<IElementObserver*>& observers() const;
 
 public: // Methods:
+   virtual void copyTo(UmlElement* other);
+   virtual void copyTo(QByteArray& array);
    void dispose();
 
    void linkto(UmlLink* link);
@@ -96,6 +101,7 @@ public: // Methods:
 
 protected:
    virtual void dispose(bool disposing);
+   virtual void serialize(QJsonObject& json, bool read, bool flat, int version);
    void send(EventType type);
 
 private: // Attributes

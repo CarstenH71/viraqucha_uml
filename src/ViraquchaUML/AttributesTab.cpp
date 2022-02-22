@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 // AttributesTab.cpp
 //
-// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
 //
 // Description  : Implementation of class AttributesTab.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
@@ -29,6 +29,7 @@
 #include "Globals.h"
 #include "MessageBox.h"
 #include "ProjectTreeModel.h"
+#include "PropertiesDialog.h"
 
 #include "ComboBoxDelegate.h"
 #include "InsertCommand.h"
@@ -41,6 +42,7 @@
 #include <QAbstractTableModel>
 #include <QItemSelectionModel>
 #include <QModelIndex>
+#include <QScopedPointer>
 #include <QSharedPointer>
 #include <QString>
 #include <QStringList>
@@ -79,74 +81,105 @@
  * @since 1.0
  * @ingroup GUI
  *
- *
+ * The ATTableItem class is used by class ATTableModel of the AttributesTab class for managing UmlAttribute objects to
+ * be edited.
  */
 class ATTableItem
 {
 public:
+   /**
+    * Initializes a new object of the ATTableItem class with a name.
+    *
+    * This constructor creates a new UmlAttribute object and sets its name, its default primitive type and its default
+    * visibility. It also creates a clone of the UmlAttribute object to be used for buffering. After calling this
+    * constructor function isNew() returns true.
+    * @param name Name
+    */
    ATTableItem(QString name)
-   : _attr(new UmlAttribute())
+   : _original(new UmlAttribute())
+   , _clone(new UmlAttribute())
    , _isNew(true)
    {
-      _name       = name;
-      _type       = StringProvider::defaultPrimitiveType();
-      _visibility = VisibilityKind::Private;
+      _clone->setName(name);
+      _clone->setType(StringProvider::defaultPrimitiveType());
+      _clone->setVisibility(VisibilityKind::Private);
    }
 
+   /**
+    * Initializes a new object of the ATTableItem class with a UmlAttribute object.
+    *
+    * This constructor uses an existing UmlAttribute object and creates a clone, that receives all properties of the
+    * existing one. After calling this constructor function isNew() returns false.
+    * @param attr UmlAttribute object
+    */
    ATTableItem(UmlAttribute* attr)
-   : _attr(attr)
+   : _original(attr)
+   , _clone(new UmlAttribute())
    , _isNew(false)
    {
-      _name       = _attr->name();
-      _comment    = _attr->comment();
-      _type       = _attr->type();
-      _default    = _attr->defaultValue();
-      _visibility = _attr->visibility();
+      _original->copyTo(_clone);
    }
 
    ~ATTableItem()
    {
-      if (_isNew) _attr->dispose();
+      if (_isNew) _original->dispose();
+      _clone->dispose();
    }
 
 public: // Properties
-   UmlAttribute* attribute() { return _attr; }
+   /** Gets the original (new or existing) UmlAttribute object. */
+   UmlAttribute* original() const { return _original.pointee(); }
+
+   /** Gets a clone of the original (new or existing) UmlAttribute object. */
+   UmlAttribute* clone() const { return _clone.pointee(); }
+
+   /** Gets a value indicating whether the UmlAttribute object is new or not. */
    bool isNew() const { return _isNew; }
 
-   QString name() const { return _name; }
-   void setName(QString value) { _name = value; }
+   /** Gets the name of the clone. */
+   QString name() const { return _clone->name(); }
+   /** Sets the name of the clone. */
+   void setName(QString value) { _clone->setName(value); }
 
-   QString comment() const { return _comment; }
-   void setComment(QString value) { _comment = value; }
+   /** Gets the comment of the clone. */
+   QString comment() const { return _clone->comment(); }
+   /** Sets the comment of the clone. */
+   void setComment(QString value) { _clone->setComment(value); }
 
-   QString type() const { return _type; }
-   void setType(QString value) { _type = value; }
+   /** Gets the type of the clone. */
+   QString type() const { return _clone->type(); }
+   /** Sets the type of the clone. */
+   void setType(QString value) { _clone->setType(value); }
 
-   QString defaultValue() const { return _default; }
-   void setDefaultValue(QString value) { _default = value; }
+   /** Gets the default value of the clone. */
+   QString defaultValue() const { return _clone->defaultValue(); }
+   /** Sets the default value of the clone. */
+   void setDefaultValue(QString value) { _clone->setDefaultValue(value); }
 
-   VisibilityKind visibility() const { return _visibility; }
-   void setVisibility(VisibilityKind value) { _visibility = value; }
+   /** Gets the visibility of the clone. */
+   VisibilityKind visibility() const { return _clone->visibility(); }
+   /** Sets the visibility of the clone. */
+   void setVisibility(VisibilityKind value) { _clone->setVisibility(value); }
 
 public: // Methods
+   /**
+    * Flushes modified properties from the clone to the original UmlAttribute object.
+    *
+    * After calling this function all properties of the clone are copied to the original (new or existing)
+    * UmlAttribute object and function isNew() returns false.
+    */
    void flush()
    {
-      _attr->setName(_name);
-      _attr->setComment(_comment);
-      _attr->setType(_type);
-      _attr->setDefaultValue(_default);
-      _attr->setVisibility(_visibility);
+      _clone->copyTo(_original);
       _isNew = false;
    }
 
 private:
-   UmlAttributePtr _attr;
+   ///@cond
+   UmlAttributePtr _original;
+   UmlAttributePtr _clone;
    bool            _isNew;
-   QString         _name;
-   QString         _comment;
-   QString         _type;
-   QString         _default;
-   VisibilityKind  _visibility;
+   ///@endcond
 };
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -159,7 +192,7 @@ private:
  * @ingroup GUI
  *
  * The ATTableModel class provides an implementation of class QAbstractTableModel needed for the table view of class
- * AttributesTab.
+ * AttributesTab. It uses ATTableItem objects for managing UmlAttribute objects of a UmlClassifier object.
  */
 class ATTableModel : public QAbstractTableModel
 {
@@ -171,6 +204,10 @@ public:
    static const int KCommentColumn = 4;
 
 public: // Constructors
+   /**
+    * Initializes a new object of the ATTableModel class with a UmlClassifier object.
+    * @param elem UmlClassifier object
+    */
    ATTableModel(UmlClassifier* elem)
    {
       Q_ASSERT(elem != nullptr);
@@ -186,21 +223,34 @@ public: // Constructors
    }
 
 public: // Methods
-   /** Gets the row count. */
+   /**
+    * Gets the row count.
+    * @param parent This parameter is unused.
+    */
    int rowCount(const QModelIndex& parent = QModelIndex()) const override
    {
       Q_UNUSED(parent);
       return _items.count();
    }
 
-   /** Gets the column count. */
+   /**
+    * Gets the column count.
+    * @param parent This parameter is unused.
+    */
    int columnCount(const QModelIndex& parent = QModelIndex()) const override
    {
       Q_UNUSED(parent);
       return 5;
    }
 
-   /** Gets data for a given model index. */
+   /**
+    * Gets data stored under the given role for the item referred to by the index.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * @param index Model index referring an item
+    * @param role Role
+    * @returns Data stored under the given role and index
+    */
    QVariant data(const QModelIndex& index, int role) const override
    {
       if (index.isValid())
@@ -226,7 +276,15 @@ public: // Methods
       return QVariant();
    }
 
-   /** Sets data for a given model index. */
+   /**
+    * Sets the role data for the item at index to value.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * @param index Model index referring an item
+    * @param value Value to be set
+    * @param role Role
+    * @returns True if successful; false otherwise.
+    */
    bool setData(const QModelIndex& index, const QVariant& value, int role) override
    {
       if (index.isValid())
@@ -262,14 +320,27 @@ public: // Methods
       return true;
    }
 
-   /** Gets flags for a given model index. */
+   /**
+    * Gets flags for a given model index.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * @param index
+    */
    Qt::ItemFlags flags(const QModelIndex& index) const override
    {
       if (!index.isValid()) return 0;
       return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
    }
 
-   /** Gets header data. */
+   /**
+    * Gets data for a given role and section in the header with the specified orientation.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * This implementation of the function supports only horizontal orientation of the header.
+    * @param section
+    * @param orientation
+    * @param role
+    */
    QVariant headerData(int section, Qt::Orientation orientation, int role) const override
    {
       if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
@@ -289,21 +360,40 @@ public: // Methods
       return QVariant();
    }
 
-   /** Inserts rows into the model. */
+   /**
+    * Inserts count rows into the model before the given row.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * This implementation of the function creates a new ATTableItem object for each row to be inserted and stores it
+    * at the same position specified by parameter row in the internal list of ATTableItem objects.
+    * @param row Row to be inserted before
+    * @param count Count of rows to be inserted
+    * @param parent Parent index
+    */
    bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex()) override
    {
       beginInsertRows(parent, row, row + count - 1);
       while (count > 0)
       {
-         QString name = QString(tr("attribute%1")).arg(_items.count() + 1);
-         _items.insert(row, QSharedPointer<ATTableItem>(new ATTableItem(name)));
+         _items.insert(row, QSharedPointer<ATTableItem>(new ATTableItem(createName())));
          --count;
       }
       endInsertRows();
       return true;
    }
 
-   /** Moves rows in the model. */
+   /**
+    * Moves count rows in the model from a source row to a target row.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * This implementation of the function moves count rows starting with the given srcRow under parent srcParent to row
+    * tgtRow under parent tgtParent.
+    * @param srcParent
+    * @param srcRow
+    * @param count
+    * @param tgtParent
+    * @param tgtRow
+    */
    bool moveRows(const QModelIndex& srcParent, int srcRow, int count, const QModelIndex& tgtParent, int tgtRow) override
    {
       // Pre: source and target row must be different:
@@ -319,7 +409,16 @@ public: // Methods
       return true;
    }
 
-   /** Removes rows from the model. */
+   /**
+    * Removes count rows from the model.
+    *
+    * See Qt documentation of class QAbstractItemModel for more details on this function.
+    * Note that the rows are removed in consecutive order! If you want to remove the rows in non consecutive order,
+    * call this function for each row to be removed separately.
+    * @param row First row to be removed
+    * @param count Count of following rows to be removed
+    * @param parent Parent index
+    */
    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override
    {
       beginRemoveRows(parent, row, row + count - 1);
@@ -348,16 +447,43 @@ public: // Methods
       return _items.last().data();
    }
 
-   /** Gets the item at a specified row. */
+   /**
+    * Gets the item at a specified row.
+    * @param row Row referring to the item
+    * @returns The ATTableItem object at the specified row
+    */
    ATTableItem* itemAt(int row) const
    {
       Q_ASSERT(_items.count() > 0);
       Q_ASSERT(row < _items.count());
       return _items.at(row).data();
    }
+private:
+   /** Creates a unique name for a new ATTableItem object. */
+   QString createName()
+   {
+      QStringList names;
+      for (auto item : _items)
+      {
+         names.append(item->name());
+      }
+
+      int count = 1;
+      QString base = tr("attribute%1");
+      QString name = base.arg(count);
+      while (names.contains(name))
+      {
+         ++count;
+         name = base.arg(count);
+      }
+
+      return name;
+   }
 
 private:
+   ///@cond
    QList<QSharedPointer<ATTableItem>> _items;
+   ///@endcond
 };
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -367,9 +493,9 @@ private:
 /**
  * Initializes a new object of the AttributesTab class.
  *
- * @param parent The parent widget.
- * @param classifier The UmlClassifier object to be edited.
- * @param project The project that shall receive new UmlAttribute objects.
+ * @param parent The parent widget
+ * @param classifier The UmlClassifier object to be edited
+ * @param project The project that shall receive new UmlAttribute objects
  */
 AttributesTab::AttributesTab(QWidget* parent, UmlClassifier* classifier, ProjectTreeModel& project)
 : super(parent)
@@ -385,6 +511,7 @@ AttributesTab::AttributesTab(QWidget* parent, UmlClassifier* classifier, Project
    ui.tableView->setItemDelegateForColumn(ATTableModel::KTypeColumn, _typeDelegate);
    ui.tableView->setItemDelegateForColumn(ATTableModel::KVisibilityColumn, _visibilityDelegate);
    ui.tableView->horizontalHeader()->resizeSection(0, 80);
+   ui.tableView->selectRow(0);
 
    connect(ui.addButton, &QPushButton::clicked, this, &AttributesTab::addItem);
    connect(ui.editButton, &QPushButton::clicked, this, &AttributesTab::editItem);
@@ -392,6 +519,7 @@ AttributesTab::AttributesTab(QWidget* parent, UmlClassifier* classifier, Project
    connect(ui.moveUpButton, &QPushButton::clicked, this, &AttributesTab::moveItemUp);
    connect(ui.moveDownButton, &QPushButton::clicked, this, &AttributesTab::moveItemDown);
    connect(ui.tableView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &AttributesTab::updateButtons);
+   updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
 AttributesTab::~AttributesTab()
@@ -404,7 +532,7 @@ AttributesTab::~AttributesTab()
 /**
  * Validates user input.
  *
- * @returns True, if input is valid; false otherwise.
+ * @returns True, if input is valid; false otherwise
  */
 bool AttributesTab::validateInput()
 {
@@ -429,14 +557,25 @@ void AttributesTab::addItem()
    _model->insertRow(_model->rowCount());
    ui.tableView->selectRow(_model->rowCount() - 1);
    _commands.push(new InsertCommand(
-     _model->lastItem()->attribute(),
+     _model->lastItem()->original(),
      _project,
      _project.indexOf(_classifier)));
 }
 
 /** Opens the properties dialog of the currently selected item. */
 void AttributesTab::editItem()
-{}
+{
+   if (ui.tableView->selectionModel()->selectedIndexes().size() > 0)
+   {
+      auto row = ui.tableView->selectionModel()->selectedIndexes().first().row();
+      auto item = _model->itemAt(row);
+
+      // Always edit the clone, not the original. Properties will be copied to the original as
+      // soon as the model is flushed to the data model of ViraquchaUML:
+      QScopedPointer<PropertiesDialog> dialog(new PropertiesDialog(this, _project, item->clone()));
+      dialog->exec();
+   }
+}
 
 /** Removes all selected items from the table and the data model. */
 void AttributesTab::removeItems()
@@ -448,23 +587,28 @@ void AttributesTab::removeItems()
       QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
    if (result == QMessageBox::Ok)
    {
+      int firstRow = -1;
       while (ui.tableView->selectionModel()->selectedIndexes().size() > 0)
       {
          auto row = ui.tableView->selectionModel()->selectedIndexes().first().row();
+         if (firstRow == -1) firstRow = row;
          auto item = _model->itemAt(row);
          if (item->isNew())
          {
-            _commands.setObsolete(item->attribute()->identifier());
+            _commands.setObsolete(item->original()->identifier());
          }
          else
          {
             _commands.push(new RemoveCommand(
-               item->attribute(),
+               item->original(),
                _project,
                _project.indexOf(_classifier)));
          }
          _model->removeRow(row);
       }
+
+      if (firstRow > _model->rowCount() - 1) firstRow = _model->rowCount() - 1;
+      ui.tableView->selectRow(firstRow);
    }
 }
 
@@ -477,8 +621,8 @@ void AttributesTab::moveItemUp()
       auto item = _model->itemAt(index.row());     // Item to be moved up
       auto succ = _model->itemAt(index.row() - 1); // Successor to be moved down
       _commands.push(new MoveCommand(
-         item->attribute(),
-         succ->attribute()->identifier(), // Needed in case an item is removed, to obsolete the command
+         item->original(),
+         succ->original()->identifier(), // Needed in case an item is removed, to obsolete the command
          _project,
          false));
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() - 1);
@@ -496,8 +640,8 @@ void AttributesTab::moveItemDown()
       auto item = _model->itemAt(index.row());     // Item to be moved down
       auto pred = _model->itemAt(index.row() + 1); // Predecessor to be moved up
       _commands.push(new MoveCommand(
-         item->attribute(),
-         pred->attribute()->identifier(), // Needed in case an item is removed, to obsolete the command
+         item->original(),
+         pred->original()->identifier(), // Needed in case an item is removed, to obsolete the command
          _project,
          true));
       _model->moveRow(QModelIndex(), index.row(), QModelIndex(), index.row() + 1);
@@ -506,13 +650,26 @@ void AttributesTab::moveItemDown()
    updateButtons(ui.tableView->currentIndex(), QModelIndex());
 }
 
-/** Enables or disables move up and down buttons depending on the currently selected item. */
+/**
+ * Enables or disables the buttons of this dialog depending on the currently selected model index.
+ * @param current Model index currently selected
+ * @param previous Model index previously selected
+ */
 void AttributesTab::updateButtons(const QModelIndex& current, const QModelIndex& previous)
 {
    Q_UNUSED(previous);
    if (current.isValid())
    {
+      ui.editButton->setEnabled(true);
       ui.moveDownButton->setEnabled(current.row() < _model->rowCount() - 1);
       ui.moveUpButton->setEnabled(current.row() > 0);
+      ui.removeButton->setEnabled(true);
+   }
+   else
+   {
+      ui.editButton->setEnabled(false);
+      ui.moveDownButton->setEnabled(false);
+      ui.moveUpButton->setEnabled(false);
+      ui.removeButton->setEnabled(false);
    }
 }

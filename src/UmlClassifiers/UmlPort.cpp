@@ -300,9 +300,9 @@ void UmlPort::isService(bool value)
    data->isService = value;
 }
 
-void UmlPort::serialize(QJsonObject& json, bool read, int version)
+void UmlPort::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();

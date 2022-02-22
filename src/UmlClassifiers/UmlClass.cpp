@@ -128,9 +128,9 @@ void UmlClass::isActive(bool value)
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlClass::serialize(QJsonObject& json, bool read, int version)
+void UmlClass::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    { 
       data->isActive = json[KPropIsActive].toBool();

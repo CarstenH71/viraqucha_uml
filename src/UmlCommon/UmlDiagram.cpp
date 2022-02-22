@@ -596,11 +596,8 @@ bool UmlDiagram::save()
 
       // Add DiaNodes to the JSON file:
       QJsonArray nodes;
-      QListIterator<DiaNode*> nodesIter(data->nodes);
-      while (nodesIter.hasNext())
+      for (auto* node : data->nodes)
       {
-         auto* node = nodesIter.next();
-
          QJsonObject obj;
          obj[KPropElement] = node->element()->identifier().toString();
          node->serialize(obj, false, KDiagramVersion);
@@ -610,10 +607,8 @@ bool UmlDiagram::save()
 
       // Add DiaEdges to the JSON file:
       QJsonArray edges;
-      QListIterator<DiaEdge*> edgesIter(data->edges);
-      while (edgesIter.hasNext())
+      for (auto* edge : data->edges)
       {
-         auto* edge = edgesIter.next();
          auto* link = edge->link();
 
          QJsonObject obj;
@@ -626,7 +621,7 @@ bool UmlDiagram::save()
       json[KPropEdges] = edges;
 
       QJsonDocument doc(json);
-      diafile.write(doc.toJson());
+      diafile.write(doc.toJson(QJsonDocument::Compact));
       diafile.commit();
       qDebug() << "Done.";
       return true;
@@ -643,9 +638,9 @@ bool UmlDiagram::save()
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlDiagram::serialize(QJsonObject& json, bool read, int version)
+void UmlDiagram::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();

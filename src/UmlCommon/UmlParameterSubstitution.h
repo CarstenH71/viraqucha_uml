@@ -45,7 +45,7 @@ public: // Properties
    void setActualParam(QString value);
 
 public: // Methods
-   virtual void serialize(QJsonObject& json, bool read, int version);
+   void serialize(QJsonObject& json, bool read, int version) override;
 
 private:
    ///@cond

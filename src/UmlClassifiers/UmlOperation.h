@@ -95,6 +95,7 @@ public: // Properties
    QString toString() const override;
 
 public: // Methods
+   void copyTo(UmlElement* other) override;
    void append(UmlParameter* par);
    void remove(UmlParameter* par);
    void clearParameter();
@@ -103,10 +104,9 @@ public: // Methods
    void remove(UmlTemplateParameter* par) override;
    void clearTemplate() override;
 
-   void serialize(QJsonObject& json, bool read, int version) override;
-
 protected:
    void dispose(bool disposing) override;
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    struct Data;

@@ -187,25 +187,31 @@ void UmlLink::dispose(bool disposing)
  * @param read If true: reads from the QJsonObject; otherwise writes to the QJsonObject.
  * @param version Version of the JSON file format.
 */
-void UmlLink::serialize(QJsonObject& json, bool read, int version)
+void UmlLink::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
-      QUuid srcId(json[KPropSource].toString());
-      QUuid tgtId(json[KPropTarget].toString());
-
-      UmlElement* src = nullptr;
-      UmlElement* tgt = nullptr;
-      if (project()->find(srcId, &src) && project()->find(tgtId, &tgt))
+      if (json.contains(KPropSource) && json.contains(KPropTarget))
       {
-         setSource(src);
-         setTarget(tgt);
+         QUuid srcId(json[KPropSource].toString());
+         QUuid tgtId(json[KPropTarget].toString());
+
+         UmlElement* src = nullptr;
+         UmlElement* tgt = nullptr;
+         if (project()->find(srcId, &src) && project()->find(tgtId, &tgt))
+         {
+            setSource(src);
+            setTarget(tgt);
+         }
       }
    }
    else
    {
-      json[KPropSource] = data->source->identifier().toString();
-      json[KPropTarget] = data->target->identifier().toString();
+      if (!flat)
+      {
+         json[KPropSource] = data->source->identifier().toString();
+         json[KPropTarget] = data->target->identifier().toString();
+      }
    }
 }

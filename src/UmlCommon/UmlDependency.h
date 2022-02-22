@@ -69,8 +69,10 @@ public: // Properties
    QVector<Label*> labels() override;
 
 public: // Methods
-   void serialize(QJsonObject& json, bool read, int version) override;
    void update(int index, Label* label) override;
+
+protected:
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    ///@cond

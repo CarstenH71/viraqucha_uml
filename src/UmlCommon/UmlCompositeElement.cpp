@@ -97,8 +97,10 @@ UmlCompositeElement::~UmlCompositeElement()
 QList<UmlElement*> UmlCompositeElement::elements() const
 {
    QList<UmlElement*> list;
-   QListIterator<UmlElementPtr> iter(data->elements);
-   while (iter.hasNext()) list.append(iter.next());
+   for (auto elem : data->elements)
+   {
+      list.append(elem.pointee());
+   }
    return list;
 }
 
@@ -251,36 +253,41 @@ void UmlCompositeElement::dispose(bool disposing)
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlCompositeElement::serialize(QJsonObject& json, bool read, int version)
+void UmlCompositeElement::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
    QJsonArray array;
 
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
-      array = json[KPropElements].toArray();
-      for (int index = 0; index < array.size(); ++index)
+      if (json.contains(KPropElements))
       {
-         // Get the identifier of the element:
-         QUuid ident = QUuid(array[index].toString());
-
-         // Get the element itself from the project...
-         UmlElement* elem = nullptr;
-         if (project()->find(ident, &elem))
+         array = json[KPropElements].toArray();
+         for (int index = 0; index < array.size(); ++index)
          {
-            // ... and add it to the list of elements:
-            append(elem);
+            // Get the identifier of the element:
+            QUuid ident = QUuid(array[index].toString());
+
+            // Get the element itself from the project...
+            UmlElement* elem = nullptr;
+            if (project()->find(ident, &elem))
+            {
+               // ... and add it to the list of elements:
+               append(elem);
+            }
          }
       }
    }
    else
    {
-      QListIterator<UmlElementPtr> iter(data->elements);
-      while (iter.hasNext())
+      if (!flat)
       {
-         array.append(QJsonValue(iter.next()->identifier().toString()));
-      }
+         for (auto elem : data->elements)
+         {
+            array.append(QJsonValue(elem->identifier().toString()));
+         }
 
-      json[KPropElements] = array;
+         json[KPropElements] = array;
+      }
    }
 }

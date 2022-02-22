@@ -271,30 +271,35 @@ void UmlElement::setOwner(UmlCompositeElement* value)
 }
 
 /**
- * Serializes properties of the UmlElement object to a QJsonObject.
+ * Copies properties to another UmlElement object of same class name.
  *
- * The base implementation of this function serializes the class name and the identity of the object only. This allows
- * the reconstruction of the memory object from class information if no project file is available and can be used e.g. 
- * for copy-paste between different projects.
- * @param json QJsonObject object to be used for serialization.
- * @param read If true: reads from the QJsonObject; otherwise writes to the QJsonObject.
- * @param version Version of the JSON file format.
+ * @param other
  */
-void UmlElement::serialize(QJsonObject& json, bool read, int version)
+void UmlElement::copyTo(UmlElement* other)
 {
-   if (read)
+   if (other != nullptr && className() == other->className())
    {
-      // Class name cannot be read, it is constant - see meta object!
-      data->keywords = json[KPropKeywords].toString();
-   }
-   else
-   {
-      json[KPropClass] = className();
-      json[KPropKeywords] = data->keywords;
+      QJsonObject obj;
+      serialize(obj, false, true, KFileVersion);
+      other->serialize(obj, true, true, KFileVersion);
    }
 }
 
-/** 
+/**
+ * Copies properties to a byte array.
+ *
+ * @param array
+ */
+void UmlElement::copyTo(QByteArray& array)
+{
+   QJsonObject obj;
+   serialize(obj, false, true, KFileVersion);
+
+   QJsonDocument doc(obj);
+   array = doc.toJson(QJsonDocument::Compact);
+}
+
+/**
  * Disposes the UmlElement object.
  *
  * This function resets intrusive pointers and releases system resources owned by the object. It must be called before
@@ -346,6 +351,19 @@ bool UmlElement::isLinkedTo(UmlLink* link)
    }
 
    return false;
+}
+
+/**
+ * Serializes properties of the UmlElement object to a QJsonObject.
+ *
+ * Calls protected function serialize(QJsonObject&, bool, bool, int).
+ * @param json QJsonObject object to be used for serialization.
+ * @param read If true: reads from the QJsonObject; otherwise writes to the QJsonObject.
+ * @param version Version of the JSON file format.
+ */
+void UmlElement::serialize(QJsonObject& json, bool read, int version)
+{
+   serialize(json, read, false, version);
 }
 
 /**
@@ -419,6 +437,31 @@ void UmlElement::dispose(bool disposing)
    data->links.clear();
    data->observers.clear();
    data->isDisposed = true;
+}
+
+/**
+ * Serializes properties of the UmlElement object to a QJsonObject.
+ *
+ * The base implementation of this function serializes the class name and the identity of the object only. This allows
+ * the reconstruction of the memory object from class information if no project file is available and can be used e.g.
+ * for copy-paste between different projects.
+ * @param json QJsonObject object to be used for serialization.
+ * @param read If true: reads from the QJsonObject; otherwise writes to the QJsonObject.
+ * @param flat If true: serializes only properties, no sub elements.
+ * @param version Version of the JSON file format.
+ */
+void UmlElement::serialize(QJsonObject& json, bool read, bool flat, int version)
+{
+   if (read)
+   {
+      // Class name cannot be read, it is constant - see meta object!
+      data->keywords = json[KPropKeywords].toString();
+   }
+   else
+   {
+      json[KPropClass] = className();
+      json[KPropKeywords] = data->keywords;
+   }
 }
 
 /**

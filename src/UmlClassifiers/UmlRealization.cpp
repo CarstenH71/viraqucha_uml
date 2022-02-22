@@ -121,9 +121,9 @@ void UmlRealization::setStereotype(QString value)
    data->stereotype = value;
 }
 
-void UmlRealization::serialize(QJsonObject& json, bool read, int version)
+void UmlRealization::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();

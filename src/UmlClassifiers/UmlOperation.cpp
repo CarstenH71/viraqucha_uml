@@ -237,13 +237,12 @@ void UmlOperation::setUpper(quint32 value)
  */
 QList<UmlTemplateBinding*> UmlOperation::templateBindings() const
 {
-   QList<UmlLink*> temp = links();
    QList<UmlTemplateBinding*> result;
 
-   QListIterator<UmlLink*> iter(temp);
-   while (iter.hasNext())
+   QList<UmlLink*> temp = links();
+   for (auto* link : temp)
    {
-      auto* bind = dynamic_cast<UmlTemplateBinding*>(iter.next());
+      auto* bind = dynamic_cast<UmlTemplateBinding*>(link);
       if (bind != nullptr)
       {
          result.append(bind);
@@ -259,8 +258,11 @@ QList<UmlTemplateBinding*> UmlOperation::templateBindings() const
 QList<UmlTemplateParameter*> UmlOperation::templateParameter() const
 {
    QList<UmlTemplateParameter*> list;
-   QListIterator<UmlTemplateParameterPtr> iter(data->templParams);
-   while (iter.hasNext()) list.append(iter.next().pointee());
+   for (auto param : data->templParams)
+   {
+      list.append(param.pointee());
+   }
+
    return list;
 }
 
@@ -342,8 +344,11 @@ void UmlOperation::setReturnType(QString value)
 QList<UmlParameter*> UmlOperation::parameter() const
 {
    QList<UmlParameter*> list;
-   QListIterator<UmlParameterPtr> iter(data->parameter);
-   while (iter.hasNext()) list.append(iter.next().pointee());
+   for (auto param : data->parameter)
+   {
+      list.append(param.pointee());
+   }
+
    return list;
 }
 
@@ -363,23 +368,40 @@ QString UmlOperation::signature() const
    stream << ChBrktO;
 
    bool first = true;
-   auto iter = QListIterator<UmlParameterPtr>(data->parameter);
-   while (iter.hasNext())
+   for (auto param : data->parameter)
    {
       if (!first) stream << ChComma << ChSpace;
       first = false;
 
-      stream << iter.next()->signature();
+      stream << param->signature();
    }
    stream << ChBrktC << ChColon << ChSpace << returnType() << makeRange(lower(), upper());
    stream.flush();
    return result;
 }
 
- QString UmlOperation::toString() const
- {
-    return signature();
- }
+QString UmlOperation::toString() const
+{
+   return signature();
+}
+
+/**
+ * Copies properties to another UmlElement object of same class name.
+ *
+ * This override clears operation parameters and template parameters of &quot;other&quot; before copying properties.
+ * @param other
+ */
+void UmlOperation::copyTo(UmlElement* other)
+{
+   if (other != nullptr && className() == other->className())
+   {
+      auto obj = dynamic_cast<UmlOperation*>(other);
+      Q_ASSERT(obj != nullptr);
+      obj->clearParameter();
+      obj->clearTemplate();
+      super::copyTo(obj);
+   }
+}
 
 /**
  * Appends a new parameter to the operation.
@@ -463,9 +485,9 @@ void UmlOperation::dispose(bool disposing)
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlOperation::serialize(QJsonObject& json, bool read, int version)
+void UmlOperation::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();
@@ -525,11 +547,10 @@ void UmlOperation::serialize(QJsonObject& json, bool read, int version)
       // Operation parameter:
       {
          QJsonArray array;
-         QListIterator<UmlParameterPtr> iter(data->parameter);
-         while (iter.hasNext())
+         for (auto param : data->parameter)
          {
             QJsonObject obj;
-            iter.next()->serialize(obj, read, version);
+            param->serialize(obj, read, version);
             array.append(obj);
          }
          json[KPropParameter] = array;
@@ -538,11 +559,10 @@ void UmlOperation::serialize(QJsonObject& json, bool read, int version)
       // Template parameter:
       {
          QJsonArray array;
-         QListIterator<UmlTemplateParameterPtr> iter(data->templParams);
-         while (iter.hasNext())
+         for (auto param : data->templParams)
          {
             QJsonObject obj;
-            iter.next()->serialize(obj, read, version);
+            param->serialize(obj, read, version);
             array.append(obj);
          }
          json[KPropTemplParam] = array;

@@ -159,11 +159,11 @@ void UmlTemplateBinding::dispose(bool disposing)
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlTemplateBinding::serialize(QJsonObject& json, bool read, int version)
+void UmlTemplateBinding::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
    QJsonArray array;
 
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       array = json[KPropSubstitutions].toArray();

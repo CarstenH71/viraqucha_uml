@@ -89,13 +89,13 @@ public: // Methods
    void close();
    bool save();
 
-   void serialize(QJsonObject& json, bool read, int version) override;
    void notify(UmlElement* sender, EventType type) override;
 
    QString toString() const override;
 
 protected:
    void dispose(bool disposing) override;
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private:
    void append(DiaNode* node);

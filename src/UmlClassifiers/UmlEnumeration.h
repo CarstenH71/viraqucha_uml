@@ -54,7 +54,8 @@ public: // Methods
    void remove(Literal* obj);
    void clearLiterals();
 
-   virtual void serialize(QJsonObject& json, bool read, int version) override;
+protected:
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes 
    /// @cond

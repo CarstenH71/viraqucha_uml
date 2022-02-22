@@ -78,8 +78,6 @@ public: // Methods
    void remove(UmlTemplateParameter* par) override;
    void clearTemplate() override;
 
-   void serialize(QJsonObject& json, bool read, int version) override;
-
    QVector<Compartment*> compartments() override;
    void update(int index, Compartment* comp) override;
 
@@ -87,6 +85,7 @@ public: // Methods
 
 protected:
    void dispose(bool disposing) override;
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    ///@cond

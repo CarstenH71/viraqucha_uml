@@ -58,11 +58,9 @@ public: // Properties
    virtual bool isDirected() const;
    virtual void swap();
 
-public: // Methods
-   void serialize(QJsonObject& json, bool read, int version) override;
-
-protected:
+protected: // Methods
    void dispose(bool disposing) override;
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    ///@cond

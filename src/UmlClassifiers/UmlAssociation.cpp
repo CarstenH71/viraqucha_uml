@@ -181,9 +181,9 @@ QVector<Label*> UmlAssociation::labels()
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlAssociation::serialize(QJsonObject& json, bool read, int version)
+void UmlAssociation::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();

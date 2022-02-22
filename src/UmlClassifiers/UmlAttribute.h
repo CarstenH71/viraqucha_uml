@@ -99,8 +99,8 @@ public: // Properties
    QString signature() const;
    QString toString() const override;
 
-public: // Methods
-   void serialize(QJsonObject& json, bool read, int version) override;
+protected: // Methods
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    struct Data;

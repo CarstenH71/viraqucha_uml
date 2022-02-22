@@ -374,9 +374,9 @@ void UmlClassifier::dispose(bool disposing)
  * @param read True if reading, otherwise writing.
  * @param version File version number of the ViraquchaUML project.
  */
-void UmlClassifier::serialize(QJsonObject& json, bool read, int version)
+void UmlClassifier::serialize(QJsonObject& json, bool read, bool flat, int version)
 {
-   super::serialize(json, read, version);
+   super::serialize(json, read, flat, version);
    if (read)
    {
       data->name = json[KPropName].toString();

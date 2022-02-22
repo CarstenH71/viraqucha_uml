@@ -94,12 +94,12 @@ public: // Methods
    void clearTemplate() override;
 
    void update(int index, Compartment* comp) override;
-   void serialize(QJsonObject& json, bool read, int version) override;
 
    QString toString() const override;
 
 protected:
    void dispose(bool disposing) override;
+   void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
    /// @cond
