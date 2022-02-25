@@ -273,7 +273,7 @@ void UmlElement::setOwner(UmlCompositeElement* value)
 /**
  * Copies properties to another UmlElement object of same class name.
  *
- * @param other
+ * @param other Other UmlElement object to be copied to
  */
 void UmlElement::copyTo(UmlElement* other)
 {
@@ -286,9 +286,10 @@ void UmlElement::copyTo(UmlElement* other)
 }
 
 /**
- * Copies properties to a byte array.
+ * Copies serialized properties of the UmlElement object to a byte array.
  *
- * @param array
+ * This function can be used e.g. to store the UmlElement object as a serialized string on the Clipboard.
+ * @param array QByteArray object to receive serialized properties
  */
 void UmlElement::copyTo(QByteArray& array)
 {
@@ -311,7 +312,7 @@ void UmlElement::dispose()
 }
 
 /**
- * Attaches an UmlLink object to the UmlElement object.
+ * Attaches a UmlLink object to the UmlElement object.
  *
  * @param link UmlLink object to be attached.
  */
@@ -324,7 +325,7 @@ void UmlElement::linkto(UmlLink* link)
 }
 
 /**
- * Detaches an UmlLink object from the UmlElement object.
+ * Detaches a UmlLink object from the UmlElement object.
  *
  * @param link UmlLink object to be detached.
  */
@@ -337,7 +338,7 @@ void UmlElement::unlink(UmlLink* link)
 }
 
 /**
- * Checks whether an UmlLink object is already attached to the UmlElement object.
+ * Checks whether a UmlLink object is already attached to the UmlElement object.
  *
  * @param link UmlLink object to be checked. Must not be nullptr.
  * @returns True, if the UmlLink object is already attached; false otherwise.

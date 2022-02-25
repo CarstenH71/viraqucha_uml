@@ -55,6 +55,7 @@
 
 /**
  * Initializes a new object of the GeneralTab class.
+ *
  * @param parent Parent widget.
  * @param elem UmlElement object to be edited.
  */
@@ -83,7 +84,9 @@ GeneralTab::~GeneralTab()
 
 /**
  * Validates user input.
- * @returns True, if input is valid; false otherwise.
+ *
+ * Always returns true, since no validation is necessary.
+ * @returns Always true
  */
 bool GeneralTab::validateInput()
 {

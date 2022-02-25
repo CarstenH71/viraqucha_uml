@@ -29,9 +29,9 @@
 
 /**
  * @class StringProvider
- * @brief Provides translatable strings and string lists for windows and dialogs
+ * @brief Provides translatable strings and string lists for windows and dialogs.
  * @since 1.0
- * @ingroup GUI
+ * @ingroup GuiResources
  */
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -46,6 +46,8 @@ StringProvider::StringProvider()
    _aggregations << tr("None") << tr("Shared") << tr("Composite");
    _directions << "" << tr("in") << tr("out") << tr("inout") << tr("return");
    _effects << "" << tr("create") << tr("delete") << tr("read") << tr("update");
+   _languages << "" << tr("Ada95") << tr("C++") << tr("C#") << tr("D") << tr("Delphi") << tr("Go") << tr("Java")
+      << tr("Python") << tr("Smalltalk") << tr("Swift");
    _multiplicities << "0" << "1" << "*" << "0..1" << "1..*";
    _primitiveTypes << "" << tr("bool") << tr("char") << tr("double") << tr("float") << tr("int") << tr("long")
       << tr("short") << tr("string") << tr("uint") << tr("ulong") << tr("ushort") << tr("void");
@@ -97,6 +99,12 @@ QStringList& StringProvider::directions()
 QStringList& StringProvider::effects()
 {
    return instance()._effects;
+}
+
+/** Gets the list of supported languages. */
+QStringList& StringProvider::languages()
+{
+   return instance()._languages;
 }
 
 /** Gets the list of multiplicities. */

@@ -34,8 +34,10 @@
 
 class UMLCLASSIFIERS_EXPORT UmlInterface : public UmlClassifier
 {
+   ///@cond
    Q_GADGET
    typedef UmlClassifier super;
+   ///@endcond
 public: // Constructors
    UmlInterface();
    UmlInterface(QUuid id);

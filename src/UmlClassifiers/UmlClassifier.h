@@ -44,8 +44,10 @@ class UMLCLASSIFIERS_EXPORT UmlClassifier : public UmlCompositeElement,
    public IStereotypedElement,
    public ITemplatableElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlCompositeElement super;
+   ///@endcond
 public: // Constructors
    UmlClassifier();
    UmlClassifier(QUuid id);

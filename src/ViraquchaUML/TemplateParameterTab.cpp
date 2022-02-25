@@ -26,7 +26,6 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "TemplateParameterTab.h"
-#include "Globals.h"
 #include "MessageBox.h"
 
 #include "ITemplatableElement.h"

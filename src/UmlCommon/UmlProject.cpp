@@ -54,7 +54,7 @@
  * UmlElement) of the data model must be registered in an object of this class in order to be serialized. UmlProject 
  * uses the unique identifiers of the UmlElement objects to identify the objects both in memory and in mass storage.
  *
- * UmlProject writes and reads the files of the memory objects into a directory with the following structure:
+ * UmlProject writes and reads the files of the memory objects into a folder with the following structure:
  *
  * A JSON file with the extension UPRJ (UML Project) contains an array of UmlElement objects that are assigned (known) 
  * to the project. The array contains the class name and the identifier of each object. This enables the reconstruction 
@@ -88,9 +88,9 @@
       std::cout << "Error on creation: " << project->errorString(); 
  * }
  * ~~~
- * This will create a new directory "myNewProject" in directory "/home/projects/" with all necessary subdirectories as
- * well as an empty UPRJ file with the same name. Note that you must always call function create() before using the 
- * project! Otherwise, the project cannot be saved (function save() returns false).
+ * This will create a new folder "myNewProject" in folder "/home/projects/" with all necessary subfolders as well as
+ * an empty UPRJ file with the same name. Note that you must always call function create() before using the project!
+ * Otherwise, the project cannot be saved (function save() returns false).
  * If something goes wrong, the function returns false. Then property errorString() contains a description of the error.
  *
  * ### Adding and removing objects
@@ -559,7 +559,7 @@ UmlElement* UmlProject::take(QUuid id)
 }
 
 /**
- * Creates the project on a volume.
+ * Creates the project folder and its subfolders on disk.
  *
  * Call this function one time after initializing a new object of the UmlProject class. It creates the folders needed
  * to store the data of a ViraquchaUML project, that is
@@ -614,7 +614,7 @@ bool UmlProject::create(QString path, QString name)
 }
 
 /**
- * Loads a project from hard disk.
+ * Loads the project from a project file and folder.
  *
  * @param filename Name of the project file (with extension *.uprj) including path to be loaded.
  * @returns true if successful, false if a parse error occurred or the project or an element file cannot be read.
@@ -623,7 +623,7 @@ bool UmlProject::load(QString filename)
 {
    setErrorString("");
 
-   // Skip if it is not a project file and directory:
+   // Skip if it is not a project file and folder:
    if (!isProject(filename))
    {
       setErrorString(QString(KNoProjectError).arg(filename));
@@ -721,9 +721,9 @@ bool UmlProject::load(QString filename)
 }
 
 /**
- * Saves a project to hard disk.
+ * Saves the project to a project file and folder.
  *
- * Note: If the project does not yet exist on hard disk, call function create() first. This function assumes that the
+ * Note: If the project does not yet exist on disk, call function create() first. This function assumes that the
  * subfolder structure is already created. If not, it will return false.
  *
  * @param filename File name including path of the project file (with file extension *.uprj) to be saved.
@@ -733,7 +733,7 @@ bool UmlProject::save(QString filename)
 {
    setErrorString("");
 
-   // Skip if it is not a project file and directory:
+   // Skip if it is not a project file and folder:
    if (!isProject(filename))
    {
       setErrorString(QString(KNoProjectError).arg(filename));
@@ -743,7 +743,7 @@ bool UmlProject::save(QString filename)
    // Variables needed to compute the current save in percent:
    int count = data->elements.size(), current = 1;
 
-   // Write the project file down to the directory:
+   // Write the project file down to the folder:
    QSaveFile prjfile(filename);
    if (prjfile.open(QIODevice::WriteOnly | QIODevice::Truncate))
    {
@@ -844,9 +844,9 @@ void UmlProject::dispose()
 /** 
  * Adds a file name to the list of files to be removed. 
  *
- * If a file needs to be deleted from the project directories, it should not be deleted directly! Instead it should be
+ * If a file needs to be deleted from the project folders, it should not be deleted directly! Instead it should be
  * added to the list of files to be removed in the UmlProject object. The UmlProject object takes care of deleting
- * the file from the directories and from the project file (*.uprj) on saving (lazy delete), thus preventing invalid
+ * the file from the folders and from the project file (*.uprj) on saving (lazy delete), thus preventing invalid
  * projects.
  */
 void UmlProject::removeFile(QString filename)

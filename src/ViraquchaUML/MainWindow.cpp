@@ -27,7 +27,6 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "MainWindow.h"
 
-#include "Globals.h"
 #include "DiagramPage.h"
 #include "DiagramScene.h"
 #include "StartPage.h"
@@ -36,6 +35,7 @@
 #include "NewProjectDialog.h"
 #include "ProjectTreeModel.h"
 #include "PropertiesDialog.h"
+#include "Viraqucha.h"
 
 #include "UmlDiagram.h"
 #include "UmlClass.h"

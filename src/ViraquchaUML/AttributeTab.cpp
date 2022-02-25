@@ -24,7 +24,6 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "AttributeTab.h"
-#include "Globals.h"
 #include "StringProvider.h"
 
 #include "UmlAttribute.h"

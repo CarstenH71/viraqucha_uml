@@ -35,8 +35,10 @@
 
 class UMLCLASSIFIERS_EXPORT UmlAttribute : public UmlElement, public IProperty
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlAttribute();
    UmlAttribute(QUuid id);
@@ -103,8 +105,10 @@ protected: // Methods
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlAttribute> UmlAttributePtr;

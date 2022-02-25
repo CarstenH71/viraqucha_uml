@@ -29,11 +29,11 @@
 #include <QMap>
 
 /**
-* @class UmlElementFactory
-* @brief The UmlElementFactory class implements a factory building UmlElement objects from class names.
-* @since 1.0
-* @ingroup UmlCommon
-*/
+ * @class UmlElementFactory
+ * @brief The UmlElementFactory class implements a factory building UmlElement objects from class names.
+ * @since 1.0
+ * @ingroup UmlCommon
+ */
 
 //---------------------------------------------------------------------------------------------------------------------
 // Internal struct hiding implementation details

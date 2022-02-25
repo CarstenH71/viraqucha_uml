@@ -123,19 +123,19 @@ public:
  */
 void initCommon()
 {
-    if (!isInitialized)
-    {
-        auto& factory = UmlElementFactory::instance();
-        factory.subscribe(UmlAbstractionBuilder::className(), new UmlAbstractionBuilder());
-        factory.subscribe(UmlComment::staticMetaObject.className(), new UmlCommentBuilder());
-        factory.subscribe(UmlDependencyBuilder::className(), new UmlDependencyBuilder());
-        factory.subscribe(UmlDiagram::staticMetaObject.className(), new UmlDiagramBuilder());
-        factory.subscribe(UmlModel::staticMetaObject.className(), new UmlModelBuilder());
-        factory.subscribe(UmlNesting::staticMetaObject.className(), new UmlNestingBuilder());
-        factory.subscribe(UmlLink::staticMetaObject.className(), new UmlLinkBuilder());
-        factory.subscribe(UmlPackage::staticMetaObject.className(), new UmlPackageBuilder());
-        factory.subscribe(UmlTemplateBinding::staticMetaObject.className(), new UmlTemplateBindingBuilder());
-        factory.subscribe(UmlUsageBuilder::className(), new UmlUsageBuilder());
-        isInitialized = true;
-    }
+   if (!isInitialized)
+   {
+      auto& factory = UmlElementFactory::instance();
+      factory.subscribe(UmlAbstractionBuilder::className(), new UmlAbstractionBuilder());
+      factory.subscribe(UmlComment::staticMetaObject.className(), new UmlCommentBuilder());
+      factory.subscribe(UmlDependencyBuilder::className(), new UmlDependencyBuilder());
+      factory.subscribe(UmlDiagram::staticMetaObject.className(), new UmlDiagramBuilder());
+      factory.subscribe(UmlModel::staticMetaObject.className(), new UmlModelBuilder());
+      factory.subscribe(UmlNesting::staticMetaObject.className(), new UmlNestingBuilder());
+      factory.subscribe(UmlLink::staticMetaObject.className(), new UmlLinkBuilder());
+      factory.subscribe(UmlPackage::staticMetaObject.className(), new UmlPackageBuilder());
+      factory.subscribe(UmlTemplateBinding::staticMetaObject.className(), new UmlTemplateBindingBuilder());
+      factory.subscribe(UmlUsageBuilder::className(), new UmlUsageBuilder());
+      isInitialized = true;
+   }
 }

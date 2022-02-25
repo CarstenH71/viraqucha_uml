@@ -43,8 +43,10 @@ class UMLCLASSIFIERS_EXPORT UmlOperation : public UmlElement,
    public IMultiplicityElement,
    public ITemplatableElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlOperation();
    UmlOperation(QUuid id);
@@ -109,8 +111,10 @@ protected:
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlOperation> UmlOperationPtr;

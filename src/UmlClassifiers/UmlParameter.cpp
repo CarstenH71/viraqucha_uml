@@ -89,7 +89,7 @@ UmlParameter::~UmlParameter()
 }
 
 /**
- * @brief Gets the name of the parameter.
+ * Gets the name of the parameter.
  */
 QString UmlParameter::name() const
 {
@@ -97,7 +97,7 @@ QString UmlParameter::name() const
 }
 
 /**
- * @brief Sets the name of the parameter.
+ * Sets the name of the parameter.
  */
 void UmlParameter::setName(QString value)
 {
@@ -105,7 +105,7 @@ void UmlParameter::setName(QString value)
 }
 
 /**
- * @brief Gets the comment of the parameter.
+ * Gets the comment of the parameter.
  */
 QString UmlParameter::comment() const
 {
@@ -113,7 +113,7 @@ QString UmlParameter::comment() const
 }
 
 /**
- * @brief Sets the comment of the parameter.
+ * Sets the comment of the parameter.
  */
 void UmlParameter::setComment(QString value)
 {
@@ -121,7 +121,7 @@ void UmlParameter::setComment(QString value)
 }
 
 /**
- * @brief Gets the default value of the parameter.
+ * Gets the default value of the parameter.
  */
 QString UmlParameter::defaultValue() const
 {
@@ -129,7 +129,7 @@ QString UmlParameter::defaultValue() const
 }
 
 /**
- * @brief Sets the default value of the parameter.
+ * Sets the default value of the parameter.
  */
 void UmlParameter::setDefaultValue(QString value)
 {
@@ -137,7 +137,7 @@ void UmlParameter::setDefaultValue(QString value)
 }
 
 /**
- * @brief Gets the direction (in, out, inout) of the parameter.
+ * Gets the direction (in, out, inout) of the parameter.
  */
 ParameterDirectionKind UmlParameter::direction() const
 {
@@ -145,7 +145,7 @@ ParameterDirectionKind UmlParameter::direction() const
 }
 
 /**
- * @brief Sets the direction (in, out, inout) of the parameter.
+ * Sets the direction (in, out, inout) of the parameter.
  */
 void UmlParameter::setDirection(ParameterDirectionKind value)
 {
@@ -153,7 +153,7 @@ void UmlParameter::setDirection(ParameterDirectionKind value)
 }
 
 /**
- * @brief Gets the effect of the parameter.
+ * Gets the effect of the parameter.
  */
 ParameterEffectKind UmlParameter::effect() const
 {
@@ -161,7 +161,7 @@ ParameterEffectKind UmlParameter::effect() const
 }
 
 /**
- * @brief Sets the effect of the parameter.
+ * Sets the effect of the parameter.
  */
 void UmlParameter::setEffect(ParameterEffectKind value)
 {
@@ -169,7 +169,7 @@ void UmlParameter::setEffect(ParameterEffectKind value)
 }
 
 /**
- * @brief Gets a value indicating whether the parameter is an exception.
+ * Gets a value indicating whether the parameter is an exception.
  */
 bool UmlParameter::isException() const
 {
@@ -177,7 +177,7 @@ bool UmlParameter::isException() const
 }
 
 /**
- * @brief Sets a value indicating whether the parameter is an exception.
+ * Sets a value indicating whether the parameter is an exception.
  */
 void UmlParameter::isException(bool value)
 {
@@ -185,7 +185,7 @@ void UmlParameter::isException(bool value)
 }
 
 /**
- * @brief Gets a value indicating whether the parameter is a stream.
+ * Gets a value indicating whether the parameter is a stream.
  */
 bool UmlParameter::isStream() const
 {
@@ -193,7 +193,7 @@ bool UmlParameter::isStream() const
 }
 
 /**
- * @brief Sets a value indicating whether the parameter is a stream.
+ * Sets a value indicating whether the parameter is a stream.
  */
 void UmlParameter::isStream(bool value)
 {
@@ -201,7 +201,7 @@ void UmlParameter::isStream(bool value)
 }
 
 /**
- * @brief Gets the data type of the parameter.
+ * Gets the data type of the parameter.
  */
 QString UmlParameter::type() const
 {
@@ -209,7 +209,7 @@ QString UmlParameter::type() const
 }
 
 /**
- * @brief Sets the data type of the parameter.
+ * Sets the data type of the parameter.
  */
 void UmlParameter::setType(QString value)
 {
@@ -257,7 +257,7 @@ void UmlParameter::setUpper(quint32 value)
 }
 
 /**
- * @brief Gets the signature of the parameter.
+ * Gets the signature of the parameter.
  */
 QString UmlParameter::signature() const
 {
@@ -275,7 +275,7 @@ QString UmlParameter::signature() const
 }
 
 /**
- * @brief Serializes properties of the UmlParameter instance to a JSON file.
+ * Serializes properties of the UmlParameter instance to a JSON file.
  *
  * @param json JSON object to be serialized to.
  * @param read True if reading, otherwise writing.

@@ -171,12 +171,10 @@ void UmlClassifier::setLanguage(QString value)
 QList<UmlAttribute*> UmlClassifier::attributes() const
 {
    QList<UmlAttribute*> list;
-   
-   QList<UmlElement*> temp = elements();
-   QListIterator<UmlElement*> iter(temp);
-   while (iter.hasNext())
+   QList<UmlElement*> elems = elements(); // Do the copy only once
+   for (auto* elem : elems)
    {
-      auto* obj = dynamic_cast<UmlAttribute*>(iter.next());
+      auto* obj = dynamic_cast<UmlAttribute*>(elem);
       if (obj != nullptr)
       {
          list.append(obj);
@@ -190,12 +188,10 @@ QList<UmlAttribute*> UmlClassifier::attributes() const
 QList<UmlOperation*> UmlClassifier::operations() const
 {
    QList<UmlOperation*> list;
-
-   QList<UmlElement*> temp = elements();
-   QListIterator<UmlElement*> iter(temp);
-   while (iter.hasNext())
+   QList<UmlElement*> elemList = elements(); // Do the copy only once
+   for (auto* elem : elemList)
    {
-      auto* obj = dynamic_cast<UmlOperation*>(iter.next());
+      auto* obj = dynamic_cast<UmlOperation*>(elem);
       if (obj != nullptr)
       {
          list.append(obj);
@@ -209,12 +205,10 @@ QList<UmlOperation*> UmlClassifier::operations() const
 QList<UmlTemplateBinding*> UmlClassifier::templateBindings() const
 {
    QList<UmlTemplateBinding*> list;
-
-   QList<UmlLink*> temp = links();
-   QListIterator<UmlLink*> iter(temp);
-   while (iter.hasNext())
+   QList<UmlLink*> linkList = links(); // Do the copy only once
+   for (auto* link : linkList)
    {
-      auto* obj = dynamic_cast<UmlTemplateBinding*>(iter.next());
+      auto* obj = dynamic_cast<UmlTemplateBinding*>(link);
       if (obj != nullptr)
       {
          list.append(obj);
@@ -228,8 +222,11 @@ QList<UmlTemplateBinding*> UmlClassifier::templateBindings() const
 QList<UmlTemplateParameter*> UmlClassifier::templateParameter() const
 {
    QList<UmlTemplateParameter*> list;
-   QListIterator<UmlTemplateParameterPtr> iter(data->templParams);
-   while (iter.hasNext()) list.append(iter.next().pointee());
+   for (auto param : data->templParams)
+   {
+      list.append(param.pointee());
+   }
+
    return list;
 }
 
@@ -304,11 +301,9 @@ QVector<Compartment*> UmlClassifier::compartments()
 /** Clears all attributes from the classifier. */
 void UmlClassifier::clearAttributes()
 {
-   QList<UmlElement*> list = elements();
-   QListIterator<UmlElement*> iter(list);
-   while (iter.hasNext())
+   QList<UmlElement*> elemList = elements();
+   for (auto* elem : elemList)
    {
-      auto* elem = iter.next();
       if (elem->className() == UmlAttribute::staticMetaObject.className())
       {
          super::remove(elem);
@@ -319,11 +314,9 @@ void UmlClassifier::clearAttributes()
 /** Clears all operations from the classifier. */
 void UmlClassifier::clearOperations()
 {
-   QList<UmlElement*> list = elements();
-   QListIterator<UmlElement*> iter(list);
-   while (iter.hasNext())
+   QList<UmlElement*> elemList = elements();
+   for (auto* elem : elemList)
    {
-      auto* elem = iter.next();
       if (elem->className() == UmlOperation::staticMetaObject.className())
       {
          super::remove(elem);
@@ -414,11 +407,10 @@ void UmlClassifier::serialize(QJsonObject& json, bool read, bool flat, int versi
       // Template parameter:
       {
          QJsonArray array;
-         QListIterator<UmlTemplateParameterPtr> iter(data->templParams);
-         while (iter.hasNext())
+         for (auto param : data->templParams)
          {
             QJsonObject obj;
-            iter.next()->serialize(obj, read, version);
+            param->serialize(obj, read, version);
             array.append(obj);
          }
          json[KPropTemplParam] = array;
@@ -458,22 +450,19 @@ void UmlClassifier::update(int index, Compartment* comp)
    }
    case 1: // Attributes compartment
    {
-      auto list = attributes();
-      auto iter = QListIterator<UmlAttribute*>(list);
-      while (iter.hasNext())
+      auto atList = attributes();
+      for (auto at : atList)
       {
-         comp->addLine(iter.next()->signature());
+         comp->addLine(at->signature());
       }
       break;
    }
    case 2: // Operations compartment
    {
-      auto list = operations();
-      auto iter = QListIterator<UmlOperation*>(list);
-      while (iter.hasNext())
+      auto opList = operations();
+      for (auto op : opList)
       {
-         auto oper = iter.next();
-         comp->addLine(oper->signature(), false, oper->isAbstract());
+         comp->addLine(op->signature(), false, op->isAbstract());
       }
       break;
    }

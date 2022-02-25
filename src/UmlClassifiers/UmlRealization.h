@@ -36,8 +36,10 @@
 
 class UMLCLASSIFIERS_EXPORT UmlRealization : public UmlLink, public INamedElement, public IStereotypedElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlLink super;
+   ///@endcond
 public: // Constructors
    UmlRealization();
    UmlRealization(QUuid id);
@@ -62,6 +64,8 @@ protected: // Methods
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };

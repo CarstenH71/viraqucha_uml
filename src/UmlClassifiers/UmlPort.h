@@ -35,8 +35,10 @@
 
 class UMLCLASSIFIERS_EXPORT UmlPort : public UmlElement, public IProperty
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlPort();
    UmlPort(QUuid id);
@@ -106,8 +108,10 @@ protected: // Methods
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlPort> UmlPortPtr;

@@ -31,6 +31,8 @@ TARGET   = ViraquchaUML
 DESTDIR  = ../../bin
 CONFIG  += qt c++17
 
+include (../GuiCommon/GuiCommon.pri)
+include (../GuiResources/GuiResources.pri)
 include (../UmlCommon/UmlCommon.pri)
 include (../UmlClassifiers/UmlClassifiers.pri)
 
@@ -38,8 +40,8 @@ DEPENDPATH  += .
 MOC_DIR      = ./moc
 OBJECTS_DIR  = ./obj
 UI_DIR       = ./ui
-RCC_DIR      = ./resources
-RESOURCES    = ./ViraquchaUML.qrc
+RCC_DIR      = ./rcc
+RESOURCES    = ../GuiResources/GuiResources.qrc
 
 HEADERS += \
 ./AssociationShape.h \
@@ -56,15 +58,12 @@ HEADERS += \
 ./EdgeShape.h \
 ./GeneralizationShape.h \
 ./GeneralTab.h \
-./Globals.h \
 ./InsertCommand.h \
 ./IPropertiesTab.h \
 ./IShapeBuilder.h \
 ./LinkShape.h \
 ./MainWindow.h \
-./MessageBox.h \
 ./MultiplicityTab.h \
-./MultiplicityUtils.h \
 ./NewDiagramDialog.h \
 ./NewProjectDialog.h \
 ./NodeShape.h \
@@ -87,8 +86,7 @@ HEADERS += \
 ./TreeIconProvider.h \
 ./UndoCommand.h \
 ./MoveCommand.h \
-./StringProvider.h \
-    CommandStack.h
+./CommandStack.h
 
 FORMS += \
 ./AttributesTab.ui \
@@ -126,9 +124,7 @@ SOURCES += \
 ./LinkShape.cpp \
 ./main.cpp \
 ./MainWindow.cpp \
-./MessageBox.cpp \
 ./MultiplicityTab.cpp \
-./MultiplicityUtils.cpp \
 ./NewDiagramDialog.cpp \
 ./NewProjectDialog.cpp \
 ./NodeShape.cpp \
@@ -147,7 +143,6 @@ SOURCES += \
 ./TemplateParameterTab.cpp \
 ./ToolBoxManager.cpp \
 ./TreeIconProvider.cpp \
-./StringProvider.cpp \
 ./UndoCommand.cpp \
-    CommandStack.cpp \
-    MoveCommand.cpp
+./CommandStack.cpp \
+./MoveCommand.cpp

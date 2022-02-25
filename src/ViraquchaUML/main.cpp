@@ -25,7 +25,7 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#include "Globals.h"
+#include "Viraqucha.h"
 #include "MainWindow.h"
 
 #include "UmlCommon.h"
@@ -41,7 +41,7 @@
 
 int main(int argc, char *argv[])
 {
-   Q_INIT_RESOURCE(ViraquchaUML);
+   Q_INIT_RESOURCE(GuiResources);
 
    QApplication app(argc, argv);
    QCoreApplication::setOrganizationName("Viraqucha");

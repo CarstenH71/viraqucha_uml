@@ -348,10 +348,11 @@ QString UmlAttribute::signature() const
    return result;
 }
 
- QString UmlAttribute::toString() const
- {
-    return signature();
- }
+/** Gets a string representation of this object. */
+QString UmlAttribute::toString() const
+{
+   return signature();
+}
 
 /**
  * Serializes properties of the UmlAttribute object to a JSON file.

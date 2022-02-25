@@ -24,6 +24,7 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "ClassifierTab.h"
+#include "StringProvider.h"
 #include "UmlClassifier.h"
 #include "UmlClass.h"
 
@@ -31,12 +32,22 @@
 
 /**
  * @class ClassifierTab
- * @brief Implements a tab for classifier properties.
+ * @brief The ClassifierTab class implements a widget for editing UML classifier.
  * @since 1.0
  * @ingroup GUI
  */
 
-ClassifierTab::ClassifierTab(QWidget *parent, UmlClassifier* elem)
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the ClassifierTab class.
+ *
+ * @param parent Parent widget
+ * @param elem UmlClassifier object to be edited
+ */
+ClassifierTab::ClassifierTab(QWidget* parent, UmlClassifier* elem)
 : super(parent)
 , _element(elem)
 {
@@ -48,11 +59,20 @@ ClassifierTab::~ClassifierTab()
 {
 }
 
+/**
+ * Validates user input.
+ *
+ * Always returns true, since no validation is necessary.
+ * @returns Always true
+ */
 bool ClassifierTab::validateInput()
 {
    return true;
 }
 
+/**
+ * Applies changes to the properties of the UmlClassifier object.
+ */
 void ClassifierTab::applyChanges()
 {
    _element->setLanguage(ui.languageCombo->currentText());
@@ -65,13 +85,13 @@ void ClassifierTab::applyChanges()
    _element->isLeaf(ui.isLeafBox->isChecked());
 }
 
+/**
+ * Updates the controls of this widget.
+ */
 void ClassifierTab::updateControls()
 {
-   // TODO: This is only blatancy - currently none of the languages are supported by generators.
-   // But to make later changes easier...
-   QStringList list;
-   list << tr("") << tr("Ada95") << tr("C++") << tr("C#") << tr("D") << tr("Java") << tr("Python");
-   ui.languageCombo->addItems(list);
+   ui.languageCombo->addItems(StringProvider::languages());
+   ui.languageCombo->setCurrentIndex(StringProvider::languages().indexOf(_element->language()));
    ui.languageCombo->setCurrentText(_element->language());
 
    ui.isAbstractBox->setChecked(_element->isAbstract());

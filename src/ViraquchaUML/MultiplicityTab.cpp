@@ -24,8 +24,8 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "MultiplicityTab.h"
-#include "Globals.h"
 #include "StringProvider.h"
+#include "Viraqucha.h"
 
 #include "IMultiplicityElement.h"
 #include "MultiplicityUtils.h"

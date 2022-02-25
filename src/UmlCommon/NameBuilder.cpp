@@ -27,9 +27,17 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "NameBuilder.h"
 
-#include <QList>
-#include <QListIterator>
-#include <QMap>
+#include <QStringList>
+
+/**
+ * @class NameBuilder
+ * @brief Creates a unique name for an INamedElement object
+ * @since 1.0
+ * @ingroup UmlCommon
+ *
+ * The NameBuilder class creates a unique name for an INamedElement object that will be stored in a UmlCompositeElement
+ * object.
+ */
 
 //---------------------------------------------------------------------------------------------------------------------
 // Internal struct hiding implementation details
@@ -37,7 +45,8 @@
 /// @cond
 struct NameBuilder::Data
 {
-   QMap<QString, INamedElement*> names;
+   // A simple list should be fast enough. I do not expect any composite to have more than 10.000 elements!
+   QStringList names;
 };
 /// @endcond
 
@@ -45,18 +54,23 @@ struct NameBuilder::Data
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Initializes a new object of the NameBuilder class.
+ *
+ * The constructor creates a list of named elements found in the UmlCompositeElement object provided. The list is used
+ * for searching equal names when creating the new name.
+ * @param owner UmlCompositeElement object containing named elements (must not be nullptr)
+ */
 NameBuilder::NameBuilder(UmlCompositeElement* owner)
 : data(new Data())
 {
    Q_ASSERT(owner != nullptr);
-   
-   QListIterator<UmlElement*> iter(owner->elements());
-   while (iter.hasNext())
+   for (auto elem : owner->elements())
    {
-      auto elem = dynamic_cast<INamedElement*>(iter.next());
-      if (elem != nullptr && !data->names.contains(elem->name()))
+      auto named = dynamic_cast<INamedElement*>(elem);
+      if (named != nullptr && !data->names.contains(named->name()))
       {
-         data->names.insert(elem->name(), elem);
+         data->names.append(named->name());
       }
    }
 }
@@ -67,26 +81,28 @@ NameBuilder::~NameBuilder()
 }
 
 /**
- * Builds a name for a given named element.
+ * Builds a unique name for a given named element.
  * 
- * The name is built by adding a postfix number to a base name. The postfix number is automatically increased as long
- * as the owner of the named element contains another named element with the same name. Note that the named element
- * must not be contained in the owner's list of elements!
- *
- * @param elem Named element receiving the new name.
- * @param base Name base used to build the name (e.g."Class").
- * @returns A new unique name for the named element.
+ * The name is built by adding a postfix number to a base name (like &quot;Class1&quot;, where &quot;Class&quot; is the
+ * base name). The postfix number starts at 1 and is increased by 1 until no other named element with the same name can
+ * be found in the owner's list of elements.
+ * Note that the named element must not be contained in the owner's list of elements, otherwise the function will never
+ * return!
+ * @param elem Named element receiving the new name
+ * @param base Name base used to build the name
+ * @returns A new unique name for the named element
  */
 QString NameBuilder::buildFor(INamedElement* elem, QString base)
 {
    if (elem == nullptr) return QString();
    
-   int cnt = 0;
-   QString name = QString("%1%2").arg(base).arg(cnt);
+   int count = 1;
+   QString form = QString("%1%2");
+   QString name = form.arg(base).arg(count);
    while (data->names.contains(name))
    {
-      ++cnt;
-      name = QString("%1%2").arg(base).arg(cnt);
+      ++count;
+      name = form.arg(base).arg(count);
    }
 
    elem->setName(name);

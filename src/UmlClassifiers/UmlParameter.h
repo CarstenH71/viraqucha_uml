@@ -89,8 +89,10 @@ public: // Methods
    quint32 refCount() const;
 
 public: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
 
 typedef IntrusivePtr<UmlParameter> UmlParameterPtr;

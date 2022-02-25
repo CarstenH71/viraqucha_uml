@@ -26,6 +26,12 @@
 #---------------------------------------------------------------------------------------------------------------------
 
 TEMPLATE = subdirs
-SUBDIRS += UmlCommon UmlClassifiers ViraquchaUML
+SUBDIRS  = \
+  GuiCommon \
+  GuiResources \
+  UmlCommon \
+  UmlClassifiers \
+  ViraquchaUML
+
 UmlClassifiers.depends = UmlCommon
-ViraquchaUML.depends = UmlCommon UmlClassifiers
+ViraquchaUML.depends = GuiCommon GuiResources UmlCommon UmlClassifiers

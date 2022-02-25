@@ -26,7 +26,6 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "OperationTab.h"
-#include "Globals.h"
 
 #include "UmlOperation.h"
 #include "UmlProject.h"

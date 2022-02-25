@@ -60,7 +60,7 @@ UmlParameterSubstitution::~UmlParameterSubstitution()
 }
 
 /**
- * @brief Gets the name of the template parameter that shall be substituted.
+ * Gets the name of the template parameter that shall be substituted.
  */
 QString UmlParameterSubstitution::templParam() const
 {
@@ -68,7 +68,7 @@ QString UmlParameterSubstitution::templParam() const
 }
 
 /**
- * @brief Sets the name of the template parameter that shall be substituted.
+ * Sets the name of the template parameter that shall be substituted.
  */
 void UmlParameterSubstitution::setTemplParam(QString value)
 {
@@ -76,7 +76,7 @@ void UmlParameterSubstitution::setTemplParam(QString value)
 }
 
 /**
- * @brief Gets the name of the actual parameter that substitutes the template parameter.
+ * Gets the name of the actual parameter that substitutes the template parameter.
  */
 QString UmlParameterSubstitution::actualParam() const
 {
@@ -84,7 +84,7 @@ QString UmlParameterSubstitution::actualParam() const
 }
 
 /**
- * @brief Sets the name of the actual parameter that substitutes the template parameter.
+ * Sets the name of the actual parameter that substitutes the template parameter.
  */
 void UmlParameterSubstitution::setActualParam(QString value)
 {
@@ -92,7 +92,7 @@ void UmlParameterSubstitution::setActualParam(QString value)
 }
 
 /**
- * @brief Serializes properties of the UmlParameterSubstitution instance to a JSON file.
+ * Serializes properties of the UmlParameterSubstitution instance to a JSON file.
  *
  * @param json JSON object to be serialized to.
  * @param read True if reading, otherwise writing.

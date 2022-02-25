@@ -26,7 +26,6 @@
 // See https://github.com/carstenhuber/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "AttributesTab.h"
-#include "Globals.h"
 #include "MessageBox.h"
 #include "ProjectTreeModel.h"
 #include "PropertiesDialog.h"
@@ -651,7 +650,7 @@ void AttributesTab::moveItemDown()
 }
 
 /**
- * Enables or disables the buttons of this dialog depending on the currently selected model index.
+ * Enables or disables the buttons of this widget depending on the currently selected model index.
  * @param current Model index currently selected
  * @param previous Model index previously selected
  */

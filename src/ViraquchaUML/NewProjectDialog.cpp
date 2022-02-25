@@ -26,8 +26,6 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "NewProjectDialog.h"
-
-#include "Globals.h"
 #include "MessageBox.h"
 
 #include <QDir>
@@ -50,6 +48,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+const QRegularExpression KFileNamePattern = QRegularExpression("[\\\\/\:\*\?\"<>\|]");
 
 NewProjectDialog::NewProjectDialog(QWidget* parent)
 : super(parent)
@@ -111,7 +110,7 @@ bool NewProjectDialog::checkName()
       return false;
    }
    
-   if (text.indexOf(Viraqucha::KFileNamePattern) != -1)
+   if (text.indexOf(KFileNamePattern) != -1)
    {
       MessageBox::warning(
          this,

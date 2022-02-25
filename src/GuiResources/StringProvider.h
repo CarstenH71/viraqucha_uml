@@ -54,6 +54,7 @@ public: // Properties
    static QStringList& aggregations();
    static QStringList& directions();
    static QStringList& effects();
+   static QStringList& languages();
    static QStringList& multiplicities();
    static QStringList& primitiveTypes();
    static QStringList& stereotypes();
@@ -64,6 +65,7 @@ private: // Attributes
    QStringList _aggregations;
    QStringList _directions;
    QStringList _effects;
+   QStringList _languages;
    QStringList _multiplicities;
    QStringList _primitiveTypes;
    QStringList _stereotypes;

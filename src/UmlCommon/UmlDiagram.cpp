@@ -351,10 +351,8 @@ void UmlDiagram::remove(DiaEdge* edge)
  */
 void UmlDiagram::removeById(QUuid id)
 {
-   QListIterator<DiaNode*> nodes(data->nodes);
-   while (nodes.hasNext())
+   for (auto* node : data->nodes)
    {
-      auto* node = nodes.next();
       if (node->element()->identifier() == id)
       {
          data->nodes.removeOne(node);
@@ -365,10 +363,8 @@ void UmlDiagram::removeById(QUuid id)
       }
    }
 
-   QListIterator<DiaEdge*> edges(data->edges);
-   while (edges.hasNext())
+   for (auto* edge : data->edges)
    {
-      auto* edge = edges.next();
       if (edge->link()->identifier() == id)
       {
          data->edges.removeOne(edge);
@@ -388,20 +384,16 @@ void UmlDiagram::removeById(QUuid id)
  */
 bool UmlDiagram::contains(QUuid id)
 {
-   QListIterator<DiaNode*> nodes(data->nodes);
-   while (nodes.hasNext())
+   for (auto* node : data->nodes)
    {
-      auto* node = nodes.next();
       if (node->element()->identifier() == id)
       {
          return true;
       }
    }
 
-   QListIterator<DiaEdge*> edges(data->edges);
-   while (edges.hasNext())
+   for (auto* edge : data->edges)
    {
-      auto* edge = edges.next();
       if (edge->link()->identifier() == id)
       {
          return true;
@@ -417,28 +409,20 @@ bool UmlDiagram::contains(QUuid id)
 void UmlDiagram::clear()
 {
    // Delete DiaNode objects first:
+   for (auto* node : data->nodes)
    {
-      QListIterator<DiaNode*> iter(data->nodes);
-      while (iter.hasNext())
-      {
-         auto* node = iter.next();
-         node->element()->observers().removeOne(this);
-         delete node;
-      }
-      data->nodes.clear();
+      node->element()->observers().removeOne(this);
+      delete node;
    }
+   data->nodes.clear();
 
    // Then delete DiaEdge objects:
+   for (auto* edge : data->edges)
    {
-      QListIterator<DiaEdge*> iter(data->edges);
-      while (iter.hasNext())
-      {
-         auto* edge = iter.next();
-         edge->link()->observers().removeOne(this);
-         delete edge;
-      }
-      data->edges.clear();
+      edge->link()->observers().removeOne(this);
+      delete edge;
    }
+   data->edges.clear();
 }
 
 /**

@@ -56,7 +56,7 @@ struct UmlTemplateBinding::Data
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * @brief Initializes a new instance of the UmlTemplateBinding class with a new unique identifier.
+ * Initializes a new instance of the UmlTemplateBinding class with a new unique identifier.
  */
 UmlTemplateBinding::UmlTemplateBinding()
 : data(new Data())
@@ -65,7 +65,7 @@ UmlTemplateBinding::UmlTemplateBinding()
 }
 
 /**
- * @brief Initializes a new instance of the UmlTemplateBinding class with an existing identifier.
+ * Initializes a new instance of the UmlTemplateBinding class with an existing identifier.
  *
  * This constructor is used by serialization and the unit tests. It does not create a new identifier but uses the given
  * one. To create a new instance with a new unique identifier, use constructor UmlPackage() instead.
@@ -89,7 +89,7 @@ QString UmlTemplateBinding::className() const
 }
 
 /**
- * @brief Returns true, since template bindings are always directed.
+ * Returns true, since template bindings are always directed.
  */
 bool UmlTemplateBinding::isDirected() const
 {
@@ -97,7 +97,7 @@ bool UmlTemplateBinding::isDirected() const
 }
 
 /**
- * @brief Gets a list of parameter substitutions of the template binding.
+ * Gets a list of parameter substitutions of the template binding.
  */
 QList<UmlParameterSubstitution*> UmlTemplateBinding::substitutions() const
 {
@@ -105,7 +105,7 @@ QList<UmlParameterSubstitution*> UmlTemplateBinding::substitutions() const
 }
 
 /**
- * @brief Appends a parameter substitution to the template binding.
+ * Appends a parameter substitution to the template binding.
  */
 void UmlTemplateBinding::append(UmlParameterSubstitution* subst)
 {
@@ -116,7 +116,7 @@ void UmlTemplateBinding::append(UmlParameterSubstitution* subst)
 }
 
 /**
- * @brief Removes a parameter substitution from the template binding.
+ * Removes a parameter substitution from the template binding.
  */
 void UmlTemplateBinding::remove(UmlParameterSubstitution* subst)
 {
@@ -127,21 +127,20 @@ void UmlTemplateBinding::remove(UmlParameterSubstitution* subst)
 }
 
 /**
- * @brief Clears all parameter substitutions from the template binding.
+ * Clears all parameter substitutions from the template binding.
  */
 void UmlTemplateBinding::clear()
 {
-   QListIterator<UmlParameterSubstitution*> iter(data->substitutions);
-   while (iter.hasNext())
+   for (auto* subst : data->substitutions)
    {
-      delete iter.next();
+      delete subst;
    }
 
    data->substitutions.clear();
 }
 
 /**
- * @brief Disposes the template binding.
+ * Disposes the template binding.
  *
  * This function is called by UmlProject::dispose() to reset all intrusive pointers owned by the binding. Do not call
  * it directly.
@@ -153,7 +152,7 @@ void UmlTemplateBinding::dispose(bool disposing)
 }
 
 /**
- * @brief Serializes properties of the UmlTemplateBinding instance to a JSON file.
+ * Serializes properties of the UmlTemplateBinding instance to a JSON file.
  *
  * @param json JSON object to be serialized to.
  * @param read True if reading, otherwise writing.
@@ -177,11 +176,10 @@ void UmlTemplateBinding::serialize(QJsonObject& json, bool read, bool flat, int 
    }
    else
    {
-      QListIterator<UmlParameterSubstitution*> iter(data->substitutions);
-      while (iter.hasNext())
+      for (auto* subst : data->substitutions)
       {
          QJsonObject obj;
-         iter.next()->serialize(obj, read, version);
+         subst->serialize(obj, read, version);
          array.append(obj);
       }
 

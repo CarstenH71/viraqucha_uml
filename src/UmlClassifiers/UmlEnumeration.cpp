@@ -134,10 +134,9 @@ void UmlEnumeration::remove(Literal* obj)
 /** Clears all Literal objects from the enumeration. */
 void UmlEnumeration::clearLiterals()
 {
-   QListIterator<Literal*> iter(data->literals);
-   while (iter.hasNext())
+   for (auto* lit : data->literals)
    {
-      delete iter.next();
+      delete lit;
    }
 
    data->literals.clear();
@@ -166,10 +165,8 @@ void UmlEnumeration::serialize(QJsonObject& json, bool read, bool flat, int vers
    }
    else
    { 
-      QListIterator<Literal*> iter(data->literals);
-      while (iter.hasNext())
+      for (auto* lit : data->literals)
       {
-         auto* lit = iter.next();
          QJsonObject obj;
          obj[KPropNumber] = lit->number();
          obj[KPropSymbol] = lit->symbol();

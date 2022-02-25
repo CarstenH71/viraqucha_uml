@@ -33,7 +33,7 @@
 #include "INamedElement.h"
 #include <QString>
 
-class UMLCOMMON_EXPORT NameBuilder
+class UMLCOMMON_EXPORT NameBuilder final
 {
 public: // Constructors
    NameBuilder(UmlCompositeElement* owner);

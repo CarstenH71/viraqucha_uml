@@ -238,9 +238,8 @@ void UmlOperation::setUpper(quint32 value)
 QList<UmlTemplateBinding*> UmlOperation::templateBindings() const
 {
    QList<UmlTemplateBinding*> result;
-
-   QList<UmlLink*> temp = links();
-   for (auto* link : temp)
+   QList<UmlLink*> linkList = links();
+   for (auto* link : linkList)
    {
       auto* bind = dynamic_cast<UmlTemplateBinding*>(link);
       if (bind != nullptr)

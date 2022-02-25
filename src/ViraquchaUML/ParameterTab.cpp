@@ -27,7 +27,6 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "ParameterTab.h"
 #include "ComboBoxDelegate.h"
-#include "Globals.h"
 #include "MessageBox.h"
 #include "MultiplicityUtils.h"
 #include "StringProvider.h"

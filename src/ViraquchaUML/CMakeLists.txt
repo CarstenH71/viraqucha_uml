@@ -54,14 +54,13 @@ add_executable(${EXE_NAME}
   ShapeFactory.cpp
   StartPage.cpp
   StartPage.ui
-  StringProvider.cpp
   TemplateBox.cpp
   TemplateParameterTab.cpp
   TemplateParameterTab.ui
   ToolBoxManager.cpp
   TreeIconProvider.cpp
   UndoCommand.cpp
-  ViraquchaUML.qrc
+  ../GuiResources/GuiResources.qrc
 )
 
 # set compile and link properties:
@@ -75,8 +74,10 @@ target_link_libraries(${EXE_NAME}
   PUBLIC
     UmlCommon
     UmlClassifiers
+    GuiResources
 )
 
+target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiResources")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlCommon")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlClassifiers")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/ViraquchaUML")

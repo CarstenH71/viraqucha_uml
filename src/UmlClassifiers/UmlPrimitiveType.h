@@ -35,8 +35,10 @@
 
 class UMLCLASSIFIERS_EXPORT UmlPrimitiveType : public UmlElement, public INamedElement
 {
+   ///@cond
    Q_GADGET
    typedef UmlElement super;
+   ///@endcond
 public: // Constructors
    UmlPrimitiveType();
    UmlPrimitiveType(QUuid id);
@@ -61,6 +63,8 @@ protected:
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes
+   ///@cond
    struct Data;
    Data* data;
+   ///@endcond
 };
