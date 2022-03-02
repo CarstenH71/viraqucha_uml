@@ -26,7 +26,6 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "GeneralTab.h"
-#include "RenameCommand.h"
 #include "StringProvider.h"
 
 #include "UmlElement.h"

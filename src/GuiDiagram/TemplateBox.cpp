@@ -34,12 +34,13 @@
 
 /**
  * @class TemplateBox
- * @brief Implements a box displaying template parameters of an element.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a box displaying template parameters of a UML Classifier.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
- * The TemplateBox class draws the rectangular area of an element displaying template parameters of the element. The 
- * rectangular area is always positioned right above the shape of the element. Its size grows upwards.
+ * The TemplateBox class draws the rectangular area of a UML Classifier displaying template parameters of the UML
+ * Classifier. The rectangular area is always positioned right above the shape of the UML Classifier. Its size grows
+ * only upwards, depending on the count of text lines to be shown in the box.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

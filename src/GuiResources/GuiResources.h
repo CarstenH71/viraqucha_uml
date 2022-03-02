@@ -32,5 +32,7 @@
 
 /**
  * @defgroup GuiResources
- * Resource classes for ViraquchaUML.
+ * @brief Resources and resource classes for ViraquchaUML
+ *
+ * The GuiResources module provides resources (icons) and helper classes (icon and string lookup) for ViraquchaUML.
  */

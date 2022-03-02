@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// RemoveCommand.h
+// RemoveCommand.cpp
 //
 // Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class RemoveCommand.
+// Description  : Implementation of class RemoveCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,43 +25,27 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
-
+#include "RemoveCommand.h"
 #include "ProjectTreeModel.h"
-#include "UndoCommand.h"
 
-#include <QModelIndex>
-#include <QPersistentModelIndex>
-
-class RemoveCommand : public UndoCommand
+RemoveCommand::RemoveCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
+: super(element, model.getProject())
+, _model(model)
+, _parent(parent)
+{}
+   
+RemoveCommand::~RemoveCommand()
+{}
+   
+void RemoveCommand::redo()
 {
-   typedef UndoCommand super;
-public:
-   RemoveCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
-   : super(element, model.getProject())
-   , _model(model)
-   , _parent(parent)
-   {}
-   
-   virtual ~RemoveCommand()
-   {}
-   
-public:
-   void redo() override
-   {
-      saveProperties(_properties);
-      _model.removeRow(_parent, element());
-   }
+   saveProperties(_properties);
+   _model.removeRow(_parent, element());
+}
 
-   void undo() override
-   {
-      restoreElement();
-      loadProperties(_properties);
-      _model.insertRow(_parent, element());
-   }
-   
-private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
-   QByteArray            _properties;
-};
+void RemoveCommand::undo()
+{
+   restoreElement();
+   loadProperties(_properties);
+   _model.insertRow(_parent, element());
+}

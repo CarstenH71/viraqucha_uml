@@ -33,5 +33,8 @@
 
 /**
  * @defgroup GuiProject
- * Classes of the project management of ViraquchaUML.
+ * @brief Classes for the project management of ViraquchaUML
+ *
+ * The GuiProject module provides classes needed for the project management of ViraquchaUML, namely the project tree
+ * and its tree view.
  */

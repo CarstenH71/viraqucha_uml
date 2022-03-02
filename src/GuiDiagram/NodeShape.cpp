@@ -37,8 +37,8 @@
 /**
  * @class NodeShape
  * @brief Base class for node shapes.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The NodeShape class is a base class which can be used to draw UML elements like Class, Enumeration, Use Case, etc.
  * It needs a DiaNode instance on construction to compute the overall size of the shape. The shape itself can be of any

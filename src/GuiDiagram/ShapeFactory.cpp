@@ -48,8 +48,8 @@
 /**
  * @class ShapeFactory
  * @brief Creates Shape objects for diagrams.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The ShapeFactory class is a factory method that creates Shape objects for the diagrams of ViraquchaUML. It is
  * implemented as a singleton.

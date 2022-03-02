@@ -29,9 +29,25 @@
 
 #include <QPainter>
 
+/**
+ * @class LinkShape
+ * @brief Draws a shape for a UML Link.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
+ *
+ * The LinkShape class draws a shape for UML Links. A UML Link is drawn as a dashed line with no arrows at all.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the LinkShape class.
+ *
+ * @param parent Parent graphics item
+ * @param node DiaNode object containing data from the data model
+ */
 LinkShape::LinkShape(QGraphicsItem* parent, DiaEdge* edge)
 : super(parent, edge)
 {
@@ -46,12 +62,25 @@ LinkShape::~LinkShape()
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Overwritten to do nothing - this function is unused.
+ *
+ * @param painter This parameter is unused
+ * @param line This parameter is unused
+ */
 void LinkShape::drawLineStart(QPainter* painter, const QLineF& line)
 {
    Q_UNUSED(painter);
    Q_UNUSED(line);
 }
 
+/**
+ * Overwritten to do nothing - this function is unused.
+ *
+ * @param painter This parameter is unused
+ * @param line This parameter is unused
+ */
 void LinkShape::drawLineEnd(QPainter* painter, const QLineF& line)
 {
    Q_UNUSED(painter);
@@ -61,6 +90,13 @@ void LinkShape::drawLineEnd(QPainter* painter, const QLineF& line)
 //---------------------------------------------------------------------------------------------------------------------
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Builds a LinkShape object.
+ *
+ * This function is called by the shape factory each time a new LinkShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* LinkShapeBuilder::build(DiaShape* shape)
 {
    return new LinkShape(nullptr, dynamic_cast<DiaEdge*>(shape));

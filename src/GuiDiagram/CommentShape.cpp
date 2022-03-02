@@ -32,10 +32,27 @@
 #include <QSizeF>
 #include <QTextOption>
 
+/**
+ * @class CommentShape
+ * @brief Draws a shape for a UML Comment.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
+ *
+ * The CommentShape class draws a shape for UML Comment elements. A UML Comment shape is drawn as a rectangle with an
+ * inward bent triangle at the upper right corner so that it resembles a sheet of paper. The text of the comment is
+ * drawn inside the rectangle.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Initializes a new object of the CommentShape class.
+ *
+ * @param parent Parent graphics item
+ * @param node DiaNode object containing data from the data model
+ */
 CommentShape::CommentShape(QGraphicsItem* parent, DiaNode* node)
 : super(parent, node)
 {
@@ -51,11 +68,19 @@ CommentShape::~CommentShape()
 {
 }
 
+/** Gets the element associated with this shape. */
 UmlElement* CommentShape::element() const
 {
    return _element;
 }
 
+/**
+ * Paints the CommentShape object.
+ *
+ * @param painter QPainter object needed for drawing
+ * @param option This parameter is unused
+ * @param widget This parameter is unused
+ */
 void CommentShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
    Q_UNUSED(option);
@@ -97,6 +122,12 @@ void CommentShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* opti
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Builds a CommentShape object.
+ *
+ * This function is called by the shape factory each time a new CommentShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* CommentShapeBuilder::build(DiaShape* shape)
 {
    return new CommentShape(nullptr, dynamic_cast<DiaNode*>(shape));

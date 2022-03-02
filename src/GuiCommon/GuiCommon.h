@@ -33,5 +33,7 @@
 
 /**
  * @defgroup GuiCommon
- * Common classes and utilitiy functions for ViraquchaUML.
+ * @brief Common classes and utilitiy functions for ViraquchaUML
+ *
+ * The GuiCommon module provides common classes and utility functions needed by ViraquchaUML.
  */

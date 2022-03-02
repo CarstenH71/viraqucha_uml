@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------------------------------------------------------
-# ViraquchaUML.pro
+# GuiUndoing.pri
 #
-# Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
+# Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 #
-# Description: Qt project file for the ViraquchaUML executable.
+# Description: Project include file of the GuiUndoing library
 #
 # *******************************************************************************************************************
 # *                                                                                                                 *
@@ -24,82 +24,7 @@
 #
 # See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 #---------------------------------------------------------------------------------------------------------------------
-
-TEMPLATE    = app
-TARGET      = ViraquchaUML
-DESTDIR     = ../../bin
-CONFIG     += qt c++17
-DEPENDPATH += .
-
-QT          += widgets
-MOC_DIR      = ./moc
-OBJECTS_DIR  = ./obj
-UI_DIR       = ./ui
-RCC_DIR      = ./rcc
-RESOURCES    = ../GuiResources/GuiResources.qrc
-
-include (../GuiCommon/GuiCommon.pri)
-include (../GuiDiagram/GuiDiagram.pri)
-include (../GuiProject/GuiProject.pri)
-include (../GuiResources/GuiResources.pri)
-include (../GuiUndoing/GuiUndoing.pri)
-include (../UmlCommon/UmlCommon.pri)
-include (../UmlClassifiers/UmlClassifiers.pri)
-
-HEADERS += \
-    AttributesTab.h \
-    AttributeTab.h \
-    ClassifierTab.h \
-    CommentTab.h \
-    DiagramPage.h \
-    GeneralTab.h \
-    IPropertiesTab.h \
-    MainWindow.h \
-    MultiplicityTab.h \
-    NewDiagramDialog.h \
-    NewProjectDialog.h \
-    OperationsTab.h \
-    OperationTab.h \
-    ParameterTab.h \
-    PropertiesDialog.h \
-    StartPage.h \
-    TemplateParameterTab.h \
-    ToolBoxManager.h
-
-FORMS += \
-    AttributesTab.ui \
-    AttributeTab.ui \
-    ClassifierTab.ui \
-    CommentTab.ui \
-    DiagramPage.ui \
-    GeneralTab.ui \
-    MainWindow.ui \
-    MultiplicityTab.ui \
-    NewDiagramDialog.ui \
-    NewProjectDialog.ui \
-    OperationsTab.ui \
-    OperationTab.ui \
-    ParameterTab.ui \
-    PropertiesDialog.ui \
-    StartPage.ui \
-    TemplateParameterTab.ui
-
-SOURCES += \
-    AttributesTab.cpp \
-    AttributeTab.cpp \
-    ClassifierTab.cpp \
-    CommentTab.cpp \
-    DiagramPage.cpp \
-    GeneralTab.cpp \
-    main.cpp \
-    MainWindow.cpp \
-    MultiplicityTab.cpp \
-    NewDiagramDialog.cpp \
-    NewProjectDialog.cpp \
-    OperationsTab.cpp \
-    OperationTab.cpp \
-    ParameterTab.cpp \
-    PropertiesDialog.cpp \
-    StartPage.cpp \
-    TemplateParameterTab.cpp \
-    ToolBoxManager.cpp
+LIBTARGET    = GuiUndoing
+BASEDIR      = $${PWD}
+INCLUDEPATH *= $${BASEDIR}
+LIBS        += -L$${DESTDIR} -lGuiUndoing

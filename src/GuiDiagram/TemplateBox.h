@@ -37,7 +37,9 @@
 
 class TemplateBox : public QGraphicsItem
 {
+   ///@cond
    typedef QGraphicsItem super;
+   ///@endcond
 public: // Constructors
    TemplateBox(QGraphicsItem* parent, DiaNode* node, QFont& font, QPen& linePen, QPen& textPen);
    virtual ~TemplateBox();
@@ -53,6 +55,7 @@ private:
    void computeSize();
 
 private: // Attributes
+   ///@cond
    DiaNode*             _node;
    ITemplatableElement* _element;
    QSizeF               _size;
@@ -62,4 +65,5 @@ private: // Attributes
    QPen&                _linePen;
    QPen&                _textPen;
    double               _padding;
+   ///@endcond
 };

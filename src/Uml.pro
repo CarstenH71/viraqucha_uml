@@ -31,13 +31,15 @@ SUBDIRS  = \
     GuiDiagram \
     GuiProject \
     GuiResources \
+    GuiUndoing \
     UmlCommon \
     UmlClassifiers \
     ViraquchaUML
 
-GuiDiagram.depends = GuiResources UmlCommon UmlClassifiers
-GuiProject.depends = GuiResources UmlCommon
+GuiDiagram.depends = GuiProject GuiResources UmlCommon UmlClassifiers
+GuiProject.depends = GuiResources UmlCommon UmlClassifiers
+GuiUndoing.depends = GuiProject UmlCommon UmlClassifiers
 
 UmlClassifiers.depends = UmlCommon
 
-ViraquchaUML.depends = GuiCommon GuiProject GuiResources UmlCommon UmlClassifiers
+ViraquchaUML.depends = GuiCommon GuiProject GuiResources GuiUndoing UmlCommon UmlClassifiers

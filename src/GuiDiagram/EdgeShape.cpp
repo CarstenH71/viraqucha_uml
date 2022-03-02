@@ -37,8 +37,8 @@
 /**
  * @class EdgeShape
  * @brief Abstract base class for edge shapes.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The EdgeShape class is an abstract base class that can be used for drawing UML relationships like Generalization, 
  * Realization, Association etc. It needs a DiaEdge object on construction that must contain pointers to the graphics

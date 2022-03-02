@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// InsertCommand.h
+// GuiUndoing.h
 //
-// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of template class InsertCommand.
+// Description  : Include file of the GuiUndoing library.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -27,37 +27,16 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "ProjectTreeModel.h"
+#include "CommandStack.h"
+#include "EditCommand.h"
+#include "InsertCommand.h"
+#include "MoveCommand.h"
+#include "RemoveCommand.h"
 #include "UndoCommand.h"
 
-#include <QModelIndex>
-#include <QPersistentModelIndex>
-
-class InsertCommand : public UndoCommand
-{
-   typedef UndoCommand super;
-public:
-   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
-   : super(element, model.getProject())
-   , _model(model)
-   , _parent(parent)
-   {}
-   
-   virtual ~InsertCommand()
-   {}
-   
-public:
-   void redo() override
-   {
-      _model.insertRow(_parent, element());
-   }
-
-   void undo() override
-   {
-      _model.removeRow(_parent, element());
-   }
-   
-private:
-   ProjectTreeModel&     _model;
-   QPersistentModelIndex _parent;
-};
+/**
+ * @defgroup GuiUndoing
+ * @brief Classes for the Undo/Redo functionality of ViraquchaUML
+ *
+ * The GuiUndoing module provides classes for the Undo/Redo functionality of ViraquchaUML.
+ */

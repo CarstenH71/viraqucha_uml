@@ -47,8 +47,8 @@
 /**
  * @class DiagramScene
  * @brief Extends the QGraphicsScene class by functionality needed for drawing UML diagrams.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The DiagramScene class extends the QGraphicsScene class by functions for drawing the UML diagrams of ViraquchaUML,
  * that is functions for...

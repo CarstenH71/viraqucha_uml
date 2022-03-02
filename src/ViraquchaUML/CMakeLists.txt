@@ -9,7 +9,6 @@ add_executable(${EXE_NAME}
   AttributeTab.ui
   ClassifierTab.cpp
   ClassifierTab.ui
-  CommandStack.cpp
   CommentTab.cpp
   CommentTab.ui
   DiagramPage.cpp
@@ -19,7 +18,6 @@ add_executable(${EXE_NAME}
   main.cpp
   MainWindow.cpp
   MainWindow.ui
-  MoveCommand.cpp
   MultiplicityTab.cpp
   MultiplicityTab.ui
   NewDiagramDialog.cpp
@@ -39,7 +37,6 @@ add_executable(${EXE_NAME}
   TemplateParameterTab.cpp
   TemplateParameterTab.ui
   ToolBoxManager.cpp
-  UndoCommand.cpp
   ../GuiResources/GuiResources.qrc
 )
 
@@ -58,12 +55,14 @@ target_link_libraries(${EXE_NAME}
     GuiDiagram
     GuiProject
     GuiResources
+    GuiUndoing
 )
 
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiCommon")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiDiagram")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiProject")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiResources")
+target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiUndoing")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlCommon")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlClassifiers")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/ViraquchaUML")

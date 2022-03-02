@@ -33,8 +33,8 @@
 /**
  * @class Shape
  * @brief Abstract base class of all diagram shapes of ViraquchaUML
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The Shape class is the abstract base class of all diagram shapes of ViraquchaUML. It provides properties needed by
  * all diagram shapes.

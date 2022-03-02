@@ -37,12 +37,11 @@
 
 /**
  * @class PrimitiveTypeShape
- * @brief Implements a shape for UML primitive type elements.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a shape for a UML Primitive Type.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
- * The PrimitiveTypeShape class draws a shape for UML primitive type elements. It is derived from QGraphicsItem to be 
- * used in a QGraphicsScene.
+ * The PrimitiveTypeShape class draws a shape for UML Primitive Type elements.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

@@ -31,9 +31,9 @@
 
 /**
  * @class AssociationShape
- * @brief Draws an Association shape.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a shape for a UML Association.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
  * The AssociationShape class draws a UML Association: a solid line connecting two node shapes, decorated with a
  * diamond at one end representing the aggregation kind, and (if the connection is directed) an open arrow at the other

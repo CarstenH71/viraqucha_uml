@@ -41,12 +41,17 @@
 
 /**
  * @class ClassifierShape
- * @brief Implements a shape for UML classifier elements.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a shape for a UML Classifier.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
- * The ClassifierShape class draws a shape for UML classifier elements. It is derived from QGraphicsItem to be used
- * in a QGraphicsScene.
+ * The ClassifierShape class draws a shape for UML Classifier elements. A UML classifier element is drawn as a
+ * filled rectangle with at least three compartments:
+ * - Name compartment: contains the name of the classifier and its stereotype
+ * - Attributes compartment: contains the list of attributes of the classifier
+ * - Operations compartment: contains the list of operations of the classifier
+ *
+ * All compartments are separated with a line from each other and can be hidden.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -83,9 +88,9 @@ UmlElement* ClassifierShape::element() const
 /**
  * Paints the classifier shape.
  *
- * @param painter QPainter instance needed for painting.
- * @param option Currently unused.
- * @param widget Currently unused.
+ * @param painter QPainter instance needed for painting
+ * @param option This parameter is unused
+ * @param widget This parameter is unused
  */
 void ClassifierShape::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {

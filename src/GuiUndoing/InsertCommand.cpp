@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// GuiDiagram.h
+// InsertCommand.cpp
 //
-// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Include file of the GuiDiagram library.
+// Description  : Implementation of class InsertCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,27 +25,24 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#pragma once
+#include "InsertCommand.h"
+#include "ProjectTreeModel.h"
 
-#include "AssociationShape.h"
-#include "ClassifierShape.h"
-#include "CommentShape.h"
-#include "DependencyShape.h"
-#include "DiagramScene.h"
-#include "EdgeShape.h"
-#include "GeneralizationShape.h"
-#include "IShapeBuilder.h"
-#include "LinkShape.h"
-#include "NodeShape.h"
-#include "PrimitiveTypeShape.h"
-#include "RealizationShape.h"
-#include "Shape.h"
-#include "ShapeFactory.h"
-#include "TemplateBox.h"
+InsertCommand::InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
+: super(element, model.getProject())
+, _model(model)
+, _parent(parent)
+{}
+   
+InsertCommand::~InsertCommand()
+{}
+   
+void InsertCommand::redo()
+{
+   _model.insertRow(_parent, element());
+}
 
-/**
- * @defgroup GuiDiagram
- * @brief Classes for drawing the diagrams of ViraquchaUML
- *
- * The module GuiDiagram provides all classes that are needed for drawing the UML diagrams of ViraquchaUML.
- */
+void InsertCommand::undo()
+{
+   _model.removeRow(_parent, element());
+}

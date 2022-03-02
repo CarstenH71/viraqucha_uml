@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------------------------------------------------------
-# ViraquchaUML.pro
+# GuiUndoing.pro
 #
-# Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
+# Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 #
-# Description: Qt project file for the ViraquchaUML executable.
+# Description: Qt project file for the GuiUndoing static library.
 #
 # *******************************************************************************************************************
 # *                                                                                                                 *
@@ -25,81 +25,35 @@
 # See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 #---------------------------------------------------------------------------------------------------------------------
 
-TEMPLATE    = app
-TARGET      = ViraquchaUML
-DESTDIR     = ../../bin
-CONFIG     += qt c++17
-DEPENDPATH += .
+TEMPLATE = lib
+VERSION  = 0.2.0
+TARGET   = GuiUndoing
+DESTDIR  = ../../bin
+CONFIG  += qt c++17 static
+DEFINES += BUILD_STATIC
 
 QT          += widgets
-MOC_DIR      = ./moc
-OBJECTS_DIR  = ./obj
-UI_DIR       = ./ui
-RCC_DIR      = ./rcc
-RESOURCES    = ../GuiResources/GuiResources.qrc
+MOC_DIR     += ./moc
+OBJECTS_DIR += ./obj
+RCC_DIR     += ./moc
 
-include (../GuiCommon/GuiCommon.pri)
-include (../GuiDiagram/GuiDiagram.pri)
 include (../GuiProject/GuiProject.pri)
-include (../GuiResources/GuiResources.pri)
-include (../GuiUndoing/GuiUndoing.pri)
 include (../UmlCommon/UmlCommon.pri)
 include (../UmlClassifiers/UmlClassifiers.pri)
 
+DISTFILES   += ./GuiUndoing.pri
+
 HEADERS += \
-    AttributesTab.h \
-    AttributeTab.h \
-    ClassifierTab.h \
-    CommentTab.h \
-    DiagramPage.h \
-    GeneralTab.h \
-    IPropertiesTab.h \
-    MainWindow.h \
-    MultiplicityTab.h \
-    NewDiagramDialog.h \
-    NewProjectDialog.h \
-    OperationsTab.h \
-    OperationTab.h \
-    ParameterTab.h \
-    PropertiesDialog.h \
-    StartPage.h \
-    TemplateParameterTab.h \
-    ToolBoxManager.h
+    GuiUndoing.h \
+    CommandStack.h \
+    InsertCommand.h \
+    MoveCommand.h \
+    RemoveCommand.h \
+    UndoCommand.h
 
-FORMS += \
-    AttributesTab.ui \
-    AttributeTab.ui \
-    ClassifierTab.ui \
-    CommentTab.ui \
-    DiagramPage.ui \
-    GeneralTab.ui \
-    MainWindow.ui \
-    MultiplicityTab.ui \
-    NewDiagramDialog.ui \
-    NewProjectDialog.ui \
-    OperationsTab.ui \
-    OperationTab.ui \
-    ParameterTab.ui \
-    PropertiesDialog.ui \
-    StartPage.ui \
-    TemplateParameterTab.ui
-
-SOURCES += \
-    AttributesTab.cpp \
-    AttributeTab.cpp \
-    ClassifierTab.cpp \
-    CommentTab.cpp \
-    DiagramPage.cpp \
-    GeneralTab.cpp \
-    main.cpp \
-    MainWindow.cpp \
-    MultiplicityTab.cpp \
-    NewDiagramDialog.cpp \
-    NewProjectDialog.cpp \
-    OperationsTab.cpp \
-    OperationTab.cpp \
-    ParameterTab.cpp \
-    PropertiesDialog.cpp \
-    StartPage.cpp \
-    TemplateParameterTab.cpp \
-    ToolBoxManager.cpp
+SOURCES += \ 
+    CommandStack.cpp \
+    InsertCommand.cpp \
+    MoveCommand.cpp \
+    RemoveCommand.cpp \
+    UndoCommand.cpp

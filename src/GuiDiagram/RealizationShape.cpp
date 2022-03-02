@@ -31,12 +31,13 @@
 
 /**
  * @class RealizationShape
- * @brief Draws a Realization shape.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a shape for a UML Realization.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
- * The RealizationShape class draws a UML Realization: a dashed line with a closed arrow at one end pointing to a node
- * shape representing the base classifier to be realized.
+ * The RealizationShape class draws a shape for UML Realization links. A UML Realization link is drawn as a dashed line
+ * with a closed arrow at one end pointing to a UML Classifier representing the base classifier to be realized. The
+ * UML Realization is always directed.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

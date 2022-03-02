@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// GuiDiagram.h
+// InsertCommand.h
 //
-// Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
+// Copyright (C) 2020 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Include file of the GuiDiagram library.
+// Description  : Declaration of class InsertCommand.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -27,25 +27,25 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "AssociationShape.h"
-#include "ClassifierShape.h"
-#include "CommentShape.h"
-#include "DependencyShape.h"
-#include "DiagramScene.h"
-#include "EdgeShape.h"
-#include "GeneralizationShape.h"
-#include "IShapeBuilder.h"
-#include "LinkShape.h"
-#include "NodeShape.h"
-#include "PrimitiveTypeShape.h"
-#include "RealizationShape.h"
-#include "Shape.h"
-#include "ShapeFactory.h"
-#include "TemplateBox.h"
+#include "UndoCommand.h"
 
-/**
- * @defgroup GuiDiagram
- * @brief Classes for drawing the diagrams of ViraquchaUML
- *
- * The module GuiDiagram provides all classes that are needed for drawing the UML diagrams of ViraquchaUML.
- */
+#include <QModelIndex>
+#include <QPersistentModelIndex>
+
+class ProjectTreeModel;
+
+class InsertCommand : public UndoCommand
+{
+   typedef UndoCommand super;
+public:
+   InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent);
+   virtual ~InsertCommand();
+   
+public:
+   void redo() override;
+   void undo() override;
+   
+private:
+   ProjectTreeModel&     _model;
+   QPersistentModelIndex _parent;
+};

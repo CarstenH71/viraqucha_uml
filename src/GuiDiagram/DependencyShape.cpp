@@ -29,9 +29,26 @@
 
 #include <QPainter>
 
+/**
+ * @class DependencyShape
+ * @brief Draws a shape for a UML Dependency.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
+ *
+ * The DependencyShape class draws a shape for UML Dependency links. A UML Dependency link is drawn as a dashed line
+ * with an open arrow at one end. A UML Dependency is always directed.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the DependencyShape class.
+ *
+ * @param parent Parent graphics item
+ * @param node DiaNode object containing data from the data model
+ */
 DependencyShape::DependencyShape(QGraphicsItem* parent, DiaEdge* edge)
 : super(parent, edge)
 {
@@ -46,12 +63,25 @@ DependencyShape::~DependencyShape()
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Overwritten to do nothing - this function is unused.
+ *
+ * @param painter This parameter is unused
+ * @param line This parameter is unused
+ */
 void DependencyShape::drawLineStart(QPainter* painter, const QLineF& line)
 {
    Q_UNUSED(painter);
    Q_UNUSED(line);
 }
 
+/**
+ * Overwritten to draw an arrow at the end of the line.
+ *
+ * @param painter QPainter object needed for drawing
+ * @param line Line receiving the arrow
+ */
 void DependencyShape::drawLineEnd(QPainter* painter, const QLineF& line)
 {
    drawArrow(painter, line, false);
@@ -60,6 +90,13 @@ void DependencyShape::drawLineEnd(QPainter* painter, const QLineF& line)
 //---------------------------------------------------------------------------------------------------------------------
 // Builder implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Builds a DependencyShape object.
+ *
+ * This function is called by the shape factory each time a new DependencyShape object needs to be created.
+ * @param shape DiaShape object needed for construction.
+ */
 Shape* DependencyShapeBuilder::build(DiaShape* shape)
 {
    return new DependencyShape(nullptr, dynamic_cast<DiaEdge*>(shape));

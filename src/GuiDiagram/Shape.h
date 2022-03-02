@@ -40,7 +40,9 @@ class UmlElement;
 
 class Shape : public QGraphicsItem, public IShapeObserver
 {
+   ///@cond
    typedef QGraphicsItem super;
+   ///@endcond
 public: // Constants
    const double KSFMargin = 5.0;           ///< Margin for the selection frame.
    const double KSBSize   = 7.0;           ///< Size (width and height) of the sizing box.
@@ -64,14 +66,16 @@ protected: // Methods
    void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
 
 protected: // Attributes
-   DiaShape*    _shape;
-   QBrush       _brush;
-   QFont        _font;
-   QPen         _linePen;
-   QPen         _textPen;
-   Qt::PenStyle _savedLine;
-   Qt::PenStyle _savedText;
+   DiaShape*    _shape;     ///< DiaShape object associated with this class.
+   QBrush       _brush;     ///< Brush to be used for drawing (e.g. the background).
+   QFont        _font;      ///< Font to be used for drawing text.
+   QPen         _linePen;   ///< Pen to be used for drawing lines.
+   QPen         _textPen;   ///< Pen to be used for drawing text.
+   Qt::PenStyle _savedLine; ///< Used for temporarily saving the pen style for lines.
+   Qt::PenStyle _savedText; ///< Used for temporarily saving the pen style for text.
    
 private:
+   ///@cond
    QMenu*       _contextMenu;
+   ///@endcond
 };

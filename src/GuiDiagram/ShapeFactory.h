@@ -44,8 +44,10 @@ private: // Constructors
    ShapeFactory();
 
 public:
+   ///@cond
    ShapeFactory(ShapeFactory const&) = delete;
    void operator=(ShapeFactory const&) = delete;
+   ///@endcond
    virtual ~ShapeFactory();
 
 public: // Properties
@@ -61,6 +63,8 @@ private:
    void subscribe(const QString& className, IShapeBuilder* builder);
 
 private: // Attributes
+   ///@cond
    QMap<QString, IShapeBuilder*> _builder;
+   ///@endcond
 };
 

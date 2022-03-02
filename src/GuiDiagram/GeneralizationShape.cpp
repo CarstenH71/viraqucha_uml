@@ -31,12 +31,13 @@
 
 /**
  * @class GeneralizationShape
- * @brief Draws a Generalization shape.
- * @since 1.0
- * @ingroup GUI
+ * @brief Draws a shape for a UML Generalization.
+ * @since 0.1.0
+ * @ingroup GuiDiagram
  *
- * The GeneralizationShape class draws a UML Generalization: a solid line with a closed arrow at one end pointing to a
- * node shape representing the base classifier to be inherited from.
+ * The GeneralizationShape class draws a shape for UML Generalization links. A UML Generalization link is drawn as a
+ * solid line with a closed arrow at one end pointing to another UML element representing the base classifier to be
+ * inherited from. A UML Generalization is always directed.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
