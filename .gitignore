@@ -31,3 +31,19 @@
 *.exe
 *.out
 *.app
+
+# User files
+*.user
+
+# Temporary files
+*.odt#
+
+# Build directories
+build-Uml-Desktop-Debug/
+build-Uml-Desktop-Release/
+
+# Binaries
+bin/
+
+# Generated HTML documentation
+doc/srcdoc/html/
