@@ -22,6 +22,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../lib)
 
 # add sub directories containing libraries and the executable:
 add_subdirectory(./GuiCommon GuiCommon)
+add_subdirectory(./GuiDiagram GuiDiagram)
+add_subdirectory(./GuiProject GuiProject)
 add_subdirectory(./GuiResources GuiResources)
 add_subdirectory(./UmlCommon UmlCommon)
 add_subdirectory(./UmlClassifiers UmlClassifiers)

@@ -25,28 +25,30 @@
 # See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 #---------------------------------------------------------------------------------------------------------------------
 
-QT      += widgets
 TEMPLATE = lib
-VERSION  = 1.0.0
+VERSION  = 0.2.0
 TARGET   = GuiCommon
 DESTDIR  = ../../bin
-
-include (../UmlCommon/UmlCommon.pri)
-
-CONFIG  += static
+CONFIG  += qt c++17 static
 DEFINES += BUILD_STATIC
 
+QT          += widgets
 MOC_DIR     += ./moc
 OBJECTS_DIR += ./obj
 RCC_DIR     += ./moc
 
+include (../UmlCommon/UmlCommon.pri)
+
 DISTFILES   += ./GuiCommon.pri
 
 HEADERS += \
+./ComboBoxDelegate.h \
 ./MessageBox.h \
 ./MultiplicityUtils.h \
-    Viraqucha.h
+./Viraqucha.h \
+./GuiCommon.h
 
 SOURCES += \ 
+./ComboBoxDelegate.cpp \
 ./MessageBox.cpp \
 ./MultiplicityUtils.cpp

@@ -35,7 +35,7 @@
 #include <QCommandLineParser>
 
 /**
- * @defgroup GUI
+ * @defgroup ViraquchaUML
  * Implements the Graphical User Interface of ViraquchaUML.
  */
 

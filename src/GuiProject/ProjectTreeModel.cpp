@@ -40,11 +40,11 @@
 /**
  * @class ProjectTreeModel
  * @brief Implements the concrete item model of the project tree.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiProject
  * 
  * The ProjectTreeModel class implements abstract base class QAbstractItemModel. It provides the model for the project 
- * tree of ViraquchaUML which is shown on the left side of the main window.
+ * tree view of ViraquchaUML which is shown on the left side of the main window.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

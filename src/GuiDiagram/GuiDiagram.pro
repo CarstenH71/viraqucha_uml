@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------------------------------------------------------
-# GuiResources.pro
+# GuiDiagram.pro
 #
-# Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
+# Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 #
-# Description: Qt project file for the GuiResources static library.
+# Description: Qt project file for the GuiDiagram static library.
 #
 # *******************************************************************************************************************
 # *                                                                                                                 *
@@ -27,22 +27,52 @@
 
 TEMPLATE = lib
 VERSION  = 0.2.0
-TARGET   = GuiResources
+TARGET   = GuiDiagram
 DESTDIR  = ../../bin
 CONFIG  += qt c++17 static
 DEFINES += BUILD_STATIC
 
+QT          += widgets
 MOC_DIR     += ./moc
 OBJECTS_DIR += ./obj
 RCC_DIR     += ./moc
 
-DISTFILES   += ./GuiResources.pri
+include (../GuiProject/GuiProject.pri)
+include (../UmlCommon/UmlCommon.pri)
+include (../UmlClassifiers/UmlClassifiers.pri)
+
+DISTFILES   += ./GuiDiagram.pri
 
 HEADERS += \
-    GuiResources.h \
-    IconProvider.h \
-    StringProvider.h
+    GuiDiagram.h \
+    AssociationShape.h \
+    ClassifierShape.h \
+    CommentShape.h \
+    DependencyShape.h \
+    DiagramScene.h \
+    EdgeShape.h \
+    GeneralizationShape.h \
+    IShapeBuilder.h \
+    LinkShape.h \
+    NodeShape.h \
+    PrimitiveTypeShape.h \
+    RealizationShape.h \
+    Shape.h \
+    ShapeFactory.h \
+    TemplateBox.h
 
-SOURCES += \
-    IconProvider.cpp \
-    StringProvider.cpp
+SOURCES += \ 
+    AssociationShape.cpp \
+    ClassifierShape.cpp \
+    CommentShape.cpp \
+    DependencyShape.cpp \
+    DiagramScene.cpp \
+    EdgeShape.cpp \
+    GeneralizationShape.cpp \
+    LinkShape.cpp \
+    NodeShape.cpp \
+    PrimitiveTypeShape.cpp \
+    RealizationShape.cpp \
+    Shape.cpp \
+    ShapeFactory.cpp \
+    TemplateBox.cpp

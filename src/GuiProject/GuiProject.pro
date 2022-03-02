@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------------------------------------------------------
-# GuiResources.pro
+# GuiProject.pro
 #
-# Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
+# Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 #
-# Description: Qt project file for the GuiResources static library.
+# Description: Qt project file for the GuiProject static library.
 #
 # *******************************************************************************************************************
 # *                                                                                                                 *
@@ -27,22 +27,28 @@
 
 TEMPLATE = lib
 VERSION  = 0.2.0
-TARGET   = GuiResources
+TARGET   = GuiProject
 DESTDIR  = ../../bin
 CONFIG  += qt c++17 static
 DEFINES += BUILD_STATIC
 
+QT          += widgets
 MOC_DIR     += ./moc
 OBJECTS_DIR += ./obj
 RCC_DIR     += ./moc
 
-DISTFILES   += ./GuiResources.pri
+include (../UmlCommon/UmlCommon.pri)
+include (../UmlClassifiers/UmlClassifiers.pri)
+
+DISTFILES   += ./GuiProject.pri
 
 HEADERS += \
-    GuiResources.h \
-    IconProvider.h \
-    StringProvider.h
+    GuiProject.h \
+    ProjectTreeModel.h \
+    ProjectTreeView.h \
+    TreeIconProvider.h
 
-SOURCES += \
-    IconProvider.cpp \
-    StringProvider.cpp
+SOURCES += \ 
+    ProjectTreeModel.cpp \
+    ProjectTreeView.cpp \
+    TreeIconProvider.cpp

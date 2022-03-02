@@ -25,124 +25,89 @@
 # See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 #---------------------------------------------------------------------------------------------------------------------
 
-QT      += widgets
-TEMPLATE = app
-TARGET   = ViraquchaUML
-DESTDIR  = ../../bin
-CONFIG  += qt c++17
+TEMPLATE    = app
+TARGET      = ViraquchaUML
+DESTDIR     = ../../bin
+CONFIG     += qt c++17
+DEPENDPATH += .
 
-include (../GuiCommon/GuiCommon.pri)
-include (../GuiResources/GuiResources.pri)
-include (../UmlCommon/UmlCommon.pri)
-include (../UmlClassifiers/UmlClassifiers.pri)
-
-DEPENDPATH  += .
+QT          += widgets
 MOC_DIR      = ./moc
 OBJECTS_DIR  = ./obj
 UI_DIR       = ./ui
 RCC_DIR      = ./rcc
 RESOURCES    = ../GuiResources/GuiResources.qrc
 
+include (../GuiCommon/GuiCommon.pri)
+include (../GuiDiagram/GuiDiagram.pri)
+include (../GuiProject/GuiProject.pri)
+include (../GuiResources/GuiResources.pri)
+include (../UmlCommon/UmlCommon.pri)
+include (../UmlClassifiers/UmlClassifiers.pri)
+
 HEADERS += \
-./AssociationShape.h \
-./AttributesTab.h \
-./AttributeTab.h \
-./ClassifierShape.h \
-./ClassifierTab.h \
-./ComboBoxDelegate.h \
-./CommentShape.h \
-./CommentTab.h \
-./DependencyShape.h \
-./DiagramPage.h \
-./DiagramScene.h \
-./EdgeShape.h \
-./GeneralizationShape.h \
-./GeneralTab.h \
-./InsertCommand.h \
-./IPropertiesTab.h \
-./IShapeBuilder.h \
-./LinkShape.h \
-./MainWindow.h \
-./MultiplicityTab.h \
-./NewDiagramDialog.h \
-./NewProjectDialog.h \
-./NodeShape.h \
-./OperationsTab.h \
-./OperationTab.h \
-./ParameterTab.h \
-./PrimitiveTypeShape.h \
-./ProjectTreeModel.h \
-./ProjectTreeView.h \
-./PropertiesDialog.h \
-./RealizationShape.h \
-./RemoveCommand.h \
-./RenameCommand.h \
-./ShapeFactory.h \
-./Shape.h \
-./StartPage.h \
-./TemplateBox.h \
-./TemplateParameterTab.h \
-./ToolBoxManager.h \
-./TreeIconProvider.h \
-./UndoCommand.h \
-./MoveCommand.h \
-./CommandStack.h
+    AttributesTab.h \
+    AttributeTab.h \
+    ClassifierTab.h \
+    CommentTab.h \
+    DiagramPage.h \
+    GeneralTab.h \
+    InsertCommand.h \
+    IPropertiesTab.h \
+    MainWindow.h \
+    MultiplicityTab.h \
+    NewDiagramDialog.h \
+    NewProjectDialog.h \
+    OperationsTab.h \
+    OperationTab.h \
+    ParameterTab.h \
+    PropertiesDialog.h \
+    RemoveCommand.h \
+    RenameCommand.h \
+    StartPage.h \
+    TemplateParameterTab.h \
+    ToolBoxManager.h \
+    UndoCommand.h \
+    MoveCommand.h \
+    CommandStack.h
 
 FORMS += \
-./AttributesTab.ui \
-./AttributeTab.ui \
-./ClassifierTab.ui \
-./CommentTab.ui \
-./DiagramPage.ui \
-./GeneralTab.ui \
-./MainWindow.ui \
-./MultiplicityTab.ui \
-./NewDiagramDialog.ui \
-./NewProjectDialog.ui \
-./OperationsTab.ui \
-./OperationTab.ui \
-./ParameterTab.ui \
-./PropertiesDialog.ui \
-./StartPage.ui \
-./TemplateParameterTab.ui
+    AttributesTab.ui \
+    AttributeTab.ui \
+    ClassifierTab.ui \
+    CommentTab.ui \
+    DiagramPage.ui \
+    GeneralTab.ui \
+    MainWindow.ui \
+    MultiplicityTab.ui \
+    NewDiagramDialog.ui \
+    NewProjectDialog.ui \
+    OperationsTab.ui \
+    OperationTab.ui \
+    ParameterTab.ui \
+    PropertiesDialog.ui \
+    StartPage.ui \
+    TemplateParameterTab.ui
 
 SOURCES += \
-./AssociationShape.cpp \
-./AttributesTab.cpp \
-./AttributeTab.cpp \
-./ClassifierShape.cpp \
-./ClassifierTab.cpp \
-./ComboBoxDelegate.cpp \
-./CommentShape.cpp \
-./CommentTab.cpp \
-./DependencyShape.cpp \
-./DiagramPage.cpp \
-./DiagramScene.cpp \
-./EdgeShape.cpp \
-./GeneralizationShape.cpp \
-./GeneralTab.cpp \
-./LinkShape.cpp \
-./main.cpp \
-./MainWindow.cpp \
-./MultiplicityTab.cpp \
-./NewDiagramDialog.cpp \
-./NewProjectDialog.cpp \
-./NodeShape.cpp \
-./OperationsTab.cpp \
-./OperationTab.cpp \
-./ParameterTab.cpp \
-./PrimitiveTypeShape.cpp \
-./ProjectTreeModel.cpp \
-./ProjectTreeView.cpp \
-./PropertiesDialog.cpp \
-./RealizationShape.cpp \
-./Shape.cpp \
-./ShapeFactory.cpp \
-./StartPage.cpp \
-./TemplateBox.cpp \
-./TemplateParameterTab.cpp \
-./ToolBoxManager.cpp \
-./TreeIconProvider.cpp \
-./UndoCommand.cpp \
-./CommandStack.cpp \
-./MoveCommand.cpp
+    AttributesTab.cpp \
+    AttributeTab.cpp \
+    ClassifierTab.cpp \
+    CommentTab.cpp \
+    DiagramPage.cpp \
+    GeneralTab.cpp \
+    main.cpp \
+    MainWindow.cpp \
+    MultiplicityTab.cpp \
+    NewDiagramDialog.cpp \
+    NewProjectDialog.cpp \
+    OperationsTab.cpp \
+    OperationTab.cpp \
+    ParameterTab.cpp \
+    PropertiesDialog.cpp \
+    StartPage.cpp \
+    TemplateParameterTab.cpp \
+    ToolBoxManager.cpp \
+    UndoCommand.cpp \
+    CommandStack.cpp \
+    MoveCommand.cpp

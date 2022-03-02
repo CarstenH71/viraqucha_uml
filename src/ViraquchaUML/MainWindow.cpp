@@ -55,8 +55,8 @@
 /**
  * @class MainWindow
  * @brief Implements the main window of ViraquchaUML
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * Like many modern software development tools, the main window of ViraquchaUML is divided into a set of docks and
  * widgets:

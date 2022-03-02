@@ -31,10 +31,27 @@
 #include <QMimeData>
 #include <QMouseEvent>
 
+/**
+ * @class ProjectTreeView
+ * @brief Implements the project tree view.
+ * @since 0.1.0
+ * @ingroup GuiProject
+ *
+ * The ProjectTreeView class implements the project tree view of ViraquchaUML. The project tree view visualizes the
+ * UML project and all its UML elements in a tree and provides functions for editing and managing the UML elements.
+ *
+ * The ProjectTreeView class is created and initialized by the main window on startup of the program. See MainWindow
+ * for additional information.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Initializes a new object of the ProjectTreeView class.
+ * @param parent Parent widget
+ */
 ProjectTreeView::ProjectTreeView(QWidget* parent)
 : super(parent)
 {
@@ -49,10 +66,10 @@ ProjectTreeView::~ProjectTreeView()
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * Handles a mouse press event.
+ * Handles mouse press events.
  *
  * This method is overriden to start a drag and drop operation.
- * @param event Mouse event.
+ * @param event Mouse event to be handled
  */
 void ProjectTreeView::mousePressEvent(QMouseEvent* event)
 {
@@ -65,10 +82,10 @@ void ProjectTreeView::mousePressEvent(QMouseEvent* event)
 }
 
 /**
- * Handles a mouse move event.
+ * Handles mouse move events.
  *
  * This method is overridden to perform a drag and drop operation.
- * @param event Mouse event.
+ * @param event Mouse event to be handled
  */
 void ProjectTreeView::mouseMoveEvent(QMouseEvent* event)
 {

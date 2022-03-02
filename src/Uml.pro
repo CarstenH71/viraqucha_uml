@@ -27,11 +27,17 @@
 
 TEMPLATE = subdirs
 SUBDIRS  = \
-  GuiCommon \
-  GuiResources \
-  UmlCommon \
-  UmlClassifiers \
-  ViraquchaUML
+    GuiCommon \
+    GuiDiagram \
+    GuiProject \
+    GuiResources \
+    UmlCommon \
+    UmlClassifiers \
+    ViraquchaUML
+
+GuiDiagram.depends = GuiResources UmlCommon UmlClassifiers
+GuiProject.depends = GuiResources UmlCommon
 
 UmlClassifiers.depends = UmlCommon
-ViraquchaUML.depends = GuiCommon GuiResources UmlCommon UmlClassifiers
+
+ViraquchaUML.depends = GuiCommon GuiProject GuiResources UmlCommon UmlClassifiers

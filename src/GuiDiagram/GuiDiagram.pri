@@ -1,9 +1,9 @@
 #---------------------------------------------------------------------------------------------------------------------
-# GuiResources.pro
+# GuiDiagram.pri
 #
-# Copyright (C) 2019 Carsten Huber (Dipl.-Ing.)
+# Copyright (C) 2022 Carsten Huber (Dipl.-Ing.)
 #
-# Description: Qt project file for the GuiResources static library.
+# Description: Project include file of the GuiDiagram library
 #
 # *******************************************************************************************************************
 # *                                                                                                                 *
@@ -24,25 +24,7 @@
 #
 # See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 #---------------------------------------------------------------------------------------------------------------------
-
-TEMPLATE = lib
-VERSION  = 0.2.0
-TARGET   = GuiResources
-DESTDIR  = ../../bin
-CONFIG  += qt c++17 static
-DEFINES += BUILD_STATIC
-
-MOC_DIR     += ./moc
-OBJECTS_DIR += ./obj
-RCC_DIR     += ./moc
-
-DISTFILES   += ./GuiResources.pri
-
-HEADERS += \
-    GuiResources.h \
-    IconProvider.h \
-    StringProvider.h
-
-SOURCES += \
-    IconProvider.cpp \
-    StringProvider.cpp
+LIBTARGET    = GuiDiagram
+BASEDIR      = $${PWD}
+INCLUDEPATH *= $${BASEDIR}
+LIBS        += -L$${DESTDIR} -lGuiDiagram

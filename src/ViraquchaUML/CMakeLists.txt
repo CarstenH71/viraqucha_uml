@@ -3,62 +3,42 @@ find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
 # add the executable:
 add_executable(${EXE_NAME}
-  AssociationShape.cpp
   AttributesTab.cpp
   AttributesTab.ui
   AttributeTab.cpp
   AttributeTab.ui
-  ClassifierShape.cpp
   ClassifierTab.cpp
   ClassifierTab.ui
-  ComboBoxDelegate.cpp
   CommandStack.cpp
-  CommentShape.cpp
   CommentTab.cpp
   CommentTab.ui
-  DependencyShape.cpp
   DiagramPage.cpp
   DiagramPage.ui
-  DiagramScene.cpp
-  EdgeShape.cpp
-  GeneralizationShape.cpp
   GeneralTab.cpp
   GeneralTab.ui
-  LinkShape.cpp
   main.cpp
   MainWindow.cpp
   MainWindow.ui
-  MessageBox.cpp
   MoveCommand.cpp
   MultiplicityTab.cpp
   MultiplicityTab.ui
-  MultiplicityUtils.cpp
   NewDiagramDialog.cpp
   NewDiagramDialog.ui
   NewProjectDialog.cpp
   NewProjectDialog.ui
-  NodeShape.cpp
   OperationsTab.cpp
   OperationsTab.ui
   OperationTab.cpp
   OperationTab.ui
   ParameterTab.cpp
   ParameterTab.ui
-  PrimitiveTypeShape.cpp
-  ProjectTreeModel.cpp
-  ProjectTreeView.cpp
   PropertiesDialog.cpp
   PropertiesDialog.ui
-  RealizationShape.cpp
-  Shape.cpp
-  ShapeFactory.cpp
   StartPage.cpp
   StartPage.ui
-  TemplateBox.cpp
   TemplateParameterTab.cpp
   TemplateParameterTab.ui
   ToolBoxManager.cpp
-  TreeIconProvider.cpp
   UndoCommand.cpp
   ../GuiResources/GuiResources.qrc
 )
@@ -74,9 +54,15 @@ target_link_libraries(${EXE_NAME}
   PUBLIC
     UmlCommon
     UmlClassifiers
+    GuiCommon
+    GuiDiagram
+    GuiProject
     GuiResources
 )
 
+target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiCommon")
+target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiDiagram")
+target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiProject")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/GuiResources")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlCommon")
 target_include_directories(${EXE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/UmlClassifiers")

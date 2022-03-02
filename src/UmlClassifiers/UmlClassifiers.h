@@ -43,4 +43,13 @@
 #include "UmlRealization.h"
 #include "UmlSignal.h"
 
+/**
+ * @defgroup UmlClassifiers
+ * Provides classes for the Classification of elements of a system.
+ *
+ * UmlClassifiers contains the elements summarized in the UML specification in chapters 9 "Classification", 10 "Simple
+ * Classifiers", and 11 "Structured Classifiers". Many of the classes defined here are reused and extended in the
+ * following modules.
+ */
+
 void UMLCLASSIFIERS_EXPORT initClassifiers();

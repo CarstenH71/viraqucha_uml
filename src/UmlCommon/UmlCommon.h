@@ -53,4 +53,14 @@
 
 #include "NameBuilder.h"
 
+/**
+ * @defgroup UmlCommon
+ * Provides the infrastructure of the ViraquchaUML data model.
+ *
+ * UmlCommon provides classes implementing the infrastructure for the remaining modules of the ViraquchaUML data model.
+ * This includes the required base classes, as well as some general derivatives thereof, and the project management (in
+ * particular the serialization of the data). The module also contains the elements summarized in the UML specification
+ * in chapter 7, "Common Structure" and chapter 12, "Packages".
+ */
+
 void UMLCOMMON_EXPORT initCommon();

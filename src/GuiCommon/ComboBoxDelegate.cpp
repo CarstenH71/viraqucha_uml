@@ -32,8 +32,8 @@
 /**
  * @class ComboBoxDelegate
  * @brief The ComboBoxDelegate class implements an item delegate creating a combo box editor.
- * @since 0.1
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiCommon
  *
  * The ComboBoxDelegate class is used for QTableView objects containing columns which need to be edited using a combo 
  * box instead of a simple line edit box. It provides two editing modes: Index based and text based.

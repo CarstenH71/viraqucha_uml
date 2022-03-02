@@ -33,8 +33,8 @@
 /**
  * @class MultiplicityUtils
  * @brief The MultiplicityUtils class provides utility functions for multiplicities.
- * @since 0.1
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiCommon
  */
 
 //---------------------------------------------------------------------------------------------------------------------

@@ -31,8 +31,8 @@
 /**
  * @class MessageBox
  * @brief Wrapper class for QMessageBox.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup GuiCommon
  *
  * The MessageBox class provides static methods which show a message box like the static methods of QMessageBox. The
  * difference is that MessageBox allows setting of the informative text of a QMessageBox which makes the message boxes

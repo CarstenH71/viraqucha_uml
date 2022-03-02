@@ -30,8 +30,13 @@
 /**
  * @class StringProvider
  * @brief Provides translatable strings and string lists for windows and dialogs.
- * @since 1.0
+ * @since 0.2.0
  * @ingroup GuiResources
+ *
+ * The StringProvider class provides translatable strings and string lists for the windows and dialogs of ViraquchaUML.
+ * It also provides default strings to be used in edit fields or editable combo boxes. It does NOT provide strings like
+ * error messages or dialog descriptions. Such strings must be placed directly in the source code of the dialog or
+ * window.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

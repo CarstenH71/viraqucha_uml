@@ -29,10 +29,17 @@
 
 /**
  * @class IconProvider
- * @brief Provides icons for tree items in the project tree.
- * @since 1.0
+ * @brief Provides icons for tree items in the project tree view or for buttons in the toolbox.
+ * @since 0.2.0
  * @ingroup GuiResources
+ *
+ * The IconProvider class is used by the project tree view and the toolbox for looking up icons for tree items or
+ * buttons.
  */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Internal data types
+//---------------------------------------------------------------------------------------------------------------------
 
 struct IconProvider::Item
 {
@@ -43,6 +50,10 @@ struct IconProvider::Item
    QString _name;
    QString _res16;
 };
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
 
 /** Initializes a new instance of the TreeIconProvider class. */
 IconProvider::IconProvider()
@@ -69,7 +80,7 @@ IconProvider::~IconProvider()
    }
 }
 
-/** Gets the only object of this class (singleton) */
+/** Gets the only object of this class (singleton). */
 IconProvider& IconProvider::instance()
 {
    static IconProvider provider;

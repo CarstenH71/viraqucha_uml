@@ -31,9 +31,11 @@
 /**
  * @class StartPage
  * @brief Implements a start page for ViraquchaUML
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  * 
+ * The start page is shown on start up and provides controls for opening existing projects, creating new projects or
+ * accessing online help.
  */
 
 //---------------------------------------------------------------------------------------------------------------------

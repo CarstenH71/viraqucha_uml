@@ -1,11 +1,11 @@
-set(LIB_NAME GuiCommon)
+set(LIB_NAME GuiProject)
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
 add_library(${LIB_NAME} 
   STATIC
-    ComboBoxDelegate.cpp
-    MessageBox.cpp
-    MultiplicityUtils.cpp
+    ProjectTreeModel.cpp
+    ProjectTreeView.cpp
+    TreeIconProvider.cpp
 )
 
 target_compile_features(${LIB_NAME} PUBLIC cxx_std_17)

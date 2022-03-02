@@ -42,8 +42,8 @@
 /**
  * @class DiagramPage
  * @brief Implements a diagram page.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The DiagramPage class manages the DiagramScene object which draws all elements associated with a UmlDiagram object.
  * It also provides slots needed for handling context menu events of the DiagramScene.

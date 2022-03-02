@@ -33,8 +33,8 @@
 /**
  * @class ToolBoxManager
  * @brief Manages the toolbox of ViraquchaUML
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The ToolBoxManager class manages the toolbox of ViraquchaUML. It provides functions for adding buttons to the 
  * toolbox and translates signals sent by the toolbox to fit with the DiagramPage slots.
@@ -102,11 +102,11 @@ void ToolBoxManager::addTab(QString name)
 /**
  * Adds a new button to the tool box.
  *
- * @param name Name of the button.
+ * @param dispName Display name of the button.
  * @param className Class name of the project class that shall be created by clicking the button.
  * @param icon Icon of the button. Should be a bitmap of 24x24 pixels size.
  */
-void ToolBoxManager::addButton(int id, QString name, QString className, QIcon icon)
+void ToolBoxManager::addButton(int id, QString dispName, QString className, QIcon icon)
 {
    // Group *must* exist - if not then we have some serious problems!
    Q_ASSERT(_group != nullptr);
@@ -126,7 +126,7 @@ void ToolBoxManager::addButton(int id, QString name, QString className, QIcon ic
    auto* grid = new QGridLayout();
    grid->setSizeConstraint(QLayout::SetFixedSize);
    grid->addWidget(button, 0, 0, Qt::AlignHCenter);
-   grid->addWidget(new QLabel(name), 1, 0, Qt::AlignCenter);
+   grid->addWidget(new QLabel(dispName), 1, 0, Qt::AlignCenter);
 
    // Create the widget holding both, the button and the label:
    auto* widget = new QWidget();
