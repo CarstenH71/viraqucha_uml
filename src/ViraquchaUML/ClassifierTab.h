@@ -33,8 +33,10 @@ class UmlClassifier;
 
 class ClassifierTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    ClassifierTab(QWidget*parent, UmlClassifier* elem);
    virtual ~ClassifierTab();
@@ -47,6 +49,8 @@ private:
    void updateControls();
 
 private: // Attributes
+   ///@cond
    Ui::ClassifierTab ui;
    UmlClassifier* _element;
+   ///@endcond
 };

@@ -30,14 +30,20 @@
 /**
  * @class CommandStack
  * @brief The CommandStack class implements an undo stack that does not execute a command on push.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.2.0
+ * @ingroup GuiUndoing
  *
+ * The CommandStack class implements a special undo stack that unlike QUndoStack does not execute commands when pushed
+ * onto it. This behavior is needed by the properties dialog of ViraquchaUML.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the CommandStack class.
+ */
 CommandStack::CommandStack()
 {
 }
@@ -72,6 +78,7 @@ void CommandStack::setObsolete(QUuid elementId)
    }
 }
 
+/** Redoes all commands on the stack that are not marked obsolete. */
 void CommandStack::redo()
 {
    for (int index = 0; index < _stack.count(); ++index)
@@ -84,6 +91,7 @@ void CommandStack::redo()
    }
 }
 
+/** Undoes all commands on the stack that are not marked obsolete. */
 void CommandStack::undo()
 {
    for (int index = _stack.count() - 1; index > 0; --index)
@@ -96,6 +104,7 @@ void CommandStack::undo()
    }
 }
 
+/** Redoes each command on the stack not marked obsolete once and deletes it. */
 void CommandStack::redoOnce()
 {
    while (!_stack.isEmpty())
@@ -108,6 +117,7 @@ void CommandStack::redoOnce()
    }
 }
 
+/** Undoes each command on the stack not marked obsolete once and deletes it. */
 void CommandStack::undoOnce()
 {
    while (!_stack.isEmpty())
@@ -120,6 +130,7 @@ void CommandStack::undoOnce()
    }
 }
 
+/** Clears all command from the stack. */
 void CommandStack::clear()
 {
    _stack.clear();

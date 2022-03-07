@@ -43,8 +43,8 @@
 /**
  * @class PropertiesDialog
  * @brief The PropertiesDialog class implements a properties dialog for UML elements.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The PropertiesDialog shows all properties of an UML element distributed on one or several tab pages. Each tab pages
  * allows editing a set of properties. 

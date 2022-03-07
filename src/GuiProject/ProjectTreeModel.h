@@ -27,8 +27,6 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include "TreeIconProvider.h"
-
 #include "UmlCommon.h"
 #include "UmlClassifiers.h"
 
@@ -73,8 +71,7 @@ private:
 
 private: // Attributes
    ///@cond
-   UmlRoot*         _root;
-   TreeIconProvider _icons;
+   UmlRoot* _root;
    ///@endcond
 };
 

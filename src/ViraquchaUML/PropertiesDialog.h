@@ -39,8 +39,10 @@ class ProjectTreeModel;
 
 class PropertiesDialog : public QDialog
 {
+   ///@cond
    Q_OBJECT
    typedef QDialog super;
+   ///@endcond
 public: // Constructors
    PropertiesDialog(QWidget* parent, ProjectTreeModel& model, UmlElement* elem);
    virtual ~PropertiesDialog();
@@ -62,8 +64,10 @@ private: // Methods
    void showHelp();
 
 private: // Attributes
+   ///@cond
    Ui::PropertiesDialog ui;
    QVector<IPropertiesTab*> _tabs;
    UmlElement*              _elem;
    ProjectTreeModel&        _model;
+   ///@endcond
 };

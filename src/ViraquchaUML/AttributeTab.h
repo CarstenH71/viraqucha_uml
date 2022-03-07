@@ -33,8 +33,10 @@ class UmlAttribute;
 
 class AttributeTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    AttributeTab(QWidget* parent, UmlAttribute* attr);
    virtual ~AttributeTab();
@@ -47,6 +49,8 @@ private:
    void updateControls();
 
 private: // Attributes
+   ///@cond
    Ui::AttributeTab ui;
    UmlAttribute* _attr;
+   ///@endcond
 };

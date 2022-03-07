@@ -28,6 +28,23 @@
 #include "InsertCommand.h"
 #include "ProjectTreeModel.h"
 
+/**
+ * @class InsertCommand
+ * @brief The InsertCommand class implements an insert command for UmlElement objects.
+ * @since 0.2.0
+ * @ingroup GuiUndoing
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the InsertCommand class.
+ * @param element
+ * @param model
+ * @param parent
+ */
 InsertCommand::InsertCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
 : super(element, model.getProject())
 , _model(model)
@@ -36,12 +53,14 @@ InsertCommand::InsertCommand(UmlElement* element, ProjectTreeModel& model, const
    
 InsertCommand::~InsertCommand()
 {}
-   
+
+/** Inserts the UmlElement object into the project model. */
 void InsertCommand::redo()
 {
    _model.insertRow(_parent, element());
 }
 
+/** Removes the UmlElement object from the project model. */
 void InsertCommand::undo()
 {
    _model.removeRow(_parent, element());

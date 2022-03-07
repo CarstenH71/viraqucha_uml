@@ -35,10 +35,12 @@
 #include <QToolBox>
 #include <QToolButton>
 
-class ToolBoxManager : public QObject
+class ToolBoxManager final : public QObject
 {
+   ///@cond
    Q_OBJECT
    typedef QObject super;
+   ///@endcond
 public: // Constants
    const int KMaxColumns = 2;
 
@@ -48,6 +50,7 @@ public: // Constructors
 
 public: // Methods
    void addTab(QString name);
+   void addButton(int id, QString name, QString className);
    void addButton(int id, QString name, QString className, QIcon icon);
 
 signals:
@@ -60,9 +63,11 @@ private slots:
    void handleButton(int id);
 
 private: // Attributes
+   ///@cond
    QToolBox*          _toolbox;
    QButtonGroup*      _group;
    QMap<int, QString> _classes;
    QGridLayout*       _layout;
    int                _row, _col;
+   ///@endcond
 };

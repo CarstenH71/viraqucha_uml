@@ -34,8 +34,8 @@
 /**
  * @class AttributeTab
  * @brief The AttributeTab class implements a widget for editing properties of a single UML attribute.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  * @see PropertiesDialog
  *
  * The AttributeTab class provides controls for editing attribute specific properties like type, default value,

@@ -27,6 +27,24 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "MoveCommand.h"
 
+/**
+ * @class MoveCommand
+ * @brief The MoveCommand class implements a move command for UmlElement objects.
+ * @since 0.2.0
+ * @ingroup GuiUndoing
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the MoveCommand class.
+ * @param element
+ * @param neighbor
+ * @param model
+ * @param down
+ */
 MoveCommand::MoveCommand(UmlElement* element, QUuid neighbor, ProjectTreeModel& model, bool down)
 : super(element, model.getProject())
 , _model(model)
@@ -36,8 +54,10 @@ MoveCommand::MoveCommand(UmlElement* element, QUuid neighbor, ProjectTreeModel& 
 }
 
 MoveCommand::~MoveCommand()
-{}
+{
+}
 
+/** Moves the UmlElement object in the project model up or down. */
 void MoveCommand::redo()
 {
    if (_down)
@@ -50,6 +70,7 @@ void MoveCommand::redo()
    }
 }
 
+/** Moves the UmlElement object in the project model down or up. */
 void MoveCommand::undo()
 {
    if (_down)

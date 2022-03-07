@@ -33,8 +33,8 @@
 /**
  * @class ClassifierTab
  * @brief The ClassifierTab class implements a widget for editing UML classifier.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  */
 
 //---------------------------------------------------------------------------------------------------------------------

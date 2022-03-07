@@ -1,11 +1,21 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
+        <file>images/add_16x16.png</file>
+        <file>images/edit_16x16.png</file>
+        <file>images/cut_16x16.png</file>
+        <file>images/copy_16x16.png</file>
+        <file>images/paste_16x16.png</file>
+        <file>images/remove_16x16.png</file>
         <file>images/class_16x16.png</file>
+        <file>images/class_24x24.png</file>
         <file>images/diagram_16x16.png</file>
         <file>images/package_16x16.png</file>
+        <file>images/package_24x24.png</file>
         <file>images/datatype_16x16.png</file>
         <file>images/enum_16x16.png</file>
+        <file>images/enum_24x24.png</file>
         <file>images/interface_16x16.png</file>
+        <file>images/interface_24x24.png</file>
         <file>images/new_16x16.png</file>
         <file>images/open_16x16.png</file>
         <file>images/save_16x16.png</file>
@@ -14,8 +24,8 @@
         <file>images/movedown_16x16.png</file>
         <file>images/moveup_16x16.png</file>
         <file>images/model_16x16.png</file>
-        <file>images/primitive_16x16.png</file>
         <file>images/signal_16x16.png</file>
+        <file>images/signal_24x24.png</file>
         <file>images/attribute_16x16.png</file>
         <file>images/dependency_16x16.png</file>
         <file>images/dependency_24x24.png</file>
@@ -35,20 +45,19 @@
         <file>images/composition_16x16.png</file>
         <file>images/composition_24x24.png</file>
         <file>images/composition_32x32.png</file>
-        <file>images/classifier_16x16.png</file>
-        <file>images/classifier_24x24.png</file>
-        <file>images/classifier_32x32.png</file>
-        <file>images/enumeration_16x16.png</file>
-        <file>images/enumeration_24x24.png</file>
-        <file>images/enumeration_32x32.png</file>
         <file>images/datatype_24x24.png</file>
         <file>images/datatype_32x32.png</file>
         <file>images/operation_16x16.png</file>
         <file>images/abstraction_16x16.png</file>
+        <file>images/abstraction_24x24.png</file>
         <file>images/templbind_16x16.png</file>
+        <file>images/templbind_24x24.png</file>
         <file>images/usage_16x16.png</file>
+        <file>images/usage_24x24.png</file>
         <file>images/comment_16x16.png</file>
+        <file>images/comment_24x24.png</file>
         <file>images/link_16x16.png</file>
+        <file>images/link_24x24.png</file>
         <file>images/appicon_16x16.png</file>
         <file>images/logo.png</file>
         <file>images/background2.png</file>
@@ -60,5 +69,9 @@
         <file>images/close_16x16.png</file>
         <file>images/undo_16x16.png</file>
         <file>images/redo_16x16.png</file>
+        <file>images/primitivetype_16x16.png</file>
+        <file>images/primitivetype_24x24.png</file>
+        <file>images/nesting_16x16.png</file>
+        <file>images/nesting_24x24.png</file>
     </qresource>
 </RCC>

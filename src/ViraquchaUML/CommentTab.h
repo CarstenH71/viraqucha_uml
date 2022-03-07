@@ -35,8 +35,10 @@ class UmlComment;
 
 class CommentTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    CommentTab(QWidget* parent, UmlComment* comment);
    virtual ~CommentTab();
@@ -46,6 +48,8 @@ public: // Methods
    void applyChanges() override;
 
 private: // Attributes
+   ///@cond
    Ui::CommentTab ui;
    UmlComment* _comment;
+   ///@endcond
 };

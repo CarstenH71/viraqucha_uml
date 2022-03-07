@@ -37,8 +37,10 @@ class MainWindow;
 
 class StartPage : public QWidget
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public:
     StartPage(MainWindow* mainWin, QWidget* parent = nullptr);
     virtual ~StartPage();
@@ -53,6 +55,8 @@ private:
    void updateRecentProjects();
    
 private:
+   ///@cond
     Ui::StartPage ui;
     MainWindow* _mainWin;
+    ///@endcond
 };

@@ -37,8 +37,8 @@
 /**
  * @class MultiplicityTab
  * @brief The MultiplicityTab class implements a tab page for IMultiplicityElement instances.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The MultiplicityTab allows editing of the multiplicity of an UML element, e.g. an attribute or an operation. It
  * provides a editable combo box for editing the multiplicity range as well as check boxes for setting properties 

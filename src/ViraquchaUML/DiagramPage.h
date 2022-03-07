@@ -43,8 +43,8 @@ class ToolBoxManager;
 
 class DiagramPage : public QFrame
 {
-   Q_OBJECT
    ///@cond
+   Q_OBJECT
    typedef QFrame super;
    ///@endcond
 public: // Constructors

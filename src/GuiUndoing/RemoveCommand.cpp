@@ -28,21 +28,42 @@
 #include "RemoveCommand.h"
 #include "ProjectTreeModel.h"
 
+/**
+ * @class RemoveCommand
+ * @brief The RemoveCommand class implements a remove command for UmlElement objects.
+ * @since 0.2.0
+ * @ingroup GuiUndoing
+ */
+
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the RemoveCommand class.
+ * @param element
+ * @param model
+ * @param parent
+ */
 RemoveCommand::RemoveCommand(UmlElement* element, ProjectTreeModel& model, const QModelIndex& parent)
 : super(element, model.getProject())
 , _model(model)
 , _parent(parent)
-{}
+{
+}
    
 RemoveCommand::~RemoveCommand()
-{}
-   
+{
+}
+
+/** Removes the UmlElement object from the project model. */
 void RemoveCommand::redo()
 {
    saveProperties(_properties);
    _model.removeRow(_parent, element());
 }
 
+/** Inserts the UmlElement object into the project model. */
 void RemoveCommand::undo()
 {
    restoreElement();

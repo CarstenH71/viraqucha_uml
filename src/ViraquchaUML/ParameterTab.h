@@ -39,8 +39,10 @@ class ComboBoxDelegate;
 
 class ParameterTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
     ParameterTab(QWidget* parent, UmlOperation* oper);
     virtual ~ParameterTab();
@@ -57,6 +59,7 @@ private slots:
    void updateButtons(const QModelIndex& current, const QModelIndex& previous);
 
 private: // Attributes
+   ///@cond
    Ui::ParameterTab  ui;
    UmlOperation*     _elem;
    PATableModel*     _model;
@@ -64,4 +67,5 @@ private: // Attributes
    ComboBoxDelegate* _effectsDelegate;
    ComboBoxDelegate* _multiDelegate;
    ComboBoxDelegate* _typesDelegate;
+   ///@endcond
 };

@@ -37,8 +37,8 @@
 /**
  * @class NewProjectDialog
  * @brief Implements a dialog for creating new projects.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The NewProjectDialog class implements a dialog providing users with controls for entering a name and a location
  * (path) for a new project. The dialog also checks name and location entered for validity and issues error messages

@@ -35,8 +35,10 @@ class UmlOperation;
 
 class OperationTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
-      typedef QWidget super;
+   typedef QWidget super;
+   ///@endcond
 public: // Operations
    OperationTab(QWidget* parent, UmlOperation* oper);
    virtual ~OperationTab();
@@ -49,6 +51,8 @@ private:
    void updateControls();
 
 private:
+   ///@cond
    Ui::OperationTab ui;
    UmlOperation* _oper;
+   ///@endcond
 };

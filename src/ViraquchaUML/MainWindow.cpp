@@ -168,15 +168,14 @@ void MainWindow::loadProject(QString filename)
    _progressBar->reset();
    connect(_project, &UmlProject::updateProgress, _progressBar, &QProgressBar::setValue);
 
-   bool ok = _project->load(filename);
+   bool success = _project->load(filename);
    QApplication::restoreOverrideCursor();
    
-   if (ok)
+   if (success)
    {
       ui.projTreeView->setModel(new ProjectTreeModel(_project->root()));
       setFileName(filename);
       setWindowModified(false);
-      updateMRUList(filename);
    }
    else
    {
@@ -187,6 +186,7 @@ void MainWindow::loadProject(QString filename)
       _project = nullptr;
    }
    
+   updateMRUList(filename, success);
    _progressBar->reset();
    enableActions();
 }
@@ -289,32 +289,32 @@ void MainWindow::createToolBox()
    
    _manager = new ToolBoxManager(this, ui.toolBox);
    _manager->addTab(tr("General"));
-   _manager->addButton(id++, tr("Comment"), UmlComment::staticMetaObject.className(), QIcon(":/images/comment_16x16.png"));
-   _manager->addButton(id++, tr("Package"), UmlPackage::staticMetaObject.className(), QIcon(":/images/package_16x16.png"));
+   _manager->addButton(id++, tr("Comment"), "UmlComment");
+   _manager->addButton(id++, tr("Package"), "UmlPackage");
 
    _manager->addTab(tr("Classifier"));
-   _manager->addButton(id++, tr("Data Type"), UmlDatatype::staticMetaObject.className(), QIcon(":/images/datatype_16x16.png"));
-   _manager->addButton(id++, tr("Class"), UmlClass::staticMetaObject.className(), QIcon(":/images/class_16x16.png"));
-   _manager->addButton(id++, tr("Enumeration"), UmlEnumeration::staticMetaObject.className(), QIcon(":/images/enum_16x16.png"));
-   _manager->addButton(id++, tr("Interface"), UmlInterface::staticMetaObject.className(), QIcon(":/images/interface_16x16.png"));
-   _manager->addButton(id++, tr("Primitive"), UmlPrimitiveType::staticMetaObject.className(), QIcon(":/images/primitive_16x16.png"));
-   _manager->addButton(id++, tr("Signal"), UmlSignal::staticMetaObject.className(), QIcon(":/images/signal_16x16.png"));
+   _manager->addButton(id++, tr("Data Type"),"UmlDatatype");
+   _manager->addButton(id++, tr("Class"), "UmlClass");
+   _manager->addButton(id++, tr("Enumeration"), "UmlEnumeration");
+   _manager->addButton(id++, tr("Interface"), "UmlInterface");
+   _manager->addButton(id++, tr("Primitive"), "UmlPrimitiveType");
+   _manager->addButton(id++, tr("Signal"), "UmlSignal");
    
    id = 100; // Identifier starting with 100 are reserved for links!
    _manager->addTab(tr("Relationship"));
-   _manager->addButton(id++, tr("Abstraction"), QString(UmlDependency::staticMetaObject.className()) + "::Abstraction", QIcon(":/images/abstraction_16x16.png"));
-   _manager->addButton(id++, tr("Aggregation"), QString(UmlAssociation::staticMetaObject.className()) + "::Aggregation", QIcon(":/images/aggregation_16x16.png"));
-   _manager->addButton(id++, tr("Association"), UmlAssociation::staticMetaObject.className(), QIcon(":/images/association_16x16.png"));
-   _manager->addButton(id++, tr("Composition"), QString(UmlAssociation::staticMetaObject.className()) + "::Composition", QIcon(":/images/composition_16x16.png"));
+   _manager->addButton(id++, tr("Abstraction"), "UmlDependency::Abstraction");
+   _manager->addButton(id++, tr("Aggregation"), "UmlAssociation::Aggregation");
+   _manager->addButton(id++, tr("Association"), "UmlAssociation");
+   _manager->addButton(id++, tr("Composition"), "UmlAssociation::Composition");
 
-   _manager->addButton(id++, tr("Dependency"), UmlDependency::staticMetaObject.className(), QIcon(":/images/dependency_16x16.png"));
-   _manager->addButton(id++, tr("Generalization"), UmlGeneralization::staticMetaObject.className(), QIcon(":/images/generalization_16x16.png"));
-   _manager->addButton(id++, tr("Link"), UmlLink::staticMetaObject.className(), QIcon(":/images/link_16x16.png"));
-   _manager->addButton(id++, tr("Nesting"), UmlNesting::staticMetaObject.className(), QIcon());
-   _manager->addButton(id++, tr("Realization"), UmlRealization::staticMetaObject.className(), QIcon(":/images/realization_16x16.png"));
-   _manager->addButton(id++, tr("Template Binding"), UmlTemplateBinding::staticMetaObject.className(), QIcon(":/images/templbind_16x16.png"));
+   _manager->addButton(id++, tr("Dependency"), "UmlDependency");
+   _manager->addButton(id++, tr("Generalization"), "UmlGeneralization");
+   _manager->addButton(id++, tr("Link"), "UmlLink");
+   _manager->addButton(id++, tr("Nesting"), "UmlNesting");
+   _manager->addButton(id++, tr("Realization"), "UmlRealization");
+   _manager->addButton(id++, tr("Template Binding"), "UmlTemplateBinding");
 
-   _manager->addButton(id++, tr("Usage"), QString(UmlDependency::staticMetaObject.className()) + "::Usage", QIcon(":/images/usage_16x16.png"));
+   _manager->addButton(id++, tr("Usage"), "UmlDependency::Usage");
 }
 
 /** 
@@ -453,11 +453,15 @@ int MainWindow::findPageIndex(UmlDiagram* diagram) const
  * Updates the list of most recently used files. 
  * 
  * @param filename File name to be added to the list.
+ * @param prepend True, if the file name shall be prepended to the list; otherwise false.
  */
-void MainWindow::updateMRUList(QString filename)
+void MainWindow::updateMRUList(QString filename, bool prepend)
 {
    _mruList.removeAll(filename);
-   _mruList.prepend(filename);
+   if (prepend)
+   {
+      _mruList.prepend(filename);
+   }
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -529,7 +533,7 @@ bool MainWindow::saveProject()
    {
       _project->save(_fileName);
       setWindowModified(false);
-      updateMRUList(_fileName);
+      updateMRUList(_fileName, true);
    }
    
    return true;

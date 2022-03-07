@@ -39,16 +39,15 @@ RCC_DIR     += ./moc
 
 include (../UmlCommon/UmlCommon.pri)
 include (../UmlClassifiers/UmlClassifiers.pri)
+include (../GuiResources/GuiResources.pri)
 
 DISTFILES   += ./GuiProject.pri
 
 HEADERS += \
     GuiProject.h \
     ProjectTreeModel.h \
-    ProjectTreeView.h \
-    TreeIconProvider.h
+    ProjectTreeView.h
 
 SOURCES += \ 
     ProjectTreeModel.cpp \
-    ProjectTreeView.cpp \
-    TreeIconProvider.cpp
+    ProjectTreeView.cpp

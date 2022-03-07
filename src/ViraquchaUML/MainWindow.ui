@@ -14,7 +14,7 @@
    <string>ViraquchaUML</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="ViraquchaUML.qrc">
+   <iconset resource="../GuiResources/GuiResources.qrc">
     <normaloff>:/images/appicon_16x16.png</normaloff>:/images/appicon_16x16.png</iconset>
   </property>
   <property name="locale">
@@ -276,14 +276,14 @@
   </widget>
   <action name="actionHelp">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/help_16x16.png</normaloff>:/images/help_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Help...</string>
    </property>
    <property name="toolTip">
-    <string>Shows online help</string>
+    <string>Show online help</string>
    </property>
    <property name="statusTip">
     <string>Show online help</string>
@@ -313,14 +313,14 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/exit_16x16.png</normaloff>:/images/exit_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
    </property>
    <property name="toolTip">
-    <string>Exits ViraquchaUML</string>
+    <string>Exit ViraquchaUML</string>
    </property>
    <property name="statusTip">
     <string>Exit</string>
@@ -328,14 +328,14 @@
   </action>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/new_16x16.png</normaloff>:/images/new_16x16.png</iconset>
    </property>
    <property name="text">
     <string>New...</string>
    </property>
    <property name="toolTip">
-    <string>Creates a new project</string>
+    <string>Create new project</string>
    </property>
    <property name="statusTip">
     <string>Create new project</string>
@@ -346,14 +346,14 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/open_16x16.png</normaloff>:/images/open_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Open...</string>
    </property>
    <property name="toolTip">
-    <string>Opens an existing project</string>
+    <string>Open existing project</string>
    </property>
    <property name="statusTip">
     <string>Open existing project</string>
@@ -364,14 +364,14 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/save_16x16.png</normaloff>:/images/save_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Save...</string>
    </property>
    <property name="toolTip">
-    <string>Saves the currently opened project</string>
+    <string>Save currently opened project</string>
    </property>
    <property name="statusTip">
     <string>Save project</string>
@@ -393,7 +393,7 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/close_16x16.png</normaloff>:/images/close_16x16.png</iconset>
    </property>
    <property name="text">
@@ -435,14 +435,14 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/undo_16x16.png</normaloff>:/images/undo_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
    </property>
    <property name="toolTip">
-    <string>Undos the last action</string>
+    <string>Undo last action</string>
    </property>
    <property name="statusTip">
     <string>Undo last action</string>
@@ -453,14 +453,14 @@
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/redo_16x16.png</normaloff>:/images/redo_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
    </property>
    <property name="toolTip">
-    <string>Redoes the last action</string>
+    <string>Redo last action</string>
    </property>
    <property name="statusTip">
     <string>Redo last action</string>
@@ -470,11 +470,15 @@
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/cut_16x16.png</normaloff>:/images/cut_16x16.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
    <property name="toolTip">
-    <string>Cuts an element from the project tree or a diagram</string>
+    <string>Cut element from project tree or diagram</string>
    </property>
    <property name="statusTip">
     <string>Cut element</string>
@@ -484,11 +488,15 @@
    </property>
   </action>
   <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/copy_16x16.png</normaloff>:/images/copy_16x16.png</iconset>
+   </property>
    <property name="text">
     <string>Copy</string>
    </property>
    <property name="toolTip">
-    <string>Copies an element in the project tree or a diagram</string>
+    <string>Copy element in project tree or diagram</string>
    </property>
    <property name="statusTip">
     <string>Copy element</string>
@@ -498,11 +506,15 @@
    </property>
   </action>
   <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/paste_16x16.png</normaloff>:/images/paste_16x16.png</iconset>
+   </property>
    <property name="text">
     <string>Paste</string>
    </property>
    <property name="toolTip">
-    <string>Pastes an element into the project tree or a diagram</string>
+    <string>Paste element into project tree or diagram</string>
    </property>
    <property name="statusTip">
     <string>Paste element</string>
@@ -512,6 +524,10 @@
    </property>
   </action>
   <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/remove_16x16.png</normaloff>:/images/remove_16x16.png</iconset>
+   </property>
    <property name="text">
     <string>Delete</string>
    </property>
@@ -519,7 +535,7 @@
     <string>Delete</string>
    </property>
    <property name="toolTip">
-    <string>Deletes an element from the project tree or a diagram</string>
+    <string>Remove element from project tree or diagram</string>
    </property>
    <property name="statusTip">
     <string>Delete element</string>
@@ -529,6 +545,10 @@
    </property>
   </action>
   <action name="actionProperties">
+   <property name="icon">
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/edit_16x16.png</normaloff>:/images/edit_16x16.png</iconset>
+   </property>
    <property name="text">
     <string>Properties...</string>
    </property>
@@ -587,62 +607,62 @@
   </action>
   <action name="actionMoveUp">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/moveup_16x16.png</normaloff>:/images/moveup_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Move Up</string>
    </property>
    <property name="toolTip">
-    <string>Moves the selected element one up.</string>
+    <string>Move selected element up</string>
    </property>
   </action>
   <action name="actionMoveDown">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/movedown_16x16.png</normaloff>:/images/movedown_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Move Down</string>
    </property>
    <property name="toolTip">
-    <string>Moves the selected element one down.</string>
+    <string>Move selected element down</string>
    </property>
   </action>
   <action name="actionExpand">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/expand_16x16.png</normaloff>:/images/expand_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Expand</string>
    </property>
    <property name="toolTip">
-    <string>Expands the selecte node.</string>
+    <string>Expand selected element</string>
    </property>
   </action>
   <action name="actionCollapse">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/collapse_16x16.png</normaloff>:/images/collapse_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Collapse</string>
    </property>
    <property name="toolTip">
-    <string>Collapses the selected node.</string>
+    <string>Collapse selected element</string>
    </property>
   </action>
   <action name="actionAddClass">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/class_16x16.png</normaloff>:/images/class_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Class</string>
    </property>
    <property name="toolTip">
-    <string>Adds a classifier of type Class to the project</string>
+    <string>Add new class to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Class</string>
@@ -650,14 +670,14 @@
   </action>
   <action name="actionAddInterface">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/interface_16x16.png</normaloff>:/images/interface_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Interface</string>
    </property>
    <property name="toolTip">
-    <string>Adds a classifier of type Interface to the project</string>
+    <string>Add new interface to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Interface</string>
@@ -665,14 +685,14 @@
   </action>
   <action name="actionAddDatatype">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/datatype_16x16.png</normaloff>:/images/datatype_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Data Type</string>
    </property>
    <property name="toolTip">
-    <string>Adds a classifier of type Data Type to the project</string>
+    <string>Add new data type to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Data Type</string>
@@ -680,7 +700,7 @@
   </action>
   <action name="actionAddEnumeration">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/enum_16x16.png</normaloff>:/images/enum_16x16.png</iconset>
    </property>
    <property name="text">
@@ -690,19 +710,19 @@
     <string>Adds a classifier of type Enumeration to the project</string>
    </property>
    <property name="toolTip">
-    <string>Add new Enumeration</string>
+    <string>Add new enumeration to the project</string>
    </property>
   </action>
   <action name="actionAddPrimitive">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
-     <normaloff>:/images/primitive_16x16.png</normaloff>:/images/primitive_16x16.png</iconset>
+    <iconset resource="../GuiResources/GuiResources.qrc">
+     <normaloff>:/images/primitivetype_16x16.png</normaloff>:/images/primitivetype_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Primitive</string>
    </property>
    <property name="toolTip">
-    <string>Adds a classifier of type Primitive to the project</string>
+    <string>Add new primitive type to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Primitive</string>
@@ -710,14 +730,14 @@
   </action>
   <action name="actionAddSignal">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/signal_16x16.png</normaloff>:/images/signal_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Signal</string>
    </property>
    <property name="toolTip">
-    <string>Adds a classifier of type Signal to the project</string>
+    <string>Add new signal to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Signal</string>
@@ -725,14 +745,14 @@
   </action>
   <action name="actionAddDiagram">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/diagram_16x16.png</normaloff>:/images/diagram_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Add &amp; Diagram...</string>
    </property>
    <property name="toolTip">
-    <string>Adds a new diagram to the project</string>
+    <string>Add new diagram to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new diagram</string>
@@ -740,14 +760,14 @@
   </action>
   <action name="actionAddPackage">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/package_16x16.png</normaloff>:/images/package_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Add &amp;Package</string>
    </property>
    <property name="toolTip">
-    <string>Adds a new Package to the project</string>
+    <string>Add new package to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Package</string>
@@ -771,14 +791,14 @@
   </action>
   <action name="actionAddModel">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/model_16x16.png</normaloff>:/images/model_16x16.png</iconset>
    </property>
    <property name="text">
     <string>Add &amp;Model</string>
    </property>
    <property name="toolTip">
-    <string>Adds a new Model to the project</string>
+    <string>Add new model to the project</string>
    </property>
    <property name="statusTip">
     <string>Add new Model</string>
@@ -786,14 +806,14 @@
   </action>
   <action name="actionAddAttribute">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/attribute_16x16.png</normaloff>:/images/attribute_16x16.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Attribute</string>
    </property>
    <property name="toolTip">
-    <string>Adds a feature of type Attribute to a classifier</string>
+    <string>Add new attribute to a classifier</string>
    </property>
    <property name="statusTip">
     <string>Add new Attribute</string>
@@ -801,14 +821,14 @@
   </action>
   <action name="actionAddOperation">
    <property name="icon">
-    <iconset resource="ViraquchaUML.qrc">
+    <iconset resource="../GuiResources/GuiResources.qrc">
      <normaloff>:/images/operation_16x16.png</normaloff>:/images/operation_16x16.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Operation</string>
    </property>
    <property name="toolTip">
-    <string>Adds a feature of type Operation to a classifier</string>
+    <string>Add new operation to a classifier</string>
    </property>
    <property name="statusTip">
     <string>Add new Operation</string>
@@ -899,7 +919,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="ViraquchaUML.qrc"/>
+  <include location="../GuiResources/GuiResources.qrc"/>
  </resources>
  <connections>
   <connection>

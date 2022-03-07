@@ -38,8 +38,8 @@
 /**
  * @class GeneralTab
  * @brief The GeneralTab class implements a widget for editing general properties of a single UML element.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  * @see PropertiesDialog
  *
  * The GeneralTab class provides controls for editing the name, comment and visibility of an UmlElement object, if it

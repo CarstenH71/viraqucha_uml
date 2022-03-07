@@ -30,6 +30,13 @@
 #include <QIcon>
 #include <QVector>
 
+enum class IconSize
+{
+   Small,
+   Medium,
+   Big
+};
+
 class IconProvider final
 {
 private: // Constructors
@@ -44,10 +51,12 @@ public:
 
 private: // Methods
    static IconProvider& instance();
-   QIcon find(QString name) const;
+   int indexOf(QString name) const;
+   QString resourceAt(int index, IconSize size) const;
 
 public:
-   static QIcon get(QString name);
+   static QIcon getIcon(QString name, IconSize size = IconSize::Small);
+   static QPixmap getPixmap(QString name, IconSize size = IconSize::Small);
 
 private: // Attributes
    ///@cond

@@ -43,12 +43,12 @@
 
 struct IconProvider::Item
 {
-   Item(QString name, QString res16)
-   : _name(name), _res16(res16)
+   Item(QString name, QString resource)
+   : _name(name), _resource(resource)
    {}
 
    QString _name;
-   QString _res16;
+   QString _resource;
 };
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -58,18 +58,34 @@ struct IconProvider::Item
 /** Initializes a new instance of the TreeIconProvider class. */
 IconProvider::IconProvider()
 {
-   _items.resize(11);
-   _items[0] = new Item("UmlClass", ":/images/class_16x16.png");
-   _items[1] = new Item("UmlDatatype", ":/images/datatype_16x16.png");
-   _items[2] = new Item("UmlDiagram", ":/images/diagram_16x16.png");
-   _items[3] = new Item("UmlEnumeration", ":/images/enum_16x16.png");
-   _items[4] = new Item("UmlInterface", ":/images/interface_16x16.png");
-   _items[5] = new Item("UmlModel", ":/images/model_16x16.png");
-   _items[6] = new Item("UmlPackage", ":/images/package_16x16.png");
-   _items[7] = new Item("UmlPrimitiveType", ":/images/primitive_16x16.png");
-   _items[8] = new Item("UmlSignal", ":/images/signal_16x16.png");
-   _items[9] = new Item("UmlAttribute", ":/images/attribute_16x16.png");
-   _items[10] = new Item("UmlOperation", ":/images/operation_16x16.png");
+   int index = -1;
+
+   // Add new resources here - list should be sorted by name to make searching faster. Set only base name of the
+   // resource file, size ("_16x16", "_24x24", "_32x32") and extension (".png") will be added by function resourceAt()!
+   _items.resize(23);
+   _items[++index] = new Item("UmlAssociation", "association");
+   _items[++index] = new Item("UmlAssociation::Aggregation", "aggregation");
+   _items[++index] = new Item("UmlAssociation::Composition", "composition");
+   _items[++index] = new Item("UmlAttribute", "attribute");
+   _items[++index] = new Item("UmlClass", "class");
+   _items[++index] = new Item("UmlComment", "comment");
+   _items[++index] = new Item("UmlDatatype", "datatype");
+   _items[++index] = new Item("UmlDependency", "dependency");
+   _items[++index] = new Item("UmlDependency::Usage", "usage");
+   _items[++index] = new Item("UmlDependency::Abstraction", "abstraction");
+   _items[++index] = new Item("UmlDiagram", "diagram");
+   _items[++index] = new Item("UmlEnumeration", "enum");
+   _items[++index] = new Item("UmlGeneralization", "generalization");
+   _items[++index] = new Item("UmlInterface", "interface");
+   _items[++index] = new Item("UmlLink", "link");
+   _items[++index] = new Item("UmlModel", "model");
+   _items[++index] = new Item("UmlNesting", "nesting");
+   _items[++index] = new Item("UmlOperation", "operation");
+   _items[++index] = new Item("UmlPackage", "package");
+   _items[++index] = new Item("UmlPrimitiveType", "primitivetype");
+   _items[++index] = new Item("UmlRealization", "realization");
+   _items[++index] = new Item("UmlSignal", "signal");
+   _items[++index] = new Item("UmlTemplateBinding", "templbind");
 }
 
 IconProvider::~IconProvider()
@@ -87,32 +103,71 @@ IconProvider& IconProvider::instance()
    return provider;
 }
 
-/** Finds an icon for a specified name in the vector of icons. */
-QIcon IconProvider::find(QString name) const
+/**
+ * Returns the index of a specified name.
+ * @param name
+ * @returns
+ */
+int IconProvider::indexOf(QString name) const
 {
-   int  index = 0;
-   bool found = false;
-   while (index < _items.count() && !found)
+   for (int index = 0; index < _items.count(); ++index)
    {
       if (_items[index]->_name == name)
       {
-         found = true;
-         break;
+         return index;
       }
-
-      ++index;
    }
 
-   if (found)
+   return -1;
+}
+
+/**
+ * Returns the resource name at a specified index.
+ * @param index
+ * @param size
+ * @returns
+ */
+QString IconProvider::resourceAt(int index, IconSize size) const
+{
+   QString format;
+   switch (size)
    {
-      return QIcon(_items[index]->_res16);
+   case IconSize::Small:
+      format = ":/images/%1_16x16.png";
+      break;
+   case IconSize::Medium:
+      format = ":/images/%1_24x24.png";
+      break;
+   case IconSize::Big:
+      format = ":/images/%1_32x32.png";
+      break;
+   default:
+      break;
+   }
+
+   return format.arg(_items[index]->_resource);
+}
+
+/** Looks up an icon for a secified name. */
+QIcon IconProvider::getIcon(QString name, IconSize size)
+{
+   int index = instance().indexOf(name);
+   if (index != -1)
+   {
+      return QIcon(instance().resourceAt(index, size));
    }
 
    return QIcon();
 }
 
-/** Looks up an icon for a secified name. */
-QIcon IconProvider::get(QString name)
+/** Looks up a pixmap for a secified name. */
+QPixmap IconProvider::getPixmap(QString name, IconSize size)
 {
-   return instance().find(name);
+   int index = instance().indexOf(name);
+   if (index != -1)
+   {
+      return QPixmap(instance().resourceAt(index, size));
+   }
+
+   return QPixmap();
 }

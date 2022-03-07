@@ -38,8 +38,8 @@
 /**
  * @class ParameterTab
  * @brief The ParameterTab class implements a properties tab for editing parameters of an UML operation.
- * @since 0.1
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * TODO1: Multiplicity column needs to be evaluated. Currently a false multiplicity is silently rejected.
  * TODO2: A properties dialog for parameters is needed, since only the most significant properties are shown in the 

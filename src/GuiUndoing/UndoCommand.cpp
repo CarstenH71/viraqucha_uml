@@ -35,8 +35,8 @@
 /**
  * @class UndoCommand
  * @brief Base class for the undo commands of ViraquchaUML
- * @since 1.0
- * @ingroup GUI
+ * @since 0.2.0
+ * @ingroup GuiUndoing
  *
  * The UndoCommand class is the base class of the undo commands of ViraquchaUML. It extends QUndoCommand by properties
  * and functions for managing UmlElement objects.
@@ -47,7 +47,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * Instantiates a new object of the UndoCommand class with a UmlElement and a UmlProject object.
+ * Initializes a new object of the UndoCommand class with a UmlElement and a UmlProject object.
  * @param element
  * @param project
  */

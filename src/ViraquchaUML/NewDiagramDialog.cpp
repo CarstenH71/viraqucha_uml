@@ -26,35 +26,36 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "NewDiagramDialog.h"
+#include "StringProvider.h"
 
-#include <QStringList>
+/**
+ * @class NewDiagramDialog
+ * @brief Implements a simple dialog which allows selection of a diagram type
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
+ */
 
+//---------------------------------------------------------------------------------------------------------------------
+// Class implementation
+//---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the NewDiagramDialog class.
+ *
+ * @param parent Parent widget
+ */
 NewDiagramDialog::NewDiagramDialog(QWidget *parent)
 : super(parent)
 {
    ui.setupUi(this);
-   QStringList list;
-   list << "Activity"
-        << "Class"
-        << "Communication"
-        << "Component"
-        << "Composite"
-        << "Deployment"
-        << "Interaction"
-        << "Object"
-        << "Packages"
-        << "Profile"
-        << "StateMachine"
-        << "Sequence"
-        << "Timing"
-        << "UseCase";
-   ui.comboBox->addItems(list);
+   ui.comboBox->addItems(StringProvider::diagramTypes());
 }
 
 NewDiagramDialog::~NewDiagramDialog()
 {
 }
 
+/** Gets the diagram type selected by the user. */
 DiagramKind NewDiagramDialog::kind() const
 {
    return (DiagramKind)(ui.comboBox->currentIndex() + 1);

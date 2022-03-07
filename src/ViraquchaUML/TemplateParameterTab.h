@@ -37,8 +37,10 @@ class TPTableModel;
 
 class TemplateParameterTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    TemplateParameterTab(QWidget* parent, ITemplatableElement* elem);
    virtual ~TemplateParameterTab();
@@ -55,7 +57,9 @@ private slots:
    void updateButtons(const QModelIndex& current, const QModelIndex& previous);
 
 private: // Attributes
+   ///@cond
    Ui::TemplateParameterTab ui;
-   ITemplatableElement*     _elem;
-   TPTableModel*            _model;
+   ITemplatableElement* _elem;
+   TPTableModel*        _model;
+   ///@endcond
 };

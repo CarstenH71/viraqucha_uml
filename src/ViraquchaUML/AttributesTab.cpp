@@ -49,8 +49,8 @@
 /**
  * @class AttributesTab
  * @brief The AttributesTab class implements a widget for editing UML attributes of a UML classifier.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  * @see PropertiesDialog, AttributeTab
  *
  * The AttributesTab class provides a table view and buttons for adding, deleting, moving and editing attributes of a

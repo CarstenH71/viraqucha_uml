@@ -35,8 +35,10 @@ class IMultiplicityElement;
 
 class MultiplicityTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    MultiplicityTab(QWidget *parent, IMultiplicityElement* elem);
    virtual ~MultiplicityTab();
@@ -49,8 +51,10 @@ private:
    void updateControls();
 
 private: // Attributes
-   Ui::MultiplicityTab   ui;
+   ///@cond
+   Ui::MultiplicityTab ui;
    IMultiplicityElement* _elem;
    quint32               _lower;
    quint32               _upper;
+   ///@endcond
 };

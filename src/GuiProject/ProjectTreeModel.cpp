@@ -26,6 +26,7 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "ProjectTreeModel.h"
+#include "IconProvider.h"
 
 #include "UmlElement.h"
 #include "UmlProject.h"
@@ -154,7 +155,7 @@ QVariant ProjectTreeModel::data(const QModelIndex& index, int role) const
       switch (role)
       {
       case Qt::DecorationRole:
-         return _icons.icon(elem->className());
+         return IconProvider::getIcon(elem->className());
       case Qt::DisplayRole:
          return elem->toString();
       case Qt::EditRole:

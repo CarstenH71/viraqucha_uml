@@ -61,15 +61,29 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="addButton">
+       <property name="toolTip">
+        <string>Add template parameter</string>
+       </property>
        <property name="text">
-        <string>&amp;Add</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/add_16x16.png</normaloff>:/images/add_16x16.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="removeButton">
+       <property name="toolTip">
+        <string>Remove template parameter</string>
+       </property>
        <property name="text">
-        <string>&amp;Delete</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/remove_16x16.png</normaloff>:/images/remove_16x16.png</iconset>
        </property>
       </widget>
      </item>
@@ -91,8 +105,15 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Move up</string>
+       </property>
        <property name="text">
-        <string>Move &amp;Up</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/moveup_16x16.png</normaloff>:/images/moveup_16x16.png</iconset>
        </property>
       </widget>
      </item>
@@ -101,8 +122,15 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Move down</string>
+       </property>
        <property name="text">
-        <string>Move &amp;Down</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/movedown_16x16.png</normaloff>:/images/movedown_16x16.png</iconset>
        </property>
       </widget>
      </item>
@@ -111,6 +139,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../GuiResources/GuiResources.qrc"/>
+ </resources>
  <connections/>
 </ui>

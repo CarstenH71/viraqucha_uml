@@ -5,7 +5,6 @@ add_library(${LIB_NAME}
   STATIC
     ProjectTreeModel.cpp
     ProjectTreeView.cpp
-    TreeIconProvider.cpp
 )
 
 target_compile_features(${LIB_NAME} PUBLIC cxx_std_17)

@@ -32,8 +32,8 @@
 /**
  * @class OperationsTab
  * @brief Provides a widget for editing operations of a UML classifier.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
  *
  * The OperationsTab class provides a table widget and some buttons for editing operations of an UML classifier. It
  * is added to the properties dialog (see class PropertiesDialog) for every UML classifier instance in the ViraquchaUML

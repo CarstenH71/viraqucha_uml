@@ -35,8 +35,10 @@ class IStereotypedElement;
 
 class GeneralTab : public QWidget, public IPropertiesTab
 {
+   ///@cond
    Q_OBJECT
    typedef QWidget super;
+   ///@endcond
 public: // Constructors
    GeneralTab(QWidget* parent, UmlElement* elem);
    virtual ~GeneralTab();
@@ -49,8 +51,10 @@ private:
    void updateControls();
 
 private: // Attributes
+   ///@cond
    Ui::GeneralTab ui;
    UmlElement*          _element;
    INamedElement*       _named;
    IStereotypedElement* _stereotyped;
+   ///@endcond
 };

@@ -26,6 +26,7 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "ToolBoxManager.h"
+#include "IconProvider.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -100,11 +101,27 @@ void ToolBoxManager::addTab(QString name)
 }
 
 /**
- * Adds a new button to the tool box.
+ * Adds a new button decorated with an icon to the tool box.
  *
+ * The function looks up an icon from the program resources in medium (24x24 pixels) size using the class name given
+ * and then adds it to the toolbar using the display name given.
  * @param dispName Display name of the button.
- * @param className Class name of the project class that shall be created by clicking the button.
- * @param icon Icon of the button. Should be a bitmap of 24x24 pixels size.
+ * @param className Class name of the UmlElement class that shall be created by clicking the button.
+ */
+void ToolBoxManager::addButton(int id, QString dispName, QString className)
+{
+   addButton(id, dispName, className, IconProvider::getIcon(className, IconSize::Medium));
+}
+
+/**
+ * Adds a new button decorated with a given icon to the tool box.
+ *
+ * The function uses the icon given to decorate the button to be added. It then adds it to the toolbar using the
+ * display name given. The class name is later used for creating the specific UmlElement object when clicking the
+ * button.
+ * @param dispName Display name of the button.
+ * @param className Class name of the UmlElement class that shall be created by clicking the button.
+ * @param icon Icon to decorate the button with.
  */
 void ToolBoxManager::addButton(int id, QString dispName, QString className, QIcon icon)
 {

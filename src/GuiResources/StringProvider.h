@@ -52,6 +52,7 @@ public: // Properties
    static QString defaultPrimitiveType();
 
    static QStringList& aggregations();
+   static QStringList& diagramTypes();
    static QStringList& directions();
    static QStringList& effects();
    static QStringList& languages();
@@ -63,6 +64,7 @@ public: // Properties
 private: // Attributes
    /// @cond
    QStringList _aggregations;
+   QStringList _diagramTypes;
    QStringList _directions;
    QStringList _effects;
    QStringList _languages;

@@ -52,22 +52,43 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="addItem">
-       <property name="text">
-        <string>&amp;Add</string>
+       <property name="toolTip">
+        <string>Add parameter</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="editItem">
        <property name="text">
-        <string>&amp;Edit...</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/add_16x16.png</normaloff>:/images/add_16x16.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="removeItems">
+       <property name="toolTip">
+        <string>Remove parameter</string>
+       </property>
        <property name="text">
-        <string>&amp;Remove</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/remove_16x16.png</normaloff>:/images/remove_16x16.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editItem">
+       <property name="toolTip">
+        <string>Edit properties</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../GuiResources/GuiResources.qrc">
+         <normaloff>:/images/edit_16x16.png</normaloff>:/images/edit_16x16.png</iconset>
        </property>
       </widget>
      </item>
@@ -87,7 +108,7 @@
      <item>
       <widget class="QPushButton" name="moveItemsUp">
        <property name="toolTip">
-        <string>Moves the selected parameter one row up</string>
+        <string>Move up</string>
        </property>
        <property name="toolTipDuration">
         <number>4</number>
@@ -96,7 +117,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="ViraquchaUML.qrc">
+        <iconset resource="../GuiResources/GuiResources.qrc">
          <normaloff>:/images/moveup_16x16.png</normaloff>:/images/moveup_16x16.png</iconset>
        </property>
       </widget>
@@ -104,7 +125,7 @@
      <item>
       <widget class="QPushButton" name="moveItemsDown">
        <property name="toolTip">
-        <string>Moves the selected parameter one row down</string>
+        <string>Move down</string>
        </property>
        <property name="toolTipDuration">
         <number>4</number>
@@ -113,7 +134,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="ViraquchaUML.qrc">
+        <iconset resource="../GuiResources/GuiResources.qrc">
          <normaloff>:/images/movedown_16x16.png</normaloff>:/images/movedown_16x16.png</iconset>
        </property>
       </widget>
@@ -142,7 +163,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="ViraquchaUML.qrc"/>
+  <include location="../GuiResources/GuiResources.qrc"/>
  </resources>
  <connections/>
 </ui>

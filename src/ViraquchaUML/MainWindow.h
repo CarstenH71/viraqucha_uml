@@ -46,8 +46,8 @@ class UmlDiagram;
 
 class MainWindow : public QMainWindow
 {
-   Q_OBJECT
    /// @cond
+   Q_OBJECT
    typedef QMainWindow super;
    /// @endcond
 public: // Constructors
@@ -84,7 +84,7 @@ private:
    void destroyProject();
    
    int findPageIndex(UmlDiagram* diagram) const;
-   void updateMRUList(QString filename);
+   void updateMRUList(QString filename, bool prepend);
 
 public slots:
    //  Menu "App":
@@ -143,8 +143,8 @@ public slots:
    void updateModel(const QModelIndex& index, UmlElement* element);
 
 private: // Attributes
+   ///@cond
    Ui::MainWindowClass ui;
-   
    UmlProject*     _project;
    QString         _fileName;
    QUndoStack      _undoStack;
@@ -152,4 +152,5 @@ private: // Attributes
    QStringList     _mruList;
    ToolBoxManager* _manager;
    StartPage*      _startPage;
+   ///@endcond
 };

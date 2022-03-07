@@ -49,6 +49,9 @@
 StringProvider::StringProvider()
 {
    _aggregations << tr("None") << tr("Shared") << tr("Composite");
+   _diagramTypes << tr("Activity") << tr("Class") << tr("Communication") << tr("Component") << tr("Composite")
+      << tr("Deployment") << tr("Interaction") << tr("Object") << tr("Packages") << tr("Profile") << tr("StateMachine")
+      << tr("Sequence") << tr("Timing") << tr("UseCase");
    _directions << "" << tr("in") << tr("out") << tr("inout") << tr("return");
    _effects << "" << tr("create") << tr("delete") << tr("read") << tr("update");
    _languages << "" << tr("Ada95") << tr("C++") << tr("C#") << tr("D") << tr("Delphi") << tr("Go") << tr("Java")
@@ -92,6 +95,12 @@ QString StringProvider::defaultPrimitiveType()
 QStringList& StringProvider::aggregations()
 {
    return instance()._aggregations;
+}
+
+/** Gets the list of diagram types. */
+QStringList& StringProvider::diagramTypes()
+{
+   return instance()._diagramTypes;
 }
 
 /** Gets the list of directions. */

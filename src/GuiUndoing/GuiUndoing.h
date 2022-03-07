@@ -28,7 +28,7 @@
 #pragma once
 
 #include "CommandStack.h"
-#include "EditCommand.h"
+//#include "EditCommand.h"
 #include "InsertCommand.h"
 #include "MoveCommand.h"
 #include "RemoveCommand.h"

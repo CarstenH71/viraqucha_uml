@@ -34,8 +34,10 @@
 
 class NewProjectDialog : public QDialog
 {
+   ///@cond
    Q_OBJECT
    typedef QDialog super;
+   ///@endcond
 public: // Constructors
    NewProjectDialog(QWidget* parent = nullptr);
    virtual ~NewProjectDialog();
@@ -58,8 +60,9 @@ private slots:
    void browseClicked();
 
 private: // Attributes
+   ///@cond
    Ui::NewProjectDialog ui;
-
    QStringList _locations;
    int         _selected;
+   ///@endcond
 };

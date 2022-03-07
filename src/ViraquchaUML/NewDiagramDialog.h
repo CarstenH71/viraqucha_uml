@@ -34,8 +34,10 @@
 
 class NewDiagramDialog : public QDialog
 {
+   ///@cond
    Q_OBJECT
    typedef QDialog super;
+   ///@endcond
 public: // Constructors
    NewDiagramDialog(QWidget* parent = nullptr);
    virtual ~NewDiagramDialog();
@@ -44,5 +46,7 @@ public: // Properties
    DiagramKind kind() const;
 
 private: // Attributes
+   ///@cond
    Ui::NewDiagramDialog ui;
+   ///@endcond
 };
