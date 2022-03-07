@@ -12,6 +12,7 @@
         <file>images/package_16x16.png</file>
         <file>images/package_24x24.png</file>
         <file>images/datatype_16x16.png</file>
+        <file>images/datatype_24x24.png</file>        
         <file>images/enum_16x16.png</file>
         <file>images/enum_24x24.png</file>
         <file>images/interface_16x16.png</file>
@@ -29,24 +30,16 @@
         <file>images/attribute_16x16.png</file>
         <file>images/dependency_16x16.png</file>
         <file>images/dependency_24x24.png</file>
-        <file>images/dependency_32x32.png</file>
         <file>images/generalization_16x16.png</file>
         <file>images/generalization_24x24.png</file>
-        <file>images/generalization_32x32.png</file>
         <file>images/realization_16x16.png</file>
         <file>images/realization_24x24.png</file>
-        <file>images/realization_32x32.png</file>
         <file>images/association_16x16.png</file>
         <file>images/association_24x24.png</file>
-        <file>images/association_32x32.png</file>
         <file>images/aggregation_16x16.png</file>
         <file>images/aggregation_24x24.png</file>
-        <file>images/aggregation_32x32.png</file>
         <file>images/composition_16x16.png</file>
         <file>images/composition_24x24.png</file>
-        <file>images/composition_32x32.png</file>
-        <file>images/datatype_24x24.png</file>
-        <file>images/datatype_32x32.png</file>
         <file>images/operation_16x16.png</file>
         <file>images/abstraction_16x16.png</file>
         <file>images/abstraction_24x24.png</file>
