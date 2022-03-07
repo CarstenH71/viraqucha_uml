@@ -794,6 +794,7 @@ INPUT                  = ../../src/GuiCommon \
                          ../../src/GuiDiagram \
                          ../../src/GuiProject \
                          ../../src/GuiResources \
+                         ../../src/GuiUndoing \
                          ../../src/UmlClassifiers \
                          ../../src/UmlCommon \
                          ../../src/ViraquchaUML \
