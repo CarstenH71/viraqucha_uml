@@ -34,7 +34,7 @@
 /**
  * @class DiaNode
  * @brief The DiaNode class holds information about a node in a diagram.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * In a UML diagram, a node represents the information of a single UML element. 

@@ -30,7 +30,7 @@
 /**
  * @class Label
  * @brief The Label class stores information about a label at a UML connector or link.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  * 
  * The Label class extends base class TextBox by a position.

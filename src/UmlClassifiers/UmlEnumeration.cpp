@@ -26,9 +26,10 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "UmlEnumeration.h"
-#include "Literal.h"
+#include "UmlLiteral.h"
 #include "PropertyStrings.h"
 
+#include "../UmlCommon/Compartment.h"
 #include "../UmlCommon/UmlKeywords.h"
 
 #include <QJsonArray>
@@ -38,7 +39,7 @@
 /**
  * @class UmlEnumeration
  * @brief The UmlEnumeration class stores properties of a UML Enumeration element.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * This class extends its base class by further properties specific to UML Enumeration elements, namely literals. You
@@ -53,7 +54,7 @@
 /// @cond
 struct UmlEnumeration::Data
 {
-   QList<Literal*> literals;
+   QList<UmlLiteral*> literals;
 };
 /// @endcond
 
@@ -96,20 +97,20 @@ QString UmlEnumeration::className() const
    return staticMetaObject.className();
 }
 
-/** Gets the list of Literal objects of the enumeration. */
-QList<Literal*> UmlEnumeration::literals() const
+/** Gets the list of UmlLiteral objects of the enumeration. */
+QList<UmlLiteral*> UmlEnumeration::literals() const
 {
-   return QList<Literal*>(data->literals);
+   return QList<UmlLiteral*>(data->literals);
 }
 
 /** 
- * Appends a Literal object to the enumeration. 
+ * Appends a UmlLiteral object to the enumeration.
  * 
  * UmlEnumeration takes ownership of the Literal object. That is, if it is not removed, it will be deleted on 
  * destruction of the UmlEnumeration object.
- * @param obj Literal object to be added.
+ * @param obj UmlLiteral object to be added.
  */
-void UmlEnumeration::append(Literal* obj)
+void UmlEnumeration::append(UmlLiteral* obj)
 {
    if (obj != nullptr)
    {
@@ -118,12 +119,12 @@ void UmlEnumeration::append(Literal* obj)
 }
 
 /** 
- * Removes a Literal object from the enumeration. 
+ * Removes a UmlLiteral object from the enumeration.
  * 
- * The Literal object is not deleted: the ownership is passed to the caller which must delete it!
- * @param obj Literal object to be removed.
+ * The UmlLiteral object is not deleted: the ownership is passed to the caller which must delete it!
+ * @param obj UmlLiteral object to be removed.
  */
-void UmlEnumeration::remove(Literal* obj)
+void UmlEnumeration::remove(UmlLiteral* obj)
 {
    if (obj != nullptr)
    {
@@ -131,7 +132,7 @@ void UmlEnumeration::remove(Literal* obj)
    }
 }
 
-/** Clears all Literal objects from the enumeration. */
+/** Clears all UmlLiteral objects from the enumeration. */
 void UmlEnumeration::clearLiterals()
 {
    for (auto* lit : data->literals)
@@ -140,6 +141,49 @@ void UmlEnumeration::clearLiterals()
    }
 
    data->literals.clear();
+}
+
+/**
+ * Initially creates the vector of compartments for this enumeration.
+ *
+ * An enumeration has all compartments of a classifier (name, attributes, operations, receptions) plus one compartment
+ * for the literals. On creation of the vector, only the literals compartment is visible. All other compartments are
+ * hidden.
+ */
+QVector<Compartment*> UmlEnumeration::compartments()
+{
+   auto comps = super::compartments();
+   for (auto* comp : comps)
+   {
+      if (comp->name() != "name")
+      {
+         comp->isHidden(true);
+      }
+   }
+
+   // Insert compartment "literals" before compartment "attributes":
+   comps.insert(1, new Compartment("literals"));
+   update(1, comps[1]);
+   return comps;
+}
+
+/**
+ * Updates a compartment by adding or modifying all text boxes.
+ *
+ * @param index Index of the compartment in the compartment vector returned by function compartments().
+ * @param comp Pointer to the compartment to be updated.
+ */
+void UmlEnumeration::update(int index, Compartment* comp)
+{
+   if (comp == nullptr) return;
+   super::update(index, comp);
+   if (comp->name() == "literals") // Literals compartment
+   {
+      for (auto lit : data->literals)
+      {
+         comp->addLine(QString("%1 = %2").arg(lit->symbol()).arg(lit->number()));
+      }
+   }
 }
 
 /**
@@ -160,7 +204,7 @@ void UmlEnumeration::serialize(QJsonObject& json, bool read, bool flat, int vers
       for (int index = 0; index < array.count(); ++index)
       {
          auto obj = array[index].toObject();
-         append(new Literal(obj[KPropNumber].toInt(), obj[KPropSymbol].toString()));
+         append(new UmlLiteral(obj[KPropNumber].toInt(), obj[KPropSymbol].toString()));
       }
    }
    else

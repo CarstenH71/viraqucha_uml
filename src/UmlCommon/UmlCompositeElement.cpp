@@ -36,7 +36,7 @@
 /**
  * @class UmlCompositeElement
  * @brief The UmlCompositeElement class represents an UML element containing child elements.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlCompositeElement class is the base class for all composite memory objects in the data model. Together with 

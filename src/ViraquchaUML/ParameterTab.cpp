@@ -31,6 +31,7 @@
 #include "MultiplicityUtils.h"
 #include "StringProvider.h"
 
+#include "NameBuilder.h"
 #include "UmlOperation.h"
 #include "UmlParameter.h"
 #include "UmlProject.h"
@@ -52,10 +53,10 @@
 class PATableItem
 {
 public:
-   PATableItem()
+   PATableItem(QString name)
    : _param(nullptr)
    {
-      _name         = "param";
+      _name         = name;
       _direction    = ParameterDirectionKind::In;
       _effect       = ParameterEffectKind::Undefined;
       _isException  = false;
@@ -299,7 +300,7 @@ public: // Methods
       beginInsertRows(parent, row, row + count - 1);
       while (count > 0)
       {
-         _items.insert(row, QSharedPointer<PATableItem>(new PATableItem()));
+         _items.insert(row, QSharedPointer<PATableItem>(new PATableItem(createName())));
          --count;
       }
       endInsertRows();
@@ -343,6 +344,20 @@ public: // Methods
    }
 
 private:
+   /** Creates a unique name for a new OPTableItem object. */
+   QString createName()
+   {
+      QStringList names;
+      for (auto item : _items)
+      {
+         names.append(item->name());
+      }
+
+      NameBuilder builder(names);
+      return builder.build(tr("param"));
+   }
+
+private:
    UmlOperation*                      _elem;
    QList<QSharedPointer<PATableItem>> _items;
 };
@@ -369,6 +384,8 @@ ParameterTab::ParameterTab(QWidget* parent, UmlOperation* elem)
    ui.tableView->setItemDelegateForColumn(PATableModel::KMultiColumn, _multiDelegate);
    ui.tableView->setItemDelegateForColumn(PATableModel::KTypeColumn, _typesDelegate);
    ui.tableView->horizontalHeader()->resizeSection(0, 80);
+   ui.tableView->resizeColumnsToContents();
+   ui.tableView->selectRow(0);
 
    connect(ui.addItem, &QPushButton::clicked, this, &ParameterTab::addItem);
    connect(ui.removeItems, &QPushButton::clicked, this, &ParameterTab::removeItems);
@@ -408,9 +425,10 @@ void ParameterTab::removeItems()
 {
    auto result = MessageBox::warning(
       this,
-      tr("Delete parameter"),
       tr("Are you sure you want to delete the selected parameters?"),
-      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+      QString(), // No additional information
+      QMessageBox::Ok | QMessageBox::Cancel,
+      QMessageBox::Cancel);
    if (result == QMessageBox::Ok)
    {
       while (ui.tableView->selectionModel()->selectedIndexes().size() > 0)

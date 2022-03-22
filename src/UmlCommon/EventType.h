@@ -30,7 +30,7 @@
 /**
  * @enum EventType
  * @brief Denotes the event type of an event sent through the IElementObserver interface.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 enum class EventType

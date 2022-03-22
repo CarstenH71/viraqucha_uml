@@ -36,7 +36,7 @@
 /**
  * @class UmlLink
  * @brief The UmlLink class is the base class for all connectors.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlLink class is the base class for all connectors in the data model. It corresponds to the modeling concept 

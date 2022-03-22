@@ -26,13 +26,32 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "OperationTab.h"
+#include "StringProvider.h"
 
 #include "UmlOperation.h"
 #include "UmlProject.h"
 
+/**
+ * @class OperationTab
+ * @brief Provides a widget for editing a single operation of a UML classifier.
+ * @since 0.1.0
+ * @ingroup ViraquchaUML
+ *
+ * The OperationTab class provides controls for editing properties of a single operation of a UML classifier. It is
+ * added to the properties dialog (see class PropertiesDialog) for every UML classifier instance in the ViraquchaUML
+ * datamodel.
+ */
+
 //---------------------------------------------------------------------------------------------------------------------
 // Class implementation
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the OperationTab class.
+ *
+ * @param parent Parent widget
+ * @param oper UmlOperation object to be edited
+ */
 OperationTab::OperationTab(QWidget* parent, UmlOperation* oper)
 : super(parent)
 , _oper(oper)
@@ -45,11 +64,17 @@ OperationTab::~OperationTab()
 {
 }
 
+/**
+ * Validates user input.
+ *
+ * @returns True, if input is valid; false otherwise
+ */
 bool OperationTab::validateInput()
 {
    return true;
 }
 
+/** Applies changes to the properties of the UmlOperation object. */
 void OperationTab::applyChanges()
 {
    _oper->setReturnType(ui.returnTypeCombo->currentText());
@@ -57,16 +82,15 @@ void OperationTab::applyChanges()
    _oper->isAbstract(ui.isAbstractBox->isChecked());
 }
 
+/** Updates controls in this widget. */
 void OperationTab::updateControls()
 {
-   ui.returnTypeCombo->addItems(_oper->project()->primitiveTypes());
+   ui.returnTypeCombo->addItems(StringProvider::primitiveTypes());
    ui.returnTypeCombo->setCurrentText(_oper->returnType());
 
-   QStringList list;
-   list << "Undefined" << "Concurrent" << "Guarded" << "Sequential";
-   ui.callConcurrencyCombo->addItems(list);
+   ui.callConcurrencyCombo->addItems(StringProvider::callConcurrencies());
+   ui.callConcurrencyCombo->setCurrentText(StringProvider::callConcurrencies()[(int)_oper->concurrency()]);
    ui.callConcurrencyCombo->setCurrentIndex((int)_oper->concurrency());
 
-   // Flags:
    ui.isAbstractBox->setChecked(_oper->isAbstract());
 }

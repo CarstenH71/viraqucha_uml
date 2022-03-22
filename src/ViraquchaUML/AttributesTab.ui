@@ -52,7 +52,7 @@
      <item>
       <widget class="QPushButton" name="removeButton">
        <property name="toolTip">
-        <string>Remove attribute </string>
+        <string>Delete attribute </string>
        </property>
        <property name="text">
         <string/>

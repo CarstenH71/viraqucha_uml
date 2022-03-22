@@ -36,7 +36,7 @@ class UmlTemplateParameter;
 /**
  * @class ITemplatableElement
  * @brief Inteface of a templatable element in the UML model.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The ITemplatableElement interface provides a data contract for templatable elements in the ViraquchaUML datamodel.

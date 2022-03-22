@@ -50,6 +50,10 @@
  * UmlClassifiers contains the elements summarized in the UML specification in chapters 9 "Classification", 10 "Simple
  * Classifiers", and 11 "Structured Classifiers". Many of the classes defined here are reused and extended in the
  * following modules.
+ *
+ * TODO: Missing features are Collaborations and Receptions. Collaborations are of type Classifier, Receptions are of
+ * type Feature (like an Operation, in fact they are a special kind of Operation called when a Class or Interface
+ * receives a Signal). The corresponding classes (UmlCollaboration, UmlReception) need to be implemented.
  */
 
 void UMLCLASSIFIERS_EXPORT initClassifiers();

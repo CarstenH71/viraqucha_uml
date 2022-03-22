@@ -39,7 +39,7 @@
 /**
  * @class UmlElement
  * @brief The UmlElement class is the abstract base class of all memory objects of the ViraquchaUML data model.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The class UmlElement is the abstract base class for all linkable memory objects in the data model. It corresponds to

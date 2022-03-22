@@ -35,7 +35,7 @@
 /**
  * @class UmlTemplateBinding
  * @brief The UmlTemplateBinding class models a UML template binding in the UML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  *

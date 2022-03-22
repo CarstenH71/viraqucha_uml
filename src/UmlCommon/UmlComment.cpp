@@ -33,7 +33,7 @@
 /**
  * @class UmlComment
  * @brief The UmlComment class represents a comment.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlComment class represents a comment in a diagram. It corresponds to the modeling concept "Comment" in the UML 

@@ -44,7 +44,7 @@
 /**
  * @class UmlClassifier
  * @brief The UmlClassifier class is the base class of all classifier elements in the ViraquchaUML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * UmlClassifier is the base class for all classes that store properties of UML Classifier elements in the database. It
@@ -275,27 +275,22 @@ void UmlClassifier::isLeaf(bool value)
 /**
  * Initially creates the vector of compartments for this classifier.
  *
- * A classifier has at least 4 compartments: name, attributes, operations, receptions. On creation of the vector, only
- * name, attributes and operations compartments are visible. All other compartments are hidden.
+ * A classifier has at least three compartments: name, attributes and operations. On creation of the vector, all
+ * compartments are visible by default. Note that each compartment can - and should - be identified by its name
+ * when implementing function update()!
  */
 QVector<Compartment*> UmlClassifier::compartments()
 {
-   QVector<Compartment*> result(4);
-   result[0] = new Compartment();
-   result[0]->setName("name");
-   result[1] = new Compartment();
-   result[1]->setName("attributes");
-   result[2] = new Compartment();
-   result[2]->setName("operations");
-   result[3] = new Compartment();
-   result[3]->setName("receptions");
-   result[3]->isHidden(true);
-   for (int index = 0; index < result.length(); ++index)
+   QVector<Compartment*> comps(3);
+   comps[0] = new Compartment("name");
+   comps[1] = new Compartment("attributes");
+   comps[2] = new Compartment("operations");
+   for (int index = 0; index < comps.length(); ++index)
    {
-      update(index, result[index]);
+      update(index, comps[index]);
    }
 
-   return result;
+   return comps;
 }
 
 /** Clears all attributes from the classifier. */
@@ -425,7 +420,7 @@ QString UmlClassifier::toString() const
 }
 
 /**
- * Updates a compartment by adding/modifying all text boxes.
+ * Updates a compartment by adding or modifying all text boxes.
  *
  * @param index Index of the compartment in the compartment vector returned by function compartments().
  * @param comp Pointer to the compartment to be updated.
@@ -435,39 +430,33 @@ void UmlClassifier::update(int index, Compartment* comp)
    if (comp == nullptr) return;
 
    comp->clear();
-   switch (index)
+   if (comp->name() == "name") // Name compartment
    {
-   case 0: // Name compartment
-   {
-      QString ret = makeAnnotation(keywords(), stereotype());
-      if (!ret.isEmpty())
+      auto text = makeAnnotation(keywords(), stereotype());
+      if (!text.isEmpty())
       {
-         comp->addLine(ret, false, false, false, AlignmentFlag::AlignCenter);
+         comp->addLine(text, false, false, false, AlignmentFlag::AlignCenter);
       }
 
       comp->addLine(name(), true, isAbstract(), false, AlignmentFlag::AlignCenter);
-      break;
+      return;
    }
-   case 1: // Attributes compartment
+   if (comp->name() == "attributes") // Attributes compartment
    {
       auto atList = attributes();
       for (auto at : atList)
       {
          comp->addLine(at->signature());
       }
-      break;
+      return;
    }
-   case 2: // Operations compartment
+   if (comp->name() == "operations") // Operations compartment
    {
       auto opList = operations();
       for (auto op : opList)
       {
          comp->addLine(op->signature(), false, op->isAbstract());
       }
-      break;
-   }
-   case 3: // Receptions compartment
-   default:
-      break;
+      return;
    }
 }

@@ -27,6 +27,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 #include "StartPage.h"
 #include "MainWindow.h"
+#include "Viraqucha.h"
 
 /**
  * @class StartPage
@@ -41,6 +42,12 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Construction
 //---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Initializes a new object of the StartPage class.
+ * @param mainWin Main window
+ * @param parent Parent window
+ */
 StartPage::StartPage(MainWindow* mainWin, QWidget* parent)
 : super(parent)
 , _mainWin(mainWin)
@@ -52,7 +59,19 @@ StartPage::StartPage(MainWindow* mainWin, QWidget* parent)
    connect(ui.openProject, &QPushButton::clicked, this, &StartPage::openUsingFileDialog);
    connect(ui.projectTemplates, &QListWidget::itemDoubleClicked, this, &StartPage::createFromTemplate);
    connect(ui.newProject, &QPushButton::clicked, this, &StartPage::createUsingNewDialog);
+   connect(ui.aboutText, &QLabel::linkActivated, this, &StartPage::openLinkInBrowser);
    
+   QString text =
+    tr("<html><head/><body><p>ViraquchaUML is an open source modeling tool for software developers. With ViraquchaUML \
+        you create models of software systems using the Unified Modeling Language (UML) version 2.5.</p> \
+        <p>Version: %1<br/>%2<br/> \
+        <a href='https://%3'>%4</a></p></body></html>")
+    .arg(Viraqucha::KProgramVersion.toString())
+    .arg(Viraqucha::KCopyrightInfo)
+    .arg(Viraqucha::KOrgaDomain)
+    .arg(Viraqucha::KOrgaDomain);
+
+   ui.aboutText->setText(text);
    updateRecentProjects();
 }
 
@@ -64,6 +83,10 @@ StartPage::~StartPage()
 // Implementation
 //---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * Opens a project file from the recent projects list.
+ * @param item List item selected by the user
+ */
 void StartPage::openFromRecentProjects(QListWidgetItem* item)
 {
    Q_ASSERT(item != nullptr);
@@ -71,25 +94,44 @@ void StartPage::openFromRecentProjects(QListWidgetItem* item)
    updateRecentProjects();
 }
 
+/** Opens a project file using the Open File dialog. */
 void StartPage::openUsingFileDialog()
 {
    _mainWin->openProject();
    updateRecentProjects();
 }
 
+/**
+ * Creates a new project from a selected project template.
+ *
+ * Note: Currently (as of version 0.2.0) there are no templates available. New projects can be created using the New
+ * Project dialog instead.
+ * @param item List item selected by the user
+ */
 void StartPage::createFromTemplate(QListWidgetItem* item)
 {
    Q_ASSERT(item != nullptr);
    // TODO: Create templates...
 }
 
+/** Creates a new project using the New Project dialog. */
 void StartPage::createUsingNewDialog()
 {
    _mainWin->newProject();
 }
 
+/** Updates the list of recently used projects. */
 void StartPage::updateRecentProjects()
 {
    ui.recentProjects->clear();
    ui.recentProjects->insertItems(0, _mainWin->mruList());
+}
+
+/**
+ * Opens the incoming link in the system's standard browser.
+ * @param link Link to be opened
+ */
+void StartPage::openLinkInBrowser(const QString& link)
+{
+   // TODO: Implement call of standard browser!
 }

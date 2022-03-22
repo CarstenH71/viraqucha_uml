@@ -35,7 +35,7 @@
  * @ingroup GuiCommon
  *
  * The MessageBox class provides static methods which show a message box like the static methods of QMessageBox. The
- * difference is that MessageBox allows setting of the informative text of a QMessageBox which makes the message boxes
+ * difference is that MessageBox allows setting of the informative info of a QMessageBox which makes the message boxes
  * nicer than the original QMessageBox methods.
  */
 
@@ -47,42 +47,47 @@ MessageBox::~MessageBox()
 {
 }
 
-int MessageBox::show(QWidget* parent, QString caption, QString text, QMessageBox::Icon icon,
+int MessageBox::show(QWidget* parent, QString text, QString info, QMessageBox::Icon icon,
                      QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn)
 {
    QMessageBox box(parent);
    box.setWindowTitle(Viraqucha::KProgramName);
-   box.setText(caption);
-   box.setInformativeText(text);
+   box.setText(text);
+   if (buttons.testFlag(QMessageBox::Ok) && buttons.testFlag(QMessageBox::Cancel))
+   {
+      if (!info.isEmpty()) info += " "; // Add space between existing and additional text
+      info += tr("Click [OK] to proceed, or [Cancel] to cancel the action.");
+   }
+   box.setInformativeText(info);
    box.setStandardButtons(buttons);
    box.setDefaultButton(defbtn);
    box.setIcon(icon);
    return box.exec();
 }
 
-void MessageBox::error(QWidget* parent, QString caption, QString text)
+void MessageBox::error(QWidget* parent, QString text, QString info)
 {
-   show(parent, caption, text, QMessageBox::Critical, QMessageBox::Ok, QMessageBox::Ok);
+   show(parent, text, info, QMessageBox::Critical, QMessageBox::Ok, QMessageBox::Ok);
 }
 
-void MessageBox::info(QWidget* parent, QString caption, QString text)
+void MessageBox::info(QWidget* parent, QString text, QString info)
 {
-   show(parent, caption, text, QMessageBox::Information, QMessageBox::Ok, QMessageBox::Ok);
+   show(parent, text, info, QMessageBox::Information, QMessageBox::Ok, QMessageBox::Ok);
 }
 
-int MessageBox::question(QWidget* parent, QString caption, QString text,
+int MessageBox::question(QWidget* parent, QString text, QString info,
                          QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn)
 {
-   return show(parent, caption, text, QMessageBox::Question, buttons, defbtn);
+   return show(parent, text, info, QMessageBox::Question, buttons, defbtn);
 }
 
-void MessageBox::warning(QWidget* parent, QString caption, QString text)
+void MessageBox::warning(QWidget* parent, QString text, QString info)
 {
-   show(parent, caption, text, QMessageBox::Warning, QMessageBox::Ok, QMessageBox::Ok);
+   show(parent, text, info, QMessageBox::Warning, QMessageBox::Ok, QMessageBox::Ok);
 }
 
-int MessageBox::warning(QWidget* parent, QString caption, QString text,
+int MessageBox::warning(QWidget* parent, QString text, QString info,
                         QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn)
 {
-   return show(parent, caption, text, QMessageBox::Warning, buttons, defbtn);
+   return show(parent, text, info, QMessageBox::Warning, buttons, defbtn);
 }

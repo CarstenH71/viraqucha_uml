@@ -27,10 +27,18 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
-#include <QWidget>
 #include "ui_OperationsTab.h"
+#include "CommandStack.h"
 #include "IPropertiesTab.h"
+#include "UndoCommand.h"
 
+#include <QList>
+#include <QSharedPointer>
+#include <QWidget>
+
+class ComboBoxDelegate;
+class ProjectTreeModel;
+class OPTableModel;
 class UmlClassifier;
 
 class OperationsTab : public QWidget, public IPropertiesTab
@@ -40,16 +48,29 @@ class OperationsTab : public QWidget, public IPropertiesTab
    typedef QWidget super;
    ///@endcond
 public: // Constructors
-   OperationsTab(QWidget* parent, UmlClassifier* classifier);
+   OperationsTab(QWidget* parent, UmlClassifier* classifier, ProjectTreeModel& project);
    virtual ~OperationsTab();
 
 public: // Methods
    bool validateInput() override;
    void applyChanges() override;
 
+private slots:
+   void addItem();
+   void editItem();
+   void removeItems();
+   void moveItemUp();
+   void moveItemDown();
+   void updateButtons(const QModelIndex& current, const QModelIndex& previous);
+
 private: // Attributes
    ///@cond
    Ui::OperationsTab ui;
    UmlClassifier* _classifier;
+   ProjectTreeModel& _project;
+   OPTableModel*     _model;
+   CommandStack      _commands;
+   ComboBoxDelegate* _returnTypeDelegate;
+   ComboBoxDelegate* _visibilityDelegate;
    ///@endcond
 };

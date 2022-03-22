@@ -31,7 +31,7 @@
 /**
  * @class UmlRoot
  * @brief The UmlRoot class represents the root object of the hirarchical structure of objects in the data model.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlRoot class serves as the root object for the hierarchical structure of the UmlElement objects in the data

@@ -26,14 +26,18 @@
 #pragma once
 
 /**
- * Denotes the format of text in a text box.
+ * @enum FormatKind
+ * @brief Denotes the format of text in a text box.
+ * @since 0.1.0
+ * @ingroup UmlCommon
  *
- * This enumeration is not UML specific. It is used by class TextBox only.
+ * This enumeration is not UML specific. It can be used with class TextBox to specify the format in which to render
+ * the text.
  */
 enum class FormatKind
 {
-   Normal = 0x00,
-   Bold = 0x01,
-   Italic = 0x02,
-   Underline = 0x08
+   Normal = 0x00,    /**< Renders text normal. */
+   Bold = 0x01,      /**< Renders text <b>bold</b>. */
+   Italic = 0x02,    /**< Renders text <i>italic</i>. */
+   Underline = 0x08  /**< Renders text <u>underlined</u>. */
 };

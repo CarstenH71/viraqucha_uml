@@ -30,12 +30,12 @@
 /**
  * @enum AlignmentKind
  * @brief Denotes the alignemt of text in a text box.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 enum class AlignmentKind
 {
-    Left,
-    Center,
-    Right
+    Left,   /**< Align text to the left of the text box. */
+    Center, /**< Center text in the text box. */
+    Right   /**< Align text to the right of the text box. */
 };

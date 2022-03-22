@@ -50,6 +50,7 @@ private slots:
    void openUsingFileDialog();
    void createFromTemplate(QListWidgetItem* item);
    void createUsingNewDialog();
+   void openLinkInBrowser(const QString& link);
    
 private:
    void updateRecentProjects();

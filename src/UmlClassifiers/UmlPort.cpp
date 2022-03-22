@@ -33,7 +33,7 @@
 /**
  * @class UmlPort
  * @brief The UmlPort class stores information about a port of a UML classifier.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  */

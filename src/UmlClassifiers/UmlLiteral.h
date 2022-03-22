@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// Literal.h
+// UmlLiteral.h
 //
 // Copyright (C) 2017 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Declaration of class Literal.
+// Description  : Declaration of class UmlLiteral.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -29,12 +29,12 @@
 
 #include <QString>
 
-class Literal
+class UmlLiteral
 {
 public:
-   Literal();
-   Literal(int num, QString sym);
-   virtual ~Literal();
+   UmlLiteral();
+   UmlLiteral(int num, QString sym);
+   virtual ~UmlLiteral();
 
 public:
    int number() const;

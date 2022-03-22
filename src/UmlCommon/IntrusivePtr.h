@@ -30,7 +30,7 @@
 /**
  * @class IntrusivePtr
  * @brief Provides an implementation of an intrusive pointer using reference counting.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * An intrusive pointer requires the object to be pointed to to have methods for increasing and decreasing a reference

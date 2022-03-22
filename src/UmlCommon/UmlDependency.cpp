@@ -38,7 +38,7 @@
 /**
  * @class UmlDependency
  * @brief The UmlDependency class models a dependency relationship between two UML elements.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlDependency class models a dependency relationship between two UML elements, e.g. two UML packages. A 

@@ -32,6 +32,9 @@
 
 namespace Viraqucha
 {
+   const QString        KCopyrightInfo  = "Copyright (C) 2017-2022 Carsten Huber";
+   const QString        KOrgaDomain     = "www.huberswelt.de";
+   const QString        KOrgaName       = "Viraqucha";
    const QString        KProgramName    = "ViraquchaUML";
    const QVersionNumber KProgramVersion = QVersionNumber(0, 2, 0);
 }

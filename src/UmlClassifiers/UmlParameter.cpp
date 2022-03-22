@@ -36,7 +36,7 @@
 /**
  * @class UmlParameter
  * @brief The UmlParameter class stores information about a parameter of an operation in the ViraquchaUML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  */

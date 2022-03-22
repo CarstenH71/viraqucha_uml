@@ -25,22 +25,23 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-
 #pragma once
 
 #include "umlcommon_globals.h"
 #include "UmlCompositeElement.h"
-#include "INamedElement.h"
+
 #include <QString>
+#include <QStringList>
 
 class UMLCOMMON_EXPORT NameBuilder final
 {
 public: // Constructors
+   NameBuilder(QStringList& names);
    NameBuilder(UmlCompositeElement* owner);
    ~NameBuilder();
 
 public: // Methods
-   QString buildFor(INamedElement* elem, QString base);
+   QString build(QString base);
 
 private: // Attributes
    ///@cond

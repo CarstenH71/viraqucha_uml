@@ -46,7 +46,7 @@
 /**
  * @class UmlDiagram
  * @brief The UmlDiagram class models a UML diagram.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlDiagram class models a diagram on which graphical representations (shapes) of the UmlElement objects can be 

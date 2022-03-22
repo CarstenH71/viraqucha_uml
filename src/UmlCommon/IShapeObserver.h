@@ -30,7 +30,7 @@
 /**
  * @class IShapeObserver
  * @brief Provides an interface for observing the lifetime of a DiaShape instance.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 class IShapeObserver

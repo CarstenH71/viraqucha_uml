@@ -121,6 +121,14 @@ PropertiesDialog::PropertiesDialog(QWidget* parent, ProjectTreeModel& model, Uml
       {
          setWindowTitle("Model properties");
       }
+      else if (elem->className() == UmlGeneralization::staticMetaObject.className())
+      {
+         setWindowTitle("Generalization properties");
+      }
+      else if (elem->className() == UmlRealization::staticMetaObject.className())
+      {
+         setWindowTitle("Realization properties");
+      }
    }
 }
 
@@ -140,7 +148,7 @@ void PropertiesDialog::createTabsFor(UmlDatatype* elem)
    setWindowTitle(tr("DataType properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
    addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
-   addTab(new OperationsTab(this, elem), tr("Operations"));
+   addTab(new OperationsTab(this, elem, _model), tr("Operations"));
 }
 
 void PropertiesDialog::createTabsFor(UmlDiagram* elem)
@@ -154,7 +162,7 @@ void PropertiesDialog::createTabsFor(UmlClass* elem)
    setWindowTitle(tr("Class properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
    addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
-   addTab(new OperationsTab(this, elem), tr("Operations"));
+   addTab(new OperationsTab(this, elem, _model), tr("Operations"));
    addTab(new TemplateParameterTab(this, elem), tr("Template Parameter"));
 }
 
@@ -170,7 +178,7 @@ void PropertiesDialog::createTabsFor(UmlInterface* elem)
    setWindowTitle(tr("Interface properties"));
    addTab(new ClassifierTab(this, elem), tr("Details"));
    addTab(new AttributesTab(this, elem, _model), tr("Attributes"));
-   addTab(new OperationsTab(this, elem), tr("Operations"));
+   addTab(new OperationsTab(this, elem, _model), tr("Operations"));
    addTab(new TemplateParameterTab(this, elem), tr("Template Parameter"));
 }
 

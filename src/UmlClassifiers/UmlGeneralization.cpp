@@ -32,7 +32,7 @@
 /**
  * @class UmlGeneralization
  * @brief The UmlGeneralization class stores information about a generalization relationship between two UML classifier.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * In the ViraquchaUML datamodel a generalization is defined as a named and stereotyped element. Since it is named, it 

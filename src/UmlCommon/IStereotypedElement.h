@@ -33,7 +33,7 @@
 /**
  * @class IStereotypedElement
  * @brief Inteface of a stereotyped element in the ViraquchaUML datamodel.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The pure abstract IStereotypedElement class provides an interface for stereotyped elements in the ViraquchaUML datamodel.

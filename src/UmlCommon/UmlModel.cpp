@@ -32,7 +32,7 @@
 /**
  * @class UmlModel
  * @brief The UmlModel class represents a model with a viewpoint in the UML project.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlModel class represents a model of a UML project. Models are packages with a viewpoint that determines the

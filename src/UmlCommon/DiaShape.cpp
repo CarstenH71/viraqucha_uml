@@ -33,7 +33,7 @@
 /**
  * @class DiaShape
  * @brief The DiaShape class provides basic properties for shapes in UML diagrams.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The DiaShape class is a base class providing common properties for classes DiaNode and DiaEdge.

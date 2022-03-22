@@ -30,7 +30,7 @@
 /**
  * @enum AggregationKind
  * @brief Denotes the aggregation kind of a property or association end.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  */
 enum class AggregationKind

@@ -35,7 +35,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="ViraquchaUML.qrc">:/images/logo.png</pixmap>
+      <pixmap resource="../GuiResources/GuiResources.qrc">:/images/logo.png</pixmap>
      </property>
      <property name="margin">
       <number>0</number>
@@ -88,9 +88,9 @@
       <number>5</number>
      </property>
      <item row="4" column="2" rowspan="2">
-      <widget class="QLabel" name="introLabel">
+      <widget class="QLabel" name="aboutText">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ViraquchaUML is an open source modeling tool for software developers. With ViraquchaUML you create models of software systems using the Unified Modeling Language (UML) version 2.5.&lt;/p&gt;&lt;p&gt;Version: 1.0&lt;br/&gt;Copyright (C) 2020 Carsten Huber&lt;br/&gt;&lt;a href=&quot;http://www.huberswelt.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;http://www.huberswelt.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string/>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -129,7 +129,7 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="startedLabel">
+      <widget class="QLabel" name="getStartedLabel">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -165,7 +165,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="ViraquchaUML.qrc">
+        <iconset resource="../GuiResources/GuiResources.qrc">
          <normaloff>:/images/open_16x16.png</normaloff>:/images/open_16x16.png</iconset>
        </property>
        <property name="flat">
@@ -185,7 +185,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="ViraquchaUML.qrc">
+        <iconset resource="../GuiResources/GuiResources.qrc">
          <normaloff>:/images/new_16x16.png</normaloff>:/images/new_16x16.png</iconset>
        </property>
        <property name="flat">
@@ -208,7 +208,7 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="openProjectLabel">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -226,7 +226,7 @@
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="createProjectLabel">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -249,7 +249,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="ViraquchaUML.qrc"/>
+  <include location="../GuiResources/GuiResources.qrc"/>
  </resources>
  <connections/>
 </ui>

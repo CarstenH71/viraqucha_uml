@@ -29,13 +29,16 @@
 
 /**
  * @enum RoutingKind
- * @brief Routing of the edge.
+ * @brief Denotes the Routing kind of a DiaEdge.
  * @since 1.0
  * @ingroup UmlCommon
+ *
+ * This enumeration is not UML specific. It is used with class DiaEdge to specify the kind of routing to be done for
+ * the edge.
  */
 enum class RoutingKind
 {
-   Auto,
-   Custom,
-   Direct
+   Auto,   /**< Automatic routing (edge is routed by the program) */
+   Custom, /**< Custom routing (edge is routed by the user) */
+   Direct  /**< Direct routing (edge is drawn straight from one DiaShape to another). */
 };

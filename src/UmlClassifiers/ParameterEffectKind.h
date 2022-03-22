@@ -27,6 +27,12 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
+/**
+ * @enum ParameterEffectKind
+ * @brief Denotes the parameter effect kind of a parameter of an operation.
+ * @since 0.1.0
+ * @ingroup UmlClassifiers
+ */
 enum class ParameterEffectKind
 {
    Undefined = 0,

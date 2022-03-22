@@ -37,7 +37,7 @@
 /**
  * @class AssociationEnd
  * @brief Stores information about an UML association end.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  * 
  * In the Unified Modeling Language an association end corresponds to a property of a classifier. The association end 

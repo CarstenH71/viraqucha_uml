@@ -28,10 +28,12 @@
 #include "UmlComponent.h"
 #include "PropertyStrings.h"
 
+#include "../UmlCommon/UmlKeywords.h"
+
 /**
  * @class UmlComponent
  * @brief The UmlComponent class stores properties of a UML Component element.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * This class extends its base class by further properties specific to UML Component elements.
@@ -61,6 +63,7 @@ struct UmlComponent::Data
 UmlComponent::UmlComponent()
 : data(new Data())
 {
+   setKeywords(KwdComponent);
 }
 
 /** 
@@ -74,6 +77,7 @@ UmlComponent::UmlComponent(QUuid id)
 : super(id)
 , data(new Data())
 {
+   setKeywords(KwdComponent);
 }
 
 UmlComponent::~UmlComponent()

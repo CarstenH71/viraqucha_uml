@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
    Q_INIT_RESOURCE(GuiResources);
 
    QApplication app(argc, argv);
-   QCoreApplication::setOrganizationName("Viraqucha");
-   QCoreApplication::setOrganizationDomain("huberswelt.de");
+   QCoreApplication::setOrganizationName(Viraqucha::KOrgaName);
+   QCoreApplication::setOrganizationDomain(Viraqucha::KOrgaDomain);
    QCoreApplication::setApplicationName(Viraqucha::KProgramName);
    QCoreApplication::setApplicationVersion(Viraqucha::KProgramVersion.toString());
 

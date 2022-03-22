@@ -38,7 +38,7 @@
 /**
  * @class UmlAssociation
  * @brief The UmlAssociation class stores information about an association relationship between two UML classifier.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  */

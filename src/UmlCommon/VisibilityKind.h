@@ -28,14 +28,14 @@
 /**
  * @enum VisibilityKind
  * @brief Denotes the visibility kind of a named element in the UML model.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 enum class VisibilityKind
 {
-   Undefined = 0,
-   Public,
-   Protected,
-   Private,
-   Package
+   Undefined = 0, /**< Undefined visibility. */
+   Public,        /**< The element is visible for all other elements even in other packages. */
+   Protected,     /**< The element is only visible in its owner element and all elements derived from the owner. */
+   Private,       /**< The element is only visible in its owner element. */
+   Package        /**< The element is visible in its owner element and all other elements in the same package. */
 };

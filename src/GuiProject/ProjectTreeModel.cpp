@@ -378,7 +378,7 @@ bool ProjectTreeModel::insertRow(const QModelIndex& parent, QString className, Q
    if (named != nullptr)
    {
       NameBuilder builder(owner);
-      builder.buildFor(named, baseName);
+      named->setName(builder.build(baseName));
    }
 
    if (element->isHidden())

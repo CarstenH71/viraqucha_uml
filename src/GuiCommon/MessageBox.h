@@ -28,19 +28,23 @@
 #pragma once
 
 #include <QMessageBox>
+#include <QObject>
 #include <QWidget>
 
-class MessageBox
+class MessageBox : public QObject
 {
+   ///@cond
+   Q_OBJECT
+   ///@endcond
 public:
    MessageBox();
-   ~MessageBox();
+   virtual ~MessageBox();
 
 public:
-   static int show(QWidget* parent, QString caption, QString text, QMessageBox::Icon icon, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
-   static void error(QWidget* parent, QString caption, QString text);
-   static void info(QWidget* parent, QString caption, QString text);
-   static int question(QWidget* parent, QString caption, QString text, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
-   static void warning(QWidget* parent, QString caption, QString text);
-   static int warning(QWidget* parent, QString caption, QString text, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
+   static int show(QWidget* parent, QString text, QString info, QMessageBox::Icon icon, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
+   static void error(QWidget* parent, QString text, QString info);
+   static void info(QWidget* parent, QString text, QString info);
+   static int question(QWidget* parent, QString text, QString info, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
+   static void warning(QWidget* parent, QString text, QString info);
+   static int warning(QWidget* parent, QString text, QString info, QFlags<QMessageBox::StandardButton> buttons, QMessageBox::StandardButton defbtn);
 };

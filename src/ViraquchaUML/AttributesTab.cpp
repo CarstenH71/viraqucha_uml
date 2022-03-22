@@ -36,6 +36,7 @@
 #include "RemoveCommand.h"
 #include "StringProvider.h"
 
+#include "UmlAttribute.h"
 #include "UmlClassifier.h"
 
 #include <QAbstractTableModel>
@@ -49,7 +50,7 @@
 /**
  * @class AttributesTab
  * @brief The AttributesTab class implements a widget for editing UML attributes of a UML classifier.
- * @since 0.1.0
+ * @since 0.2.0
  * @ingroup ViraquchaUML
  * @see PropertiesDialog, AttributeTab
  *
@@ -77,8 +78,8 @@
 
 /**
  * @brief The ATTableItem class provides information of a single item (or row) in an attribute table.
- * @since 1.0
- * @ingroup GUI
+ * @since 0.2.0
+ * @ingroup ViraquchaUML
  *
  * The ATTableItem class is used by class ATTableModel of the AttributesTab class for managing UmlAttribute objects to
  * be edited.
@@ -186,9 +187,9 @@ private:
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * @brief The ATTableModel class implements QAbstractTableModel for an attribute table.
- * @since 1.0
- * @ingroup GUI
+ * @brief The ATTableModel class implements QAbstractTableModel for a table viewing UmlAttribute objects.
+ * @since 0.2.0
+ * @ingroup ViraquchaUML
  *
  * The ATTableModel class provides an implementation of class QAbstractTableModel needed for the table view of class
  * AttributesTab. It uses ATTableItem objects for managing UmlAttribute objects of a UmlClassifier object.
@@ -224,6 +225,7 @@ public: // Constructors
 public: // Methods
    /**
     * Gets the row count.
+    *
     * @param parent This parameter is unused.
     */
    int rowCount(const QModelIndex& parent = QModelIndex()) const override
@@ -234,6 +236,7 @@ public: // Methods
 
    /**
     * Gets the column count.
+    *
     * @param parent This parameter is unused.
     */
    int columnCount(const QModelIndex& parent = QModelIndex()) const override
@@ -448,6 +451,7 @@ public: // Methods
 
    /**
     * Gets the item at a specified row.
+    *
     * @param row Row referring to the item
     * @returns The ATTableItem object at the specified row
     */
@@ -467,16 +471,8 @@ private:
          names.append(item->name());
       }
 
-      int count = 1;
-      QString base = tr("attribute%1");
-      QString name = base.arg(count);
-      while (names.contains(name))
-      {
-         ++count;
-         name = base.arg(count);
-      }
-
-      return name;
+      NameBuilder builder(names);
+      return builder.build(tr("attribute"));
    }
 
 private:
@@ -510,6 +506,7 @@ AttributesTab::AttributesTab(QWidget* parent, UmlClassifier* classifier, Project
    ui.tableView->setItemDelegateForColumn(ATTableModel::KTypeColumn, _typeDelegate);
    ui.tableView->setItemDelegateForColumn(ATTableModel::KVisibilityColumn, _visibilityDelegate);
    ui.tableView->horizontalHeader()->resizeSection(0, 80);
+   ui.tableView->resizeColumnsToContents();
    ui.tableView->selectRow(0);
 
    connect(ui.addButton, &QPushButton::clicked, this, &AttributesTab::addItem);
@@ -538,9 +535,7 @@ bool AttributesTab::validateInput()
    return true;
 }
 
-/**
- * Applies changes to the properties of the UmlAttribute object.
- */
+/** Applies changes to the properties of the UmlClassifier object. */
 void AttributesTab::applyChanges()
 {
    _model->flush();
@@ -581,9 +576,10 @@ void AttributesTab::removeItems()
 {
    auto result = MessageBox::warning(
       this,
-      tr("Delete attributes"),
       tr("Are you sure you want to delete the selected attributes?"),
-      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+      QString(), // No additional information
+      QMessageBox::Ok | QMessageBox::Cancel,
+      QMessageBox::Cancel);
    if (result == QMessageBox::Ok)
    {
       int firstRow = -1;

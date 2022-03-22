@@ -40,7 +40,7 @@ class TextBox;
 class UMLCOMMON_EXPORT Compartment
 {
 public: // Constructors
-   Compartment();
+   Compartment(QString name, bool hidden = false);
    virtual ~Compartment();
 
 public: // Properties

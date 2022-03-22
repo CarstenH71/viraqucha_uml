@@ -37,7 +37,7 @@
 /**
  * @class IProperty
  * @brief Inteface of a property in the UML model.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * The IProperty class provides an interface for UML properties (attributes or association ends).

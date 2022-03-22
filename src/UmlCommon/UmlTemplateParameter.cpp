@@ -36,7 +36,7 @@
 /**
  * @class UmlTemplateParameter
  * @brief The UmlTemplateParameter class represents an UML template parameter.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  *

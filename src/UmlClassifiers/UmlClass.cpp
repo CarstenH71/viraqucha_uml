@@ -31,7 +31,7 @@
 /**
  * @class UmlClass
  * @brief The UmlClass class stores properties of a UML Class element.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * This class extends its base class by further properties specific to UML Class elements, namely UML Ports which are

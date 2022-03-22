@@ -49,6 +49,7 @@
 StringProvider::StringProvider()
 {
    _aggregations << tr("None") << tr("Shared") << tr("Composite");
+   _callConcurrencies << tr("Undefined") << tr("Concurrent") << tr("Guarded") << tr("Sequential");
    _diagramTypes << tr("Activity") << tr("Class") << tr("Communication") << tr("Component") << tr("Composite")
       << tr("Deployment") << tr("Interaction") << tr("Object") << tr("Packages") << tr("Profile") << tr("StateMachine")
       << tr("Sequence") << tr("Timing") << tr("UseCase");
@@ -79,6 +80,12 @@ StringProvider& StringProvider::instance()
    return provider;
 }
 
+/** Gets the default call concurrency kind. */
+QString StringProvider::defaultCallConcurrency()
+{
+   return tr("Undefined");
+}
+
 /** Gets the default multiplicity. */
 QString StringProvider::defaultMultiplicity()
 {
@@ -95,6 +102,12 @@ QString StringProvider::defaultPrimitiveType()
 QStringList& StringProvider::aggregations()
 {
    return instance()._aggregations;
+}
+
+/** Gets the list of call concurrency kinds. */
+QStringList& StringProvider::callConcurrencies()
+{
+   return instance()._callConcurrencies;
 }
 
 /** Gets the list of diagram types. */

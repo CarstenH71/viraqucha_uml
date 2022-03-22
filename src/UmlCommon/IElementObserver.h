@@ -34,7 +34,7 @@ class UmlElement;
 /**
  * @class IElementObserver
  * @brief Interface of an element observer.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  * 
  * The IElementObserver interface is used by UmlElement objects to inform attached observer about their lifetime. See

@@ -31,7 +31,7 @@
 /**
  * @class UmlElementFactory
  * @brief The UmlElementFactory class implements a factory building UmlElement objects from class names.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 

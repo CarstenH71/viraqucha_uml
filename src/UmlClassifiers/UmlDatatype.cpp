@@ -31,7 +31,7 @@
 /**
  * @class UmlDatatype
  * @brief The UmlDatatype class stores data of a UML element of type DataType.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * In UML a data type is a kind of classifier, with the difference that its instances are only identified by their 

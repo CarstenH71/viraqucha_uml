@@ -34,14 +34,14 @@ class Label;
 
 /**
  * @class ILabelProvider
- * @brief Inteface of a label provider.
- * @since 1.0
+ * @brief Inteface for classes providing label information.
+ * @since 0.1.0
  * @ingroup UmlCommon
  */
 class ILabelProvider
 {
 public:
-   virtual ~ILabelProvider() {};
+   virtual ~ILabelProvider() {}
 
 public:
    virtual QVector<Label*> labels() = 0;

@@ -31,7 +31,7 @@
 #include "UmlClassifier.h"
 #include "../UmlCommon/IElementBuilder.h"
 
-class Literal;
+class UmlLiteral;
 
 class UMLCLASSIFIERS_EXPORT UmlEnumeration : public UmlClassifier
 {
@@ -47,12 +47,15 @@ public: // Constructors
 public: // Properties
    QString className() const override;
 
-   QList<Literal*> literals() const;
+   QList<UmlLiteral*> literals() const;
 
 public: // Methods
-   void append(Literal* obj);
-   void remove(Literal* obj);
+   void append(UmlLiteral* obj);
+   void remove(UmlLiteral* obj);
    void clearLiterals();
+
+   QVector<Compartment*> compartments() override;
+   void update(int index, Compartment* comp) override;
 
 protected:
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;

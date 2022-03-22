@@ -47,7 +47,7 @@
 /**
  * @class UmlProject
  * @brief The UmlProject class is the entry point of the ViraquchaUML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The class UmlProject implements the project management of the data model. All memory objects (objects of class 

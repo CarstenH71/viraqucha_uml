@@ -1,9 +1,9 @@
 //---------------------------------------------------------------------------------------------------------------------
-// Literal.cpp
+// UmlLiteral.cpp
 //
 // Copyright (C) 2017 Carsten Huber (Dipl.-Ing.)
 //
-// Description  : Implementation of class Literal.
+// Description  : Implementation of class UmlLiteral.
 // Compiles with: MSVC 15.2 (2017) or newer, GNU GCC 5.1 or newer
 //
 // *******************************************************************************************************************
@@ -25,15 +25,15 @@
 //
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
-#include "Literal.h"
+#include "UmlLiteral.h"
 
 /**
- * @class Literal
+ * @class UmlLiteral
  * @brief Stores properties of a literal of an UML Enumeration
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  * 
- * Literals are part of an UML Enumeration. They consist of a number and a symbol (or name). Objects of the Literal 
+ * Literals are part of an UML Enumeration. They consist of a number and a symbol (or name). Objects of the UmlLiteral
  * class can only be used with UmlEnumeration objects.
  */
 
@@ -41,7 +41,7 @@
 // Internal struct hiding implementation details
 //---------------------------------------------------------------------------------------------------------------------
 /// @cond
-struct Literal::Data
+struct UmlLiteral::Data
 {
    Data()
    : number(0)
@@ -59,7 +59,7 @@ struct Literal::Data
 /**
  * Initializes a new object of the Literal class.
  */
-Literal::Literal()
+UmlLiteral::UmlLiteral()
 : data(new Data())
 {
 }
@@ -70,38 +70,38 @@ Literal::Literal()
  * @param num Number of the Literal.
  * @param sym Symbol of the Literal.
  */
-Literal::Literal(int num, QString sym)
+UmlLiteral::UmlLiteral(int num, QString sym)
 : data(new Data())
 {
    setNumber(num);
    setSymbol(sym);
 }
 
-Literal::~Literal()
+UmlLiteral::~UmlLiteral()
 {
    delete data;
 }
 
 /** Gets the number. */
-int Literal::number() const
+int UmlLiteral::number() const
 {
    return data->number;
 }
 
 /** Sets the number. */
-void Literal::setNumber(int value)
+void UmlLiteral::setNumber(int value)
 {
    data->number = value;
 }
 
 /** Gets the symbol. */
-QString Literal::symbol() const
+QString UmlLiteral::symbol() const
 {
    return data->symbol;
 }
 
 /** Sets the symbol. */
-void Literal::setSymbol(QString value)
+void UmlLiteral::setSymbol(QString value)
 {
    data->symbol = value;
 }

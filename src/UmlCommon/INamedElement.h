@@ -35,7 +35,7 @@
 /**
  * @class INamedElement
  * @brief Inteface of a named element in the ViraquchaUML datamodel.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The pure abstract INamedElement class provides an interface for named elements in the ViraquchaUML datamodel. 

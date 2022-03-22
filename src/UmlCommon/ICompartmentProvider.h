@@ -29,12 +29,23 @@
 
 class Compartment;
 
+/**
+ * @class ICompartmentProvider
+ * @brief Interface for classes providing compartment information.
+ * @since 0.1.0
+ * @ingroup UmlCommon
+ *
+ * This interface must be implemented by classes that need to provide compartments for their shape.
+ */
 class ICompartmentProvider
 {
 public: // Constructors
     virtual ~ICompartmentProvider() {}
 
 public: // Methods
-    virtual QVector<Compartment*> compartments() = 0;
-    virtual void update(int index, Compartment* comp) = 0;
+   /** Gets the vector of Compartment objects provided. */
+   virtual QVector<Compartment*> compartments() = 0;
+
+   /** Updates a single Compartment object with text boxes. */
+   virtual void update(int index, Compartment* comp) = 0; // TODO: remove index it is unused
 };

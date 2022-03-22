@@ -53,7 +53,7 @@ public: // Constructors
    UmlClassifier(QUuid id);
    virtual ~UmlClassifier();
 
-public: // Attributes
+public: // Properties
    QString name() const override;
    void setName(QString value) override;
 

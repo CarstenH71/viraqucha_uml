@@ -100,6 +100,8 @@ public: // Methods
    void copyTo(UmlElement* other) override;
    void append(UmlParameter* par);
    void remove(UmlParameter* par);
+
+   UmlParameter* findParameter(QString name);
    void clearParameter();
 
    void append(UmlTemplateParameter* par) override;
@@ -107,7 +109,6 @@ public: // Methods
    void clearTemplate() override;
 
 protected:
-   void dispose(bool disposing) override;
    void serialize(QJsonObject& json, bool read, bool flat, int version) override;
 
 private: // Attributes

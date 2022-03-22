@@ -47,7 +47,7 @@
       <bool>false</bool>
      </property>
      <attribute name="horizontalHeaderHighlightSections">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>true</bool>
@@ -76,7 +76,7 @@
      <item>
       <widget class="QPushButton" name="removeButton">
        <property name="toolTip">
-        <string>Remove template parameter</string>
+        <string>Delete template parameter</string>
        </property>
        <property name="text">
         <string/>

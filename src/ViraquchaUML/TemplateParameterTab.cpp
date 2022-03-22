@@ -29,6 +29,7 @@
 #include "MessageBox.h"
 
 #include "ITemplatableElement.h"
+#include "NameBuilder.h"
 #include "UmlTemplateParameter.h"
 
 #include <QAbstractTableModel>
@@ -46,8 +47,9 @@
 class TPTableItem
 {
 public:
-   TPTableItem()
-   : _param(nullptr)
+   TPTableItem(QString name)
+   : _name(name)
+   , _param(nullptr)
    {}
 
    TPTableItem(UmlTemplateParameter* param) 
@@ -222,7 +224,7 @@ public: // Methods
       beginInsertRows(parent, row, row + count - 1);
       while (count > 0)
       {
-         _items.insert(row, QSharedPointer<TPTableItem>(new TPTableItem()));
+         _items.insert(row, QSharedPointer<TPTableItem>(new TPTableItem(createName())));
          --count;
       }
       endInsertRows();
@@ -266,6 +268,20 @@ public: // Methods
    }
 
 private:
+   /** Creates a unique name for a new OPTableItem object. */
+   QString createName()
+   {
+      QStringList names;
+      for (auto item : _items)
+      {
+         names.append(item->name());
+      }
+
+      NameBuilder builder(names);
+      return builder.build(tr("T"));
+   }
+
+private:
    ITemplatableElement*               _elem;
    QList<QSharedPointer<TPTableItem>> _items;
 };
@@ -281,6 +297,8 @@ TemplateParameterTab::TemplateParameterTab(QWidget* parent, ITemplatableElement*
    ui.setupUi(this);
    ui.tableView->setModel(_model);
    ui.tableView->horizontalHeader()->resizeSection(0, 80);
+   ui.tableView->resizeColumnsToContents();
+   ui.tableView->selectRow(0);
 
    connect(ui.addButton, &QPushButton::clicked, this, &TemplateParameterTab::addItem);
    connect(ui.removeButton, &QPushButton::clicked, this, &TemplateParameterTab::removeItems);
@@ -318,9 +336,10 @@ void TemplateParameterTab::removeItems()
 {
    auto result = MessageBox::warning(
       this, 
-      tr("Delete template parameter"),
       tr("Are you sure you want to delete the selected template parameters?"), 
-      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+      QString(), // No additional information
+      QMessageBox::Ok | QMessageBox::Cancel,
+      QMessageBox::Cancel);
    if (result == QMessageBox::Ok)
    {
       while (ui.tableView->selectionModel()->selectedIndexes().size() > 0)

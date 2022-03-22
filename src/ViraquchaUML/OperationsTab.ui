@@ -18,7 +18,20 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QTableWidget" name="tableWidget"/>
+    <widget class="QTableView" name="tableView">
+     <property name="editTriggers">
+      <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -42,7 +55,7 @@
      <item>
       <widget class="QPushButton" name="removeButton">
        <property name="toolTip">
-        <string>Remove operation</string>
+        <string>Delete operation</string>
        </property>
        <property name="locale">
         <locale language="English" country="UnitedKingdom"/>

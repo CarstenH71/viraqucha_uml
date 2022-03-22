@@ -31,7 +31,7 @@
 /**
  * @class Compartment
  * @brief The Compartment class holds information about a compartment of a diagram node.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * Depending on the type of an UML element, a diagram node (DiaNode) can have up to 6 compartments. Compartments may
@@ -62,10 +62,15 @@ struct Compartment::Data
 
 /**
  * Initializes a new instance of the Compartment class.
+ *
+ * @param name Name of the compartment
+ * @param hidden Indicates whether the compartment is hidden (= true) or not (= false).
  */
-Compartment::Compartment()
+Compartment::Compartment(QString name, bool hidden)
 : data(new Data())
 {
+   setName(name);
+   isHidden(hidden);
 }
 
 Compartment::~Compartment()

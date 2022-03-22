@@ -26,23 +26,26 @@
 #pragma once
 
 /**
+ * @enum DiagramKind
  * @brief Denotes the diagram kind of a diagram.
+ * @since 0.1.0
+ * @ingroup UmlCommon
  */
 enum class DiagramKind
 {
-   Undefined = 0,
-   Activity,
-   Class,
-   Communication,
-   Component,
-   Composite,
-   Deployment,
-   Interaction,
-   Object,
-   Packages,
-   Profile,
-   StateMachine,
-   Sequence,
-   Timing,
-   UseCase
+   Undefined = 0, /**< Undefined diagram. */
+   Activity,      /**< Activity diagram. */
+   Class,         /**< Class diagram. */
+   Communication, /**< Communication diagram. */
+   Component,     /**< Component diagram. */
+   Composite,     /**< Composite diagram. */
+   Deployment,    /**< Deployment diagram. */
+   Interaction,   /**< Interaction diagram. */
+   Object,        /**< Object diagram. */
+   Packages,      /**< Packages diagram. */
+   Profile,       /**< Profile diagram. */
+   StateMachine,  /**< State machine diagram. */
+   Sequence,      /**< Sequence diagram. */
+   Timing,        /**< Timing diagram. */
+   UseCase        /**< Use case diagram. */
 };

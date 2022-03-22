@@ -30,8 +30,8 @@
 /**
  * @class TextBox
  * @brief Provides a text box for compartments or labels of links.
- * @since 1.0
- * @ingroup Common
+ * @since 0.1.0
+ * @ingroup UmlCommon
  *
  * The TextBox class holds the text and information about the format and the alignment of the text in the text box.
  */

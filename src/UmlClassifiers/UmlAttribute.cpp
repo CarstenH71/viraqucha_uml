@@ -37,7 +37,7 @@
 /**
  * @class UmlAttribute
  * @brief The UmlAttribute class stores information about an attribute of a UML classifier.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  */

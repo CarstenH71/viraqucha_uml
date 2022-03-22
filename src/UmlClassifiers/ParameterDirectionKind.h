@@ -27,11 +27,17 @@
 //---------------------------------------------------------------------------------------------------------------------
 #pragma once
 
+/**
+ * @enum ParameterDirectionKind
+ * @brief Denotes the parameter direction kind of a parameter of an operation.
+ * @since 0.1.0
+ * @ingroup UmlClassifiers
+ */
 enum class ParameterDirectionKind
 {
-   Undefined = 0,
-   In,
-   InOut,
-   Out,
-   Return
+   Undefined = 0, /**< Direction is undefined */
+   In,            /**< Parameter goes in only (does not affect the caller) */
+   InOut,         /**< Parameter goes in and out (affects the caller) */
+   Out,           /**< Parameter goes out only (affects the caller) */
+  Return          /**< Parameter is a return value */
 };

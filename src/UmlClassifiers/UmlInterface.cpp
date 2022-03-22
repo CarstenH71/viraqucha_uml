@@ -31,7 +31,7 @@
 /**
  * @class UmlInterface
  * @brief The UmlInterface class stores properties of a UML Interface element.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * This class extends its base class by further properties specific to UML Interface elements

@@ -26,17 +26,15 @@
 // See https://github.com/CarstenH71/viraqucha_uml for the latest version of this software.
 //---------------------------------------------------------------------------------------------------------------------
 #include "NameBuilder.h"
-
-#include <QStringList>
+#include "INamedElement.h"
 
 /**
  * @class NameBuilder
  * @brief Creates a unique name for an INamedElement object
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
- * The NameBuilder class creates a unique name for an INamedElement object that will be stored in a UmlCompositeElement
- * object.
+ * The NameBuilder class creates a unique name for an INamedElement object stored in a UmlCompositeElement object.
  */
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -55,7 +53,18 @@ struct NameBuilder::Data
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * Initializes a new object of the NameBuilder class.
+ * Initializes a new object of the NameBuilder class with a string list containing names.
+ *
+ * @param names String list containing names
+ */
+NameBuilder::NameBuilder(QStringList& names)
+: data(new Data())
+{
+   data->names = names;
+}
+
+/**
+ * Initializes a new object of the NameBuilder class with a UmlCompositeElement object.
  *
  * The constructor creates a list of named elements found in the UmlCompositeElement object provided. The list is used
  * for searching equal names when creating the new name.
@@ -81,21 +90,18 @@ NameBuilder::~NameBuilder()
 }
 
 /**
- * Builds a unique name for a given named element.
+ * Builds a unique name for a named element.
  * 
  * The name is built by adding a postfix number to a base name (like &quot;Class1&quot;, where &quot;Class&quot; is the
  * base name). The postfix number starts at 1 and is increased by 1 until no other named element with the same name can
  * be found in the owner's list of elements.
  * Note that the named element must not be contained in the owner's list of elements, otherwise the function will never
  * return!
- * @param elem Named element receiving the new name
  * @param base Name base used to build the name
  * @returns A new unique name for the named element
  */
-QString NameBuilder::buildFor(INamedElement* elem, QString base)
+QString NameBuilder::build(QString base)
 {
-   if (elem == nullptr) return QString();
-   
    int count = 1;
    QString form = QString("%1%2");
    QString name = form.arg(base).arg(count);
@@ -105,6 +111,5 @@ QString NameBuilder::buildFor(INamedElement* elem, QString base)
       name = form.arg(base).arg(count);
    }
 
-   elem->setName(name);
    return name;
 }

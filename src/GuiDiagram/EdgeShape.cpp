@@ -117,19 +117,18 @@ DiaEdge* EdgeShape::diaEdge() const
 /** Gets the bounding rectangle of the edge shape. */
 QRectF EdgeShape::boundingRect() const
 {
-   /*
    double extra = (_linePen.width() + 30) / 2.0;
    QLineF temp(_line.first(), _line.last());
    return QRectF(
       temp.p1(), 
       QSizeF(temp.p2().x() - temp.p1().x(), temp.p2().y() - temp.p1().y())).normalized().adjusted(-extra, -extra, extra, extra);
-   */
-   return shape().controlPointRect() + QMarginsF(5.0, 5.0, 5.0, 5.0);
+   //return shape().controlPointRect() + QMarginsF(50.0, 50.0, 50.0, 50.0);
 }
 
 /** Gets the shape of the edge shape as a painter path. */
 QPainterPath EdgeShape::shape() const
 {
+   /*
    QPainterPath path;
    path.addPolygon(_line);
    path.addPolygon(_arrow);
@@ -145,6 +144,8 @@ QPainterPath EdgeShape::shape() const
 
    QPainterPathStroker stroker(_linePen);
    return stroker.createStroke(path);
+   */
+   return super::shape();
 }
 
 /** Gets the ending style of the edge shape. */

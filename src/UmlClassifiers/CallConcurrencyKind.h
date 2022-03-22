@@ -30,7 +30,7 @@
 /**
  * @enum CallConcurrencyKind
  * @brief Denotes the call concurrency kind of an operation.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  */
 enum class CallConcurrencyKind

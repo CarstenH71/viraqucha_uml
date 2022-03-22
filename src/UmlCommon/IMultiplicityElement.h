@@ -35,7 +35,7 @@ const quint32 KUnlimited = 4294967295;
 /**
  * @class IMultiplicityElement
  * @brief Inteface of a multiplicity element in the ViraquchaUML datamodel.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The pure abstract IMultiplicityElement class provides an interface for UML elements which may occur multiple times

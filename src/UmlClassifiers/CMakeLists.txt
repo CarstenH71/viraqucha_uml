@@ -4,7 +4,7 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 add_library(${LIB_NAME} 
   STATIC
     AssociationEnd.cpp
-    Literal.cpp
+    UmlLiteral.cpp
     UmlAssociation.cpp
     UmlAttribute.cpp
     UmlClass.cpp

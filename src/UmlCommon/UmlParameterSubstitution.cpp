@@ -31,8 +31,8 @@
 /**
  * @class UmlParameterSubstitution
  * @brief The UmlParameterSubstitution class models a parameter substitution for templated UML elements.
- * @since 1.0
- * @ingroup Common
+ * @since 0.1.0
+ * @ingroup UmlCommon
  */
 
  //---------------------------------------------------------------------------------------------------------------------

@@ -535,7 +535,7 @@
     <string>Delete</string>
    </property>
    <property name="toolTip">
-    <string>Remove element from project tree or diagram</string>
+    <string>Delete element from project tree or diagram</string>
    </property>
    <property name="statusTip">
     <string>Delete element</string>

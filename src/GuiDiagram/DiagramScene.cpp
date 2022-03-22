@@ -239,7 +239,7 @@ void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
          {
             Q_ASSERT(_diagram->owner() != nullptr);
             NameBuilder builder(_diagram->owner());
-            builder.buildFor(named, _className.remove("Uml"));
+            named->setName(builder.build(_className.remove("Uml")));
          }
 
          auto* node = _diagram->addNode(element);

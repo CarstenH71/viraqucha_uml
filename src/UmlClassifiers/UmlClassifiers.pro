@@ -49,51 +49,51 @@ UI_DIR      += ./moc
 RCC_DIR     += ./moc
 
 HEADERS += \
-./AggregationKind.h \
-./AssociationEnd.h \
-./CallConcurrencyKind.h \
-./IProperty.h \
-./Literal.h \
-./ParameterDirectionKind.h \
-./ParameterEffectKind.h \
-./PropertyStrings.h \
-./UmlAssociation.h \
-./UmlAttribute.h \
-./UmlClass.h \
-./UmlClassifier.h \
-./umlclassifiers_global.h \
-./UmlClassifiers.h \
-./UmlComponent.h \
-./UmlDatatype.h \
-./UmlEnumeration.h \
-./UmlGeneralization.h \
-./UmlInterface.h \
-./UmlOperation.h \
-./UmlParameter.h \
-./UmlPort.h \
-./UmlPrimitiveType.h \
-./UmlRealization.h \
-./UmlSignal.h
+    AggregationKind.h \
+    AssociationEnd.h \
+    CallConcurrencyKind.h \
+    IProperty.h \
+    UmlLiteral.h \
+    ParameterDirectionKind.h \
+    ParameterEffectKind.h \
+    PropertyStrings.h \
+    UmlAssociation.h \
+    UmlAttribute.h \
+    UmlClass.h \
+    UmlClassifier.h \
+    umlclassifiers_global.h \
+    UmlClassifiers.h \
+    UmlComponent.h \
+    UmlDatatype.h \
+    UmlEnumeration.h \
+    UmlGeneralization.h \
+    UmlInterface.h \
+    UmlOperation.h \
+    UmlParameter.h \
+    UmlPort.h \
+    UmlPrimitiveType.h \
+    UmlRealization.h \
+    UmlSignal.h
 
 SOURCES += \
-./AssociationEnd.cpp \
-./Literal.cpp \
-./UmlAssociation.cpp \
-./UmlAttribute.cpp \
-./UmlClass.cpp \
-./UmlClassifier.cpp \
-./UmlClassifiers.cpp \
-./UmlComponent.cpp \
-./UmlDatatype.cpp \
-./UmlEnumeration.cpp \
-./UmlGeneralization.cpp \
-./UmlInterface.cpp \
-./UmlOperation.cpp \
-./UmlParameter.cpp \
-./UmlPort.cpp \
-./UmlPrimitiveType.cpp \
-./UmlRealization.cpp \
-./UmlSignal.cpp
+    AssociationEnd.cpp \
+    UmlLiteral.cpp \
+    UmlAssociation.cpp \
+    UmlAttribute.cpp \
+    UmlClass.cpp \
+    UmlClassifier.cpp \
+    UmlClassifiers.cpp \
+    UmlComponent.cpp \
+    UmlDatatype.cpp \
+    UmlEnumeration.cpp \
+    UmlGeneralization.cpp \
+    UmlInterface.cpp \
+    UmlOperation.cpp \
+    UmlParameter.cpp \
+    UmlPort.cpp \
+    UmlPrimitiveType.cpp \
+    UmlRealization.cpp \
+    UmlSignal.cpp
 
 DISTFILES += \
-./UmlClassifiers.pri
+    UmlClassifiers.pri

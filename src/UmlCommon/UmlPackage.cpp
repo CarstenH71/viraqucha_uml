@@ -40,7 +40,7 @@
 /**
  * @class UmlPackage
  * @brief The UmlPackage class models a UML package in the UML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The UmlPackage class represents a package in the data model. In UML, packages are used to structure systems and 
@@ -308,37 +308,31 @@ void UmlPackage::serialize(QJsonObject& json, bool read, bool flat, int version)
 }
 
 /**
- * Gets a vector of compartments needed for diagrams.
+ * Initially creates the vector of compartments for this package.
  */
 QVector<Compartment*> UmlPackage::compartments()
 {
-   Compartment* com = new Compartment();
-   com->setName("name");
-   com->isHidden(false);
-   com->addLine(name(), true, false, false, AlignmentFlag::AlignCenter);
-
-   QVector<Compartment*> vec;
-   vec.append(com);
-   return vec;
+   QVector<Compartment*> comps(1);
+   comps[0] = new Compartment("name");
+   return comps;
 }
 
 /**
- * Updates the lines of a compartment.
- * @param comp Compartment to be updated.
+ * Updates a compartment by adding or modifying all text boxes.
+ *
+ * @param index Index of the compartment in the compartment vector returned by function compartments().
+ * @param comp Pointer to the compartment to be updated.
  */
 void UmlPackage::update(int index, Compartment* comp)
 {
-   Q_UNUSED(index);
-   
    if (comp == nullptr) return;
 
-   auto lns = comp->lines();
-   if (comp->name() == "name" && lns.size() != 0)
-   {
-      lns[0]->setText(name());
-   }
+   // There is only one compartment "name", fill it with the name of the package:
+   comp->clear();
+   comp->addLine(name(), true, false, false, AlignmentFlag::AlignCenter);
 }
 
+/** Gets a string representation of the package. */
 QString UmlPackage::toString() const
 {
    return data->name;

@@ -35,7 +35,7 @@ static const int KFileVersion = 1; // Supports UML 2.5
 /**
  * @class ISerializable
  * @brief Interface for serializable objects in the ViraquchaUML database.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * The pure abstract ISerializable class provides an interface for serializable objects in the ViraquchaUML database.

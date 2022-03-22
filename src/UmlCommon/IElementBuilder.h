@@ -31,11 +31,18 @@
 #include "umlcommon_globals.h"
 #include "UmlElement.h"
 
+/**
+ * @class IElementBuilder
+ * @brief Interface for classes building UmlElement objects
+ * @since 0.1.0
+ * @ingroup UmlCommon
+ */
 class IElementBuilder
 {
 public:
    virtual ~IElementBuilder() {}
 
 public:
+   /** Builds an UmlElement object using the identifier provided. */
    virtual UmlElement* build(QUuid id) = 0;
 };

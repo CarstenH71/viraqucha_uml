@@ -38,7 +38,7 @@
 /**
  * @class DiaEdge
  * @brief The DiaEdge class holds information about an edge in a diagram.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlCommon
  *
  * In a diagram, edges are used to connect nodes with each other. An edge is drawn as a line between two nodes. The

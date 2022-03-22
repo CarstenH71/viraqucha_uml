@@ -48,10 +48,12 @@ private:
    static StringProvider& instance();
 
 public: // Properties
+   static QString defaultCallConcurrency();
    static QString defaultMultiplicity();
    static QString defaultPrimitiveType();
 
    static QStringList& aggregations();
+   static QStringList& callConcurrencies();
    static QStringList& diagramTypes();
    static QStringList& directions();
    static QStringList& effects();
@@ -64,6 +66,7 @@ public: // Properties
 private: // Attributes
    /// @cond
    QStringList _aggregations;
+   QStringList _callConcurrencies;
    QStringList _diagramTypes;
    QStringList _directions;
    QStringList _effects;

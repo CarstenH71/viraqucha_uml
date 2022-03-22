@@ -381,11 +381,12 @@ bool MainWindow::maybeSave()
 {
    if (_project == nullptr || !_project->isModified()) return true;
    
-   auto result = QMessageBox::warning(
+   auto result = MessageBox::warning(
       this, 
-      QCoreApplication::applicationName(), 
-      tr("The project has been modified. Would you like to save the changes?"), 
-      QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Discard);
+      tr("The project has been modified. Would you like to save the changes?"),
+      QString(), // No additional information
+      QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Discard,
+      QMessageBox::Save);
    switch (result)
    {
       case QMessageBox::Save:
@@ -587,14 +588,23 @@ void MainWindow::deleteElement()
    auto index = ui.projTreeView->currentIndex();
    if (index.isValid())
    {
-      auto* diagram = dynamic_cast<UmlDiagram*>(treeModel()->getElement(index));
-      if (diagram != nullptr && diagram->isOpen())
+      auto result = MessageBox::warning(
+         this,
+         tr("Are you sure you want to delete the selected element from the project?"),
+         tr("Please note that the action cannot be undone and you may lose data."),
+         QMessageBox::Ok | QMessageBox::Cancel,
+         QMessageBox::Cancel);
+      if (result == QMessageBox::Ok)
       {
-         closeDiagram(findPageIndex(diagram));
+         auto* diagram = dynamic_cast<UmlDiagram*>(treeModel()->getElement(index));
+         if (diagram != nullptr && diagram->isOpen())
+         {
+            closeDiagram(findPageIndex(diagram));
+         }
+
+         treeModel()->removeRow(index);
+         setWindowModified(true);
       }
-      
-      treeModel()->removeRow(index);
-      setWindowModified(true);
    }
 }
 
@@ -640,7 +650,7 @@ void MainWindow::addDiagram()
       diagram->setKind(dialog->kind());
 
       NameBuilder builder(owner);
-      builder.buildFor(diagram, tr("Diagram"));
+      diagram->setName(builder.build(tr("Diagram")));
 
       model->insertRow(index, diagram);
       setWindowModified(true);

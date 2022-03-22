@@ -40,7 +40,7 @@
 /**
  * @class UmlOperation
  * @brief The UmlOperation class stores information about an operation of a UML classifier.
- * @since 1.0
+ * @since 0.1.0
  * @ingroup UmlClassifiers
  *
  * In the ViraquchaUML datamodel an operation is defined as an element without child elements. Since it is an element, 
@@ -110,6 +110,8 @@ UmlOperation::UmlOperation(QUuid id)
 
 UmlOperation::~UmlOperation()
 {
+   clearParameter();
+   clearTemplate();
    delete data;
 }
 
@@ -425,6 +427,25 @@ void UmlOperation::remove(UmlParameter* par)
 }
 
 /**
+ * Finds a parameter by its name.
+ *
+ * @param name Name of the parameter to be found
+ * @return The UmlParameter object found or nullptr if nothing was found
+ */
+UmlParameter* UmlOperation::findParameter(QString name)
+{
+   for (auto par : data->parameter)
+   {
+      if (par->name() == name)
+      {
+         return par;
+      }
+   }
+
+   return nullptr;
+}
+
+/**
  * Clears all parameter from the operation.
  */
 void UmlOperation::clearParameter()
@@ -462,19 +483,6 @@ void UmlOperation::remove(UmlTemplateParameter* par)
 void UmlOperation::clearTemplate()
 {
    data->templParams.clear();
-}
-
-/**
- * Disposes the operation.
- *
- * This function is called by UmlProject::dispose() to reset all intrusive pointers owned by the package. Do not call
- * it directly.
- */
-void UmlOperation::dispose(bool disposing)
-{
-   clearParameter();
-   clearTemplate();
-   super::dispose(disposing);
 }
 
 /**
